@@ -25,10 +25,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <p class="tagline">Learn the architecture. Understand the principles. Build the future.</p>
     <div class="hero-pills">
       <span class="hero-pill hl">AI AGENTS</span>
-      <span class="hero-pill">NON-CUSTODIAL</span>
+      <span class="hero-pill">TURNKEY SECURED</span>
       <span class="hero-pill">MULTI-EXCHANGE</span>
-      <span class="hero-pill hl">ZERO-CONFIG</span>
-      <span class="hero-pill">OPEN SOURCE</span>
+      <span class="hero-pill hl">AUTH REQUIRED</span>
+      <span class="hero-pill">PRIVATE BETA</span>
     </div>
   </div>
 </div>
@@ -60,10 +60,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="card accent-gold">
       <div class="card-title">D0 DIFFERENTIATOR</div>
       <ul>
-        <li><strong style="color:var(--gold)">Zero-Config</strong> — 读取操作零配置，开箱即用</li>
+        <li><strong style="color:var(--gold)">Login Once</strong> — 一次登录，所有读写操作全覆盖</li>
         <li><strong style="color:var(--gold)">Agent-First</strong> — CLI 即 API，天然适配 AI 调用</li>
-        <li><strong style="color:var(--gold)">Non-Custodial</strong> — 私钥本地，链上结算</li>
-        <li><strong style="color:var(--gold)">Multi-Exchange</strong> — Hyperliquid, Polymarket 等一键接入</li>
+        <li><strong style="color:var(--gold)">Turnkey Secured</strong> — 云端密钥托管，用户无需管理私钥</li>
+        <li><strong style="color:var(--gold)">Multi-Exchange</strong> — Hyperliquid, Polymarket 等统一接入</li>
       </ul>
     </div>
   </div>
@@ -167,29 +167,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="principle-row">
       <span class="principle-num">02</span>
       <div class="principle-body">
-        <h4>Zero-Config Progressive Disclosure / 零配置渐进暴露</h4>
-        <p>读取操作（价格、行情、账户）零配置直接可用，降低首次体验门槛到接近零。只有执行交易时才需要配置私钥。大部分功能不需要任何 setup。</p>
+        <h4>Login-Once Progressive Disclosure / 一次登录渐进暴露</h4>
+        <p>一次 <code>d0 login</code> 后，读取和执行操作全部开箱即用。研究、行情、持仓、下单，统一入口，无需为每个功能单独配置。首次体验门槛极低。</p>
       </div>
     </div>
     <div class="principle-row">
       <span class="principle-num">03</span>
       <div class="principle-body">
-        <h4>Non-Custodial by Design / 架构级非托管</h4>
-        <p>不是 "我们承诺不动你的钱"，而是架构上不可能。私钥永远在本地，EIP-712 签名在用户设备上完成，D0 从不接触私钥。信任不来自承诺，来自密码学。</p>
+        <h4>Turnkey Key Management / 云端密钥托管</h4>
+        <p>D0 使用 Turnkey 进行密钥管理，用户无需保管私钥。钱包由 Turnkey 安全托管，交易签名在后端完成，用户只需登录账号即可交易，极大降低私钥丢失和泄露风险。</p>
       </div>
     </div>
     <div class="principle-row">
       <span class="principle-num">04</span>
       <div class="principle-body">
         <h4>Exchange Abstraction / 交易所抽象层</h4>
-        <p>Hyperliquid、Polymarket、以及未来的更多协议，通过统一的命令语义对 Agent 暴露。Agent 不需要知道底层是哪条链、哪个协议，D0 处理所有差异。</p>
+        <p>Hyperliquid、Polymarket、以及未来的更多协议，通过统一的命令前缀对 Agent 暴露（<code>hl:xxx</code>、<code>perps:xxx</code>）。Agent 无需理解底层协议差异，D0 处理所有语义转换。</p>
       </div>
     </div>
     <div class="principle-row">
       <span class="principle-num">05</span>
       <div class="principle-body">
         <h4>Composable Skill System / 可组合技能系统</h4>
-        <p>D0 作为 Clawhub 上的 AI Skill 发布，可以与其他 Skill 自由组合。一个 Agent 可以同时使用 D0 (交易) + 数据分析 Skill + 新闻 Skill，形成完整的自主交易 pipeline。</p>
+        <p>D0 可作为 AI 工具链的执行层，与数据分析、新闻抓取等 Skill 自由组合。一个 Agent 可以同时调用 D0 (交易执行) + 数据 Skill + 新闻 Skill，形成完整的自主交易 pipeline。</p>
       </div>
     </div>
   </div>
