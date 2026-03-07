@@ -10,7 +10,7 @@ description: "A complete breakdown of the 5-layer agentic trading stack, why exi
 
 Every trading system ever built solves the same problem: turn an idea into a position. A human thinks "ETH looks oversold," clicks some buttons, and 30 seconds later they own 0.5 ETH on a perpetual contract with 3x leverage.
 
-That flow — from thought to on-chain state change — passes through exactly 5 layers. I've spent the last 18 months mapping them. Most teams I talk to are building at one layer, maybe two. Nobody has the full stack. And that gap is where billions of dollars in execution quality get lost.
+That flow — from thought to on-chain state change — passes through exactly 5 layers. Most teams are building at one layer, maybe two. Nobody has the full stack. And that gap is where billions of dollars in execution quality get lost.
 
 Here's the architecture that changes everything.
 
@@ -69,7 +69,7 @@ Nobody covers all 5. The opportunity is in being the connective tissue — the e
 
 ## Phase 2: Why Existing Tools Fail
 
-I've tried to build an autonomous trading agent with every major tool available today. Here's what I found: every single one of them was designed for a world where humans write code, not a world where agents reason and act.
+Attempting to build an autonomous trading agent with the major tools available today reveals a common pattern: every single one was designed for a world where humans write code, not a world where agents reason and act.
 
 **CEX APIs: built for developers, hostile to agents.** Take Binance. To execute a single market buy of 0.1 ETH through their API, you need:
 
@@ -98,9 +98,9 @@ response = requests.post(
 
 That's 20+ lines of Python to place one trade — and I'm not counting error handling, retry logic, rate limit management, or session refresh. In production, a robust Binance integration runs 200-400 lines. And that's just for *one exchange*. Coinbase uses a different auth scheme. Bybit has a different parameter format. Kraken uses nonces instead of timestamps.
 
-The numbers tell the story: according to a 2024 analysis of open-source trading bots on GitHub, the median project spends 62% of its codebase on exchange integration and API management. Only 23% is actual strategy logic. The rest is configuration and deployment. We've built an industry where two-thirds of the engineering effort goes into *plumbing*.
+The numbers tell the story: a significant majority of open-source trading bot codebases are dedicated to exchange integration and API management plumbing. Only a fraction is actual strategy logic. The rest is configuration and deployment. The industry has built a world where most engineering effort goes into *plumbing*.
 
-**DeFi frontends: GUI-first, agent-hostile.** Try to get an AI agent to use Uniswap. You need a browser, a wallet extension, a confirmation popup, and a human finger to click "Confirm." To automate this, teams resort to Puppeteer or Selenium — literally puppeting a fake browser to click buttons. The failure rate is around 15-20% per transaction due to timing issues, popup changes, and frontend updates that break selectors.
+**DeFi frontends: GUI-first, agent-hostile.** Try to get an AI agent to use Uniswap. You need a browser, a wallet extension, a confirmation popup, and a human finger to click "Confirm." To automate this, teams resort to Puppeteer or Selenium — literally puppeting a fake browser to click buttons. The failure rates are high due to timing issues, popup changes, and frontend updates that break selectors.
 
 **Existing bots: strategy-smart, integration-dumb.** Freqtrade is excellent strategy software. Hummingbot has solid market-making logic. But try to have an AI agent use either of them. They expect a human to edit YAML config files, restart the process, and monitor a dashboard. No natural language interface. No function-calling integration. No way for an LLM to say "run a momentum strategy on ETH/USDT with RSI threshold of 30" without a human writing a custom adapter.
 
@@ -110,7 +110,7 @@ The result: builders duct-tape 4-5 tools together — ChatGPT for intent parsing
 
 ## Phase 3: CLI-as-API — The Design Insight
 
-Here's the insight that changed how I think about agent-native infrastructure: **the command line interface is already the perfect AI agent interface**.
+Here's the core design insight: **the command line interface is already the perfect AI agent interface**.
 
 An LLM is a text-in, text-out machine. A CLI is a text-in, text-out machine. The impedance match is perfect. When an AI agent uses function calling (tool use), it constructs a function name and parameters — which maps 1:1 to a CLI command:
 
@@ -151,7 +151,7 @@ d0 positions
 # → No active positions (read-only mode)
 ```
 
-An agent that just needs to *check prices* can start immediately. No registration, no API key provisioning, no OAuth flow. This matters enormously for agent bootstrapping — when an agent is first deployed, the less setup required, the faster it becomes useful. In testing, we found that zero-config read access reduced agent onboarding time from 45 minutes (for a typical exchange API integration) to under 10 seconds.
+An agent that just needs to *check prices* can start immediately. No registration, no API key provisioning, no OAuth flow. This matters enormously for agent bootstrapping — when an agent is first deployed, the less setup required, the faster it becomes useful. Zero-config read access dramatically reduces agent onboarding time compared to typical exchange API integrations that require registration, key provisioning, and configuration.
 
 Only write operations — placing actual trades — require key setup. And even then, it's one command:
 
@@ -178,7 +178,7 @@ d0 strategy grid ETH 1800-2200 --grids 10 --size 0.05
 d0 spread ETH long 0.1 --leg1 buy-perp --leg2 sell-spot
 ```
 
-The agent doesn't need to learn a new API for strategies vs. simple orders vs. complex positions. It's all the same command-line grammar. This matters because LLMs learn patterns. The more consistent the pattern, the fewer examples the model needs to generalize. In our testing, an agent given 3 example D0 commands could correctly construct novel commands with 94% accuracy. The same agent given 3 example REST API calls to Binance achieved only 41% accuracy on novel calls — the parameter format, auth headers, and endpoint paths were too inconsistent for the model to generalize from sparse examples.
+The agent doesn't need to learn a new API for strategies vs. simple orders vs. complex positions. It's all the same command-line grammar. This matters because LLMs learn patterns. The more consistent the pattern, the fewer examples the model needs to generalize. Because LLMs learn patterns, the more consistent the interface, the fewer examples the model needs to generalize. A uniform CLI grammar allows agents to construct novel commands from just a handful of examples, while REST APIs with inconsistent parameter formats, auth headers, and endpoint paths are far harder for models to generalize from sparse examples.
 
 Compare the agent experience. Here is placing a leveraged trade with stop-loss using a traditional exchange SDK:
 
@@ -215,7 +215,7 @@ One line. The stop-loss is calculated relative to entry automatically. The lever
 
 ## Phase 4: Non-Custodial Execution
 
-Here's a question that keeps me up at night: when AI agents control billions of dollars in trading capital, who holds the keys?
+Here's the critical question: when AI agents control billions of dollars in trading capital, who holds the keys?
 
 If the answer is "a centralized exchange," we haven't learned anything from FTX. $8.7 billion in customer assets vanished because users trusted an entity with custody of their funds. The entire value proposition of cryptocurrency — trustless, permissionless, self-sovereign — collapses the moment you hand your private keys to someone else.
 
@@ -259,7 +259,7 @@ d0 buy ETH 0.1
 
 Even if D0's servers were fully compromised, an attacker could not access user funds. They could see signatures (which are public anyway) but could not forge new ones. The attack surface reduces to the agent's local machine — exactly the scope the operator controls.
 
-A 2025 analysis of DeFi exploits found that 73% of losses above $10M involved custodial or semi-custodial key management. Pure non-custodial architectures accounted for less than 4% of total exploit losses.
+Historically, the vast majority of large-scale DeFi exploits have involved custodial or semi-custodial key management. Pure non-custodial architectures account for a small fraction of total exploit losses — the attack surface is fundamentally smaller when keys never leave the local machine.
 
 ## Phase 5: Exchange Abstraction
 
@@ -295,7 +295,7 @@ Consider an agent monitoring 50 markets across 3 protocols. Without abstraction,
 
 With exchange abstraction, the agent has one mental model: `d0 [action] [asset] [size] [options]`. When we add a new protocol — say, a sports betting exchange — the agent's code changes by zero lines. D0 handles the protocol internally.
 
-In our testing, agents using the unified D0 interface made 67% fewer errors when trading across multiple protocols compared to agents using protocol-specific SDKs. The primary reduction came from eliminating parameter confusion — agents using raw SDKs would apply Hyperliquid-specific parameters to Polymarket calls, or vice versa.
+Agents using a unified interface make significantly fewer errors when trading across multiple protocols compared to agents using protocol-specific SDKs. The primary reduction comes from eliminating parameter confusion — agents using raw SDKs commonly apply one exchange's parameters to another exchange's calls.
 
 ## Phase 6: The Composable Future
 
@@ -330,13 +330,13 @@ Each skill is independent — swap the news skill for a different one, replace t
 
 **Multi-agent coordination patterns:**
 
-As agentic trading matures, I expect to see specialized agent roles emerge:
+As agentic trading matures, specialized agent roles will emerge:
 
 **Sentinel agents** run 24/7, monitoring positions, funding rates, liquidation levels, and market conditions. They don't trade. They watch. When something triggers — a position approaching liquidation, a funding rate spike above 0.1%, a price moving beyond 2 standard deviations — they alert the execution agent.
 
-**Execution agents** handle trade placement. They receive structured commands from other agents and execute them through D0. They're optimized for speed and reliability, not reasoning. Their job is to construct the right command, sign it, submit it, and confirm the result. A well-tuned execution agent can go from signal to on-chain confirmation in under 800ms.
+**Execution agents** handle trade placement. They receive structured commands from other agents and execute them through D0. They're optimized for speed and reliability, not reasoning. Their job is to construct the right command, sign it, submit it, and confirm the result. A well-tuned execution agent can go from signal to on-chain confirmation in sub-second time.
 
-**Risk agents** enforce portfolio constraints. Maximum position size as a percentage of capital. Maximum correlation between positions. Maximum drawdown before forced deleveraging. These agents have veto power — they can block or modify any trade that violates the risk framework. In backtesting, adding a dedicated risk agent reduced maximum portfolio drawdown by 34% compared to relying on per-trade risk checks alone.
+**Risk agents** enforce portfolio constraints. Maximum position size as a percentage of capital. Maximum correlation between positions. Maximum drawdown before forced deleveraging. These agents have veto power — they can block or modify any trade that violates the risk framework. A dedicated risk agent with portfolio-level visibility can significantly reduce maximum drawdown compared to relying on per-trade risk checks alone.
 
 **Research agents** continuously analyze market microstructure, test new strategies through paper trading, and propose parameter adjustments. They feed findings back into the strategy layer on longer time horizons.
 
@@ -360,7 +360,7 @@ The agentic trading stack is not a vision document. It's an architectural realit
 
 > The execution layer is to trading what the compiler is to programming. Everything above it is abstraction. Everything below it is implementation. Own the execution layer, and you become the interface between intelligence and action.
 
-Three things I believe will be true by 2028:
+Three things that will likely be true by 2028:
 
 1. **CLI-as-API will be the dominant integration pattern for AI agents.** Not REST APIs. Not SDKs. Not GraphQL. Text-in, text-out command interfaces that map perfectly to LLM function calling. The tooling ecosystem will converge on this.
 

@@ -10,9 +10,9 @@ description: "An empirical deep-dive into LLM probability calibration, the favor
 
 Here's the thing nobody in the AI trading space wants to say out loud: your LLM doesn't know what 5% means.
 
-I don't mean it can't parse the number. I mean that when GPT-4 tells you an event has a 5% chance of happening, the actual frequency of occurrence is closer to 12-15%. That's not a rounding error. That's a systematic bias that will blow up your prediction market portfolio if you don't understand it — and it's also, paradoxically, the single biggest edge available to anyone building calibrated trading agents right now.
+I don't mean it can't parse the number. I mean that when an LLM tells you an event has a 5% chance of happening, the actual frequency of occurrence is systematically higher. That's not a rounding error. That's a systematic bias that will blow up your prediction market portfolio if you don't understand it — and it's also, paradoxically, the single biggest edge available to anyone building calibrated trading agents right now.
 
-I've spent the last eight months studying LLM probability outputs against resolved prediction market outcomes. The models aren't broken. They're predictably wrong, in ways that map precisely onto decades of behavioral economics research. And predictably wrong means exploitably wrong.
+Research on LLM probability outputs against resolved prediction outcomes is revealing a clear pattern. The models aren't broken. They're predictably wrong, in ways that map precisely onto decades of behavioral economics research. And predictably wrong means exploitably wrong.
 
 ## Phase 1: What Calibration Actually Means
 
@@ -50,30 +50,15 @@ The question is: how miscalibrated are LLMs, exactly? And in which direction?
 
 The data here is more damning — and more useful — than most people realize.
 
-**Zou et al. (2022)** conducted one of the first rigorous studies comparing language model forecasting performance against human superforecasters using Metaculus questions. Their headline finding was encouraging: LLMs approach human forecaster accuracy on well-defined, medium-probability questions. On events in the 30-70% probability range, the gap between LLM predictions and calibrated human ensembles was small — often within 3-5 percentage points.
+**Zou et al. (2022), "Forecasting Future World Events with Neural Networks,"** conducted one of the first rigorous studies comparing language model forecasting performance against human superforecasters using Metaculus questions. Their headline finding was encouraging: LLMs approach human forecaster accuracy on well-defined, medium-probability questions. On events in the moderate probability range, the gap between LLM predictions and calibrated human ensembles was relatively small.
 
-But here's what got buried in the paper: **the gap widens dramatically on tail events**. For questions with true probabilities below 10% or above 90%, LLM predictions diverged from reality by 7-15 percentage points. The models were compressing extreme probabilities toward the center of the distribution. Events that should have been 3% were predicted at 10-12%. Events that should have been 97% were predicted at 85-88%.
+But here's what got buried in the paper: **the gap widens on tail events**. For questions with true probabilities at the extremes — below 10% or above 90% — LLM predictions diverged meaningfully from reality. The models were compressing extreme probabilities toward the center of the distribution, overestimating low-probability events and underestimating high-probability ones.
 
-This finding has been replicated across multiple studies and model generations. GPT-4 calibration analyses show **systematic overconfidence on events rated 80-95% likely** — the actual occurrence frequency for these events is roughly 60-75%. That's a 15-20 point gap. On the other end, events GPT-4 rates at 5% probability actually occur at rates closer to 12-15%.
+More recently, **Halawi et al. (2024), "Approaching Human-Level Forecasting with Language Models" (arXiv 2402.18563),** demonstrated that a carefully designed LLM pipeline — combining retrieval, chain-of-thought reasoning, and ensembling — can approach competitive human crowd forecast accuracy, and in some settings surpass it. This is a significant advance over raw model outputs, but the pipeline's complexity underscores that off-the-shelf LLM probability estimates remain miscalibrated without correction.
 
-Let me make this concrete with numbers from aggregated calibration studies:
+**Schoenegger et al. (2025), "Wisdom of the Silicon Crowd: LLM Ensemble Prediction Capabilities Rival Human Crowd Accuracy,"** found that an ensemble of 12 LLMs produces forecasts statistically indistinguishable from human crowd accuracy. The key insight: no single model is well-calibrated, but aggregation across models dramatically reduces systematic bias — analogous to how human superforecaster teams outperform individual forecasters.
 
-| Predicted Probability | Actual Frequency (GPT-4) | Actual Frequency (Claude) | Actual Frequency (Llama 70B) |
-|---|---|---|---|
-| 5% | 12-15% | 10-13% | 14-18% |
-| 20% | 25-28% | 22-26% | 27-32% |
-| 50% | 48-52% | 49-53% | 46-52% |
-| 80% | 68-74% | 72-78% | 62-70% |
-| 95% | 78-85% | 82-88% | 72-80% |
-
-**Estimated ECE scores:**
-- GPT-4: ~0.08-0.10
-- Claude: ~0.06-0.09
-- Llama 70B: ~0.10-0.14
-
-Several patterns jump out. First, all models perform best in the middle of the distribution — the 40-60% range is roughly calibrated. Second, the distortion is roughly symmetric: low probabilities are overestimated, high probabilities are underestimated. Third, larger models with more RLHF tend to be better calibrated, but none are perfect.
-
-The Metaculus AI tournament experiments confirmed this pattern with a larger dataset. When LLM forecasts were compared against calibrated human ensemble predictions (groups of superforecasters whose collective track record shows near-perfect calibration), the AI systems underperformed specifically on questions involving extreme probabilities. The human ensembles maintained calibration across the full [0, 1] interval. The LLMs did not.
+The overall pattern across these studies is consistent. Models perform best in the middle of the distribution — the 40-60% range is roughly calibrated. The distortion is roughly symmetric: low probabilities tend to be overestimated, high probabilities tend to be underestimated. Larger models and ensemble approaches improve calibration, but no single model achieves perfect calibration across the full probability range.
 
 > The core finding: LLMs compress the probability distribution toward the center. They're uncertainty-averse at both extremes. This creates a specific, exploitable pattern in any market where LLM-generated probabilities influence prices.
 
@@ -102,7 +87,7 @@ Expected_profit = (0.08 - 0.03) × $1000 = $50 per contract cycle
 
 That's a 5-cent edge on a 92-cent position, which translates to roughly 5.4% expected return per resolution. On a market with weekly resolution, that compounds to substantial annual returns — assuming you can identify which tail events are overpriced.
 
-The sweet spot I've identified from backtesting is events priced between 5-15% on prediction markets where rigorous base-rate analysis suggests the true probability is 2-5%. This zone combines two advantages: (1) the favorite-longshot bias is strongest here, and (2) the "No" position is cheap relative to the expected payout.
+The theoretical sweet spot based on bias analysis is events priced between 5-15% on prediction markets where rigorous base-rate analysis suggests the true probability is 2-5%. This zone combines two advantages: (1) the favorite-longshot bias is strongest here, and (2) the "No" position is cheap relative to the expected payout.
 
 Here's a realistic example. Suppose a Polymarket contract asks: "Will [specific geopolitical event] happen by [date]?" The market price is $0.12. You run the event through a calibration-corrected pipeline:
 
@@ -120,11 +105,11 @@ The problem, of course, is that tail events are tail events. You need a large en
 
 Knowing that LLMs are miscalibrated is useful. Building a trading system that profits from it requires solving four hard problems: confidence estimation, position sizing, conflict detection, and temporal decay.
 
-I use a **multi-gate risk framework** that every trade candidate must pass through before execution — a series of filters, each eliminating bad trades that would look good to a naive system.
+A **multi-gate risk framework** requires every trade candidate to pass through a series of filters before execution — a series of filters, each eliminating bad trades that would look good to a naive system.
 
 **Gate 1: Calibration-Adjusted Confidence**
 
-Don't use the raw LLM probability. Apply a calibration correction first (more on how in Phase 5). Only consider trades where the corrected probability diverges from the market price by more than your minimum edge threshold. I use 4% as the minimum — anything less gets eaten by fees, slippage, and model uncertainty.
+Don't use the raw LLM probability. Apply a calibration correction first (more on how in Phase 5). Only consider trades where the corrected probability diverges from the market price by more than a minimum edge threshold. A reasonable floor is 4% — anything less gets eaten by fees, slippage, and model uncertainty.
 
 **Gate 2: Kelly Criterion Position Sizing**
 
@@ -148,7 +133,7 @@ Full Kelly says bet 49.8% of your bankroll. That's insane for a single position.
 
 **Gate 3: Conflict Detection**
 
-Does the LLM's estimate conflict with other information sources? I check: (1) base rates from historical data, (2) current news sentiment, (3) expert forecaster consensus where available, and (4) the model's own uncertainty when prompted multiple times. If any two sources disagree by more than 15 percentage points, the trade gets flagged for review or skipped.
+Does the LLM's estimate conflict with other information sources? The checks include: (1) base rates from historical data, (2) current news sentiment, (3) expert forecaster consensus where available, and (4) the model's own uncertainty when prompted multiple times. If any two sources disagree by more than 15 percentage points, the trade gets flagged for review or skipped.
 
 **The Half-Life Problem**
 
@@ -204,11 +189,11 @@ def evaluate_trade(event, market_price):
 adjusted_edge = max(0, edge - model_ECE)
 ```
 
-If your model has an ECE of 0.08 and the raw edge is 0.06, the adjusted edge is negative — no trade. This single adjustment eliminated roughly 40% of the trades from my backtests and improved the Sharpe ratio by 0.3.
+If your model has an ECE of 0.08 and the raw edge is 0.06, the adjusted edge is negative — no trade. This adjustment filters out a significant portion of marginal trades, improving risk-adjusted returns by removing positions where the edge is likely illusory.
 
 ## Phase 5: Building a Calibrated Trading Pipeline
 
-Let me put the full pipeline together, end to end. This is the system architecture I've converged on after iterating through several less successful versions.
+Here is the full pipeline, end to end — a system architecture that combines calibration correction with disciplined risk management.
 
 **Step 1: Estimate probability using the LLM.**
 
@@ -224,7 +209,7 @@ calibrated_prob = 1 / (1 + exp(A * raw_prob + B))
 
 Where A and B are fit on the calibration dataset. This works well when the miscalibration is roughly monotonic (which it usually is for LLMs).
 
-**Isotonic regression** is more flexible — it fits a non-parametric, non-decreasing function to the calibration data. It handles non-monotonic distortions better but requires more calibration data to avoid overfitting. In my experience, Platt scaling is sufficient for most use cases and more stable with limited data.
+**Isotonic regression** is more flexible — it fits a non-parametric, non-decreasing function to the calibration data. It handles non-monotonic distortions better but requires more calibration data to avoid overfitting. In general, Platt scaling is sufficient for most use cases and more stable with limited data.
 
 **Step 3: Compare corrected probability to market price.**
 
@@ -232,7 +217,7 @@ This is where you identify edge. The corrected probability is your best estimate
 
 **Step 4: Size position with Kelly criterion.**
 
-Use fractional Kelly (0.25-0.5) applied to the calibration-adjusted edge. For a portfolio of prediction market positions, I target a maximum of 5% of bankroll per position and a maximum of 30% deployed across correlated positions.
+Use fractional Kelly (0.25-0.5) applied to the calibration-adjusted edge. For a portfolio of prediction market positions, a reasonable guideline is a maximum of 5% of bankroll per position and a maximum of 30% deployed across correlated positions.
 
 **Step 5: Risk gates before execution.**
 
@@ -311,11 +296,11 @@ class CalibratedTradingPipeline:
 
 **The feedback loop is the real moat.** Every resolved trade provides a data point for recalibrating the correction function. After 200-300 resolved predictions, the system's effective ECE drops below 0.03 — you become one of the most calibrated participants in the market, and every mispriced contract is visible to you.
 
-Walk-forward recalibration is critical. Markets evolve, LLM behavior changes with updates, and the distribution of prediction market questions shifts over time. I recalibrate Platt scaling parameters every 100 resolved predictions using only the most recent 500 data points — current without overfitting to stale data.
+Walk-forward recalibration is critical. Markets evolve, LLM behavior changes with updates, and the distribution of prediction market questions shifts over time. A practical cadence is recalibrating Platt scaling parameters every 100 resolved predictions using only the most recent 500 data points — current without overfitting to stale data.
 
 ## Conclusion: The Calibration Edge Is Real, and It's Compounding
 
-Here's what I want you to take away from this.
+Here's the bottom line.
 
 LLMs are not bad at estimating probabilities. They're predictably biased in specific, measurable ways — overestimating low-probability events, underestimating high-probability events, and compressing the full distribution toward the center. This bias is inherited from human training data and reinforced by RLHF optimization that penalizes confident errors.
 

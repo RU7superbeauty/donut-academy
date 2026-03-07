@@ -43,7 +43,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <div class="thesis-box">
     <p>交易的未来属于 <strong style="color:var(--accent)">AI Agent</strong>，而不是人类点击按钮。</p>
-    <p style="margin-top:8px;font-size:13px;color:var(--text2)">D0 是第一个为 AI Agent 原生设计的加密交易 CLI 和执行层。不是给人用的 GUI 加了个 API，而是从第一行代码开始就为 Agent 而生。</p>
+    <p style="margin-top:8px;font-size:13px;color:var(--text2)">D0 是专为 AI Agent 原生设计的加密交易 CLI 和执行层。不是给人用的 GUI 加了个 API，而是从第一行代码开始就为 Agent 而生。</p>
     <div class="formula">HUMAN INTENT -> AI UNDERSTANDING -> D0 EXECUTION -> ON-CHAIN SETTLEMENT</div>
   </div>
 
@@ -54,7 +54,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <li>LLM 能力突破 — Agent 可以理解复杂交易意图</li>
         <li>链上基础设施成熟 — DEX 流动性+速度可用</li>
         <li>非托管需求激增 — CEX 信任危机后的确定性趋势</li>
-        <li>现有工具的缺口 — 没有 Agent-native 交易基础设施</li>
+        <li>现有工具的缺口 — 缺乏真正 Agent-native 的交易基础设施</li>
       </ul>
     </div>
     <div class="card accent-gold">
@@ -66,6 +66,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <li><strong style="color:var(--gold)">Multi-Exchange</strong> — Hyperliquid, Polymarket 等一键接入</li>
       </ul>
     </div>
+  </div>
+
+  <div class="more-links">
+    <a class="more-link" href="/articles/agent-economy-thesis/">READ THE FULL THESIS →</a>
   </div>
 </div>
 
@@ -134,6 +138,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
   </div>
+
+  <div class="more-links">
+    <a class="more-link" href="/articles/agentic-trading-stack/">READ THE ARCHITECTURE DEEP-DIVE →</a>
+  </div>
 </div>
 
 <div class="section-divider"></div>
@@ -160,7 +168,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <span class="principle-num">02</span>
       <div class="principle-body">
         <h4>Zero-Config Progressive Disclosure / 零配置渐进暴露</h4>
-        <p>读取操作（价格、行情、账户）零配置直接可用，降低首次体验门槛到接近零。只有执行交易时才需要配置私钥。<span class="num" style="color:var(--green)">80%</span> 的功能不需要任何 setup。</p>
+        <p>读取操作（价格、行情、账户）零配置直接可用，降低首次体验门槛到接近零。只有执行交易时才需要配置私钥。大部分功能不需要任何 setup。</p>
       </div>
     </div>
     <div class="principle-row">
@@ -185,6 +193,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
   </div>
+
+  <div class="more-links">
+    <a class="more-link" href="/articles/d0-design-principles/">READ THE 5 DESIGN PRINCIPLES →</a>
+  </div>
 </div>
 
 <div class="section-divider"></div>
@@ -200,7 +212,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <p class="section-desc">AI + Crypto 交叉领域正在发生的范式转移，以及 D0 在其中的位置。</p>
 
   <div class="insight-box">
-    <p>"未来 3 年，<strong style="color:var(--accent)">90% 的链上交易将由 AI Agent 发起</strong>，而不是人类手动操作。谁拥有 Agent 的执行层，谁就拥有链上流量的入口。"</p>
+    <p>"我们相信，<strong style="color:var(--accent)">链上交易的主体将从人类转移到 AI Agent</strong>。谁拥有 Agent 的执行层，谁就拥有链上流量的入口。"</p>
     <div class="insight-src">— D0 THESIS / 2026</div>
   </div>
 
@@ -230,7 +242,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="card accent-purple">
       <div class="card-title">PARADIGM 3: REAL-TIME RISK AS FIRST-CLASS</div>
       <div class="card-label">实时风控一等公民</div>
-      <p>传统交易系统的风控是附加层。D0 将风控嵌入执行路径 — Agent 每次下单前自动校验仓位、杠杆、止损。风控不是 "可选功能"，而是<strong style="color:var(--text)">执行的前提条件</strong>。毫秒级仓位保护。</p>
+      <p>传统交易系统的风控是附加层。D0 将风控嵌入执行路径 — Agent 每次下单前自动校验仓位、杠杆、止损。风控不是 "可选功能"，而是<strong style="color:var(--text)">执行的前提条件</strong>。</p>
       <div class="research-topics">
         <span class="tag tag-accent">EMBEDDED RISK</span>
         <span class="tag tag-accent">PRE-EXECUTION</span>
@@ -248,6 +260,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <span class="tag tag-accent">TRUSTLESS</span>
       </div>
     </div>
+  </div>
+
+  <div class="more-links">
+    <a class="more-link" href="/articles/agent-to-agent-economy/">PARADIGM 1: AGENT ECONOMY →</a>
+    <a class="more-link" href="/articles/intent-centric-execution/">PARADIGM 2: INTENT EXECUTION →</a>
+    <a class="more-link" href="/articles/realtime-risk-first-class/">PARADIGM 3: REAL-TIME RISK →</a>
+    <a class="more-link" href="/articles/verifiable-transparency/">PARADIGM 4: VERIFIABLE TRANSPARENCY →</a>
   </div>
 </div>
 
@@ -334,6 +353,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
   </div>
+
+  <div class="more-links">
+    <a class="more-link" href="/articles/dr-001-intent-parsing/">DR-001: INTENT PARSING →</a>
+    <a class="more-link" href="/articles/dr-002-cross-protocol-semantics/">DR-002: CROSS-PROTOCOL SEMANTICS →</a>
+    <a class="more-link" href="/articles/dr-003-risk-failure-modes/">DR-003: RISK FAILURE MODES →</a>
+    <a class="more-link" href="/articles/dr-004-multi-agent-game-theory/">DR-004: MULTI-AGENT GAME THEORY →</a>
+    <a class="more-link" href="/articles/dr-005-mm-pattern-detection/">DR-005: MM PATTERN DETECTION →</a>
+  </div>
 </div>
 
 <div class="section-divider"></div>
@@ -364,7 +391,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <tr><td>加密货币基础</td><td>钱包、链、代币标准、Gas 机制</td><td>D0 读取链上数据实操</td></tr>
           <tr><td>K线与技术分析入门</td><td>均线、RSI、支撑阻力、趋势识别</td><td>D0 实时行情 + K线数据获取</td></tr>
           <tr><td>风险管理基础</td><td>仓位管理、止损设置、风险回报比</td><td>D0 止损/仓位命令实操</td></tr>
-          <tr><td>市场情绪分析</td><td>恐贪指数、韩溢价、社交情绪</td><td>D0 数据接口 + 情绪指标查询</td></tr>
+          <tr><td>市场情绪分析</td><td>恐贪指数、韩溢价、社交情绪</td><td>D0 数据接口查询</td></tr>
         </tbody>
       </table>
     </div>
@@ -402,12 +429,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <thead><tr><th>Topic</th><th>Description</th><th>D0 Integration</th></tr></thead>
         <tbody>
           <tr><td>AI 交易 Agent 架构</td><td>意图解析、策略路由、执行引擎、风控管线</td><td>D0 内部架构 Deep-dive</td></tr>
-          <tr><td>实时风控实现</td><td>毫秒级仓位保护、熔断机制、级联清算防护</td><td>D0 Risk Layer 源码解读</td></tr>
+          <tr><td>实时风控实现</td><td>仓位保护、熔断机制、级联清算防护</td><td>D0 Risk Layer 解读</td></tr>
           <tr><td>开源策略 Walkthrough</td><td>从零构建一个完整交易策略并发布为 Skill</td><td>D0 + Clawhub Skill 发布</td></tr>
           <tr><td>多 Agent 协同系统</td><td>Agent 间通信、信号共享、分布式执行</td><td>多 D0 实例协同实验</td></tr>
         </tbody>
       </table>
     </div>
+  </div>
+
+  <div class="more-links">
+    <a class="more-link" href="/articles/quant-framework-crypto/">READ: QUANT FRAMEWORK →</a>
+    <a class="more-link" href="/articles/building-agentic-pipeline/">READ: BUILD YOUR FIRST PIPELINE →</a>
   </div>
 </div>
 
