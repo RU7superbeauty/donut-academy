@@ -5,6 +5,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <!-- Hero + Game Zone -->
 <div class="hero">
+  <!-- Pixel donut background watermark -->
+  <svg class="hero-bg-donut" viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <rect x="10" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/><rect x="14" y="2" width="2" height="2"/><rect x="16" y="2" width="2" height="2"/><rect x="18" y="2" width="2" height="2"/><rect x="20" y="2" width="2" height="2"/>
+    <rect x="8" y="4" width="2" height="2"/><rect x="22" y="4" width="2" height="2"/>
+    <rect x="6" y="6" width="2" height="2"/><rect x="24" y="6" width="2" height="2"/>
+    <rect x="4" y="8" width="2" height="2"/><rect x="12" y="8" width="2" height="2"/><rect x="14" y="8" width="2" height="2"/><rect x="16" y="8" width="2" height="2"/><rect x="18" y="8" width="2" height="2"/><rect x="26" y="8" width="2" height="2"/>
+    <rect x="4" y="10" width="2" height="2"/><rect x="10" y="10" width="2" height="2"/><rect x="20" y="10" width="2" height="2"/><rect x="26" y="10" width="2" height="2"/>
+    <rect x="2" y="12" width="2" height="2"/><rect x="10" y="12" width="2" height="2"/><rect x="20" y="12" width="2" height="2"/><rect x="28" y="12" width="2" height="2"/>
+    <rect x="2" y="14" width="2" height="2"/><rect x="10" y="14" width="2" height="2"/><rect x="20" y="14" width="2" height="2"/><rect x="28" y="14" width="2" height="2"/>
+    <rect x="2" y="16" width="2" height="2"/><rect x="10" y="16" width="2" height="2"/><rect x="20" y="16" width="2" height="2"/><rect x="28" y="16" width="2" height="2"/>
+    <rect x="2" y="18" width="2" height="2"/><rect x="10" y="18" width="2" height="2"/><rect x="20" y="18" width="2" height="2"/><rect x="28" y="18" width="2" height="2"/>
+    <rect x="4" y="20" width="2" height="2"/><rect x="10" y="20" width="2" height="2"/><rect x="20" y="20" width="2" height="2"/><rect x="26" y="20" width="2" height="2"/>
+    <rect x="4" y="22" width="2" height="2"/><rect x="12" y="22" width="2" height="2"/><rect x="14" y="22" width="2" height="2"/><rect x="16" y="22" width="2" height="2"/><rect x="18" y="22" width="2" height="2"/><rect x="26" y="22" width="2" height="2"/>
+    <rect x="6" y="24" width="2" height="2"/><rect x="24" y="24" width="2" height="2"/>
+    <rect x="8" y="26" width="2" height="2"/><rect x="22" y="26" width="2" height="2"/>
+    <rect x="10" y="28" width="2" height="2"/><rect x="12" y="28" width="2" height="2"/><rect x="14" y="28" width="2" height="2"/><rect x="16" y="28" width="2" height="2"/><rect x="18" y="28" width="2" height="2"/><rect x="20" y="28" width="2" height="2"/>
+  </svg>
+  <div class="hero-text">
+    <h1>DONUT <span>ACADEMY</span></h1>
+    <p class="subtitle">AI-Native Crypto Trading Infrastructure / AI 原生加密交易基础设施</p>
+    <p class="tagline">Learn the architecture. Understand the principles. Build the future.</p>
+    <div class="hero-pills">
+      <span class="hero-pill hl">AI AGENTS</span>
+      <span class="hero-pill">TURNKEY SECURED</span>
+      <span class="hero-pill">MULTI-EXCHANGE</span>
+      <span class="hero-pill hl">AUTH REQUIRED</span>
+      <span class="hero-pill">PRIVATE BETA</span>
+    </div>
+  </div>
   <div class="game-tabs">
     <div class="game-tab active" data-game="catch">CATCH COINS</div>
     <div class="game-tab" data-game="breakout">BREAKOUT</div>
@@ -17,18 +46,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="game-hint" id="gameHint"></div>
     <div class="game-overlay" id="gameOverlay">
       <button class="start-btn" id="startBtn">START</button>
-    </div>
-  </div>
-  <div style="margin-top:20px;text-align:center">
-    <h1>DONUT <span>ACADEMY</span></h1>
-    <p class="subtitle">AI-Native Crypto Trading Infrastructure / AI 原生加密交易基础设施</p>
-    <p class="tagline">Learn the architecture. Understand the principles. Build the future.</p>
-    <div class="hero-pills">
-      <span class="hero-pill hl">AI AGENTS</span>
-      <span class="hero-pill">TURNKEY SECURED</span>
-      <span class="hero-pill">MULTI-EXCHANGE</span>
-      <span class="hero-pill hl">AUTH REQUIRED</span>
-      <span class="hero-pill">PRIVATE BETA</span>
     </div>
   </div>
 </div>
@@ -209,7 +226,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <span class="section-sub">AI 前沿观点</span>
   </div>
 
-  <p class="section-desc">AI + Crypto 交叉领域正在发生的范式转移，以及 D0 在其中的位置。</p>
+  <!-- Glazy mascot banner -->
+  <div class="glazy-banner">
+    <img src="/img/glazy-clawbot.jpg" alt="Glazy — deploying Clawbot" class="glazy-banner-img" loading="lazy" />
+    <div class="glazy-banner-overlay">
+      <span class="glazy-banner-label">MEET GLAZY</span>
+      <span class="glazy-banner-sub">Donut Academy Mascot / AI Trading Agent</span>
+    </div>
+  </div>
+
+  <p class="section-desc" style="margin-top:20px">AI + Crypto 交叉领域正在发生的范式转移，以及 D0 在其中的位置。</p>
 
   <div class="insight-box">
     <p>"我们相信，<strong style="color:var(--accent)">链上交易的主体将从人类转移到 AI Agent</strong>。谁拥有 Agent 的执行层，谁就拥有链上流量的入口。"</p>
@@ -440,6 +466,49 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="more-links">
     <a class="more-link" href="/articles/quant-framework-crypto/">READ: QUANT FRAMEWORK →</a>
     <a class="more-link" href="/articles/building-agentic-pipeline/">READ: BUILD YOUR FIRST PIPELINE →</a>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- S7: Glazy Gallery -->
+<div class="section" id="glazy">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <span class="section-title">GLAZY GALLERY</span>
+    <span class="section-sub">吉祥物画廊</span>
+  </div>
+
+  <p class="section-desc">Glazy — Donut Academy 的 AI 交易 Agent 吉祥物。由社区艺术家创作。</p>
+
+  <div class="glazy-grid">
+    <div class="glazy-card">
+      <img src="/img/glazy-clawbot.jpg" alt="Glazy — deploying Clawbot" loading="lazy" />
+    </div>
+    <div class="glazy-card">
+      <img src="/img/glazy-hero.jpg" alt="Glazy — DONUT" loading="lazy" />
+    </div>
+    <div class="glazy-card">
+      <img src="/img/glazy-poster.jpg" alt="Glazy — ドーナツAI" loading="lazy" />
+    </div>
+    <div class="glazy-card">
+      <img src="/img/glazy-vibrant.jpg" alt="Glazy — Neon" loading="lazy" />
+    </div>
+    <div class="glazy-card">
+      <img src="/img/glazy-retro.jpg" alt="Glazy — Retro Room" loading="lazy" />
+    </div>
+    <div class="glazy-card">
+      <img src="/img/glazy-glasses.jpg" alt="Glazy — Analyst Mode" loading="lazy" />
+    </div>
+    <div class="glazy-card">
+      <img src="/img/glazy-lobster.jpg" alt="Glazy — Lobster Mode" loading="lazy" />
+    </div>
+    <div class="glazy-card">
+      <img src="/img/glazy-beta.jpg" alt="Glazy — Beta Tester" loading="lazy" />
+    </div>
+    <div class="glazy-card">
+      <img src="/img/glazy-standing.jpg" alt="Glazy — Full Body" loading="lazy" />
+    </div>
   </div>
 </div>
 

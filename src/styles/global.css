@@ -58,6 +58,13 @@ body::after {
   letter-spacing: 2px;
   color: var(--accent);
   text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.logo-icon {
+  height: 22px;
+  width: auto;
+  margin-right: 8px;
 }
 .logo span { color: var(--text); }
 .nav-links { display: flex; gap: 4px; }
@@ -118,21 +125,44 @@ body::after {
 /* Hero */
 .hero {
   text-align: center;
-  padding: 72px 0 48px;
+  padding: 48px 0 40px;
   border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg-donut {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--accent);
+  opacity: 0.04;
+  pointer-events: none;
+  animation: spin-slow 90s linear infinite;
+}
+@keyframes spin-slow {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.hero-text {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 28px;
 }
 .hero h1 {
   font-family: 'Press Start 2P', monospace;
   font-size: 28px;
   letter-spacing: 4px;
   color: var(--text);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 .hero h1 span { color: var(--accent); }
 .hero .subtitle {
   font-size: 15px;
   color: var(--text2);
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 .hero .tagline {
   font-family: 'Space Mono', monospace;
@@ -145,7 +175,7 @@ body::after {
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin-top: 20px;
+  margin-top: 16px;
   flex-wrap: wrap;
 }
 .hero-pill {
@@ -457,7 +487,7 @@ body::after {
   border: 2px solid var(--border);
   border-radius: 4px;
   position: relative;
-  height: 460px;
+  height: 360px;
   overflow: hidden;
   box-shadow: 0 0 30px rgba(172,170,255,0.06), inset 0 0 60px rgba(0,0,0,0.3);
 }
@@ -523,6 +553,73 @@ body::after {
   font-size: 12px;
   color: var(--gold);
   text-shadow: 0 0 8px rgba(232,184,78,0.3);
+}
+
+/* Glazy banner */
+.glazy-banner {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 0;
+  max-height: 280px;
+}
+.glazy-banner-img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+  filter: saturate(0.85);
+  transition: filter 0.3s;
+}
+.glazy-banner:hover .glazy-banner-img { filter: saturate(1); }
+.glazy-banner-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 20px;
+  background: linear-gradient(transparent, rgba(19,19,32,0.95));
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.glazy-banner-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 1.5px;
+}
+.glazy-banner-sub {
+  font-size: 11px;
+  color: var(--text2);
+}
+
+/* Glazy gallery */
+.glazy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.glazy-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  position: relative;
+  aspect-ratio: 16/10;
+  transition: border-color 0.2s;
+}
+.glazy-card:hover { border-color: var(--accent); }
+.glazy-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.7) brightness(0.9);
+  transition: all 0.3s;
+}
+.glazy-card:hover img {
+  filter: saturate(1) brightness(1);
+  transform: scale(1.03);
 }
 
 /* Animations */
@@ -851,7 +948,7 @@ body::after {
 
 @media (max-width: 640px) {
   .hero h1 { font-size: 20px; letter-spacing: 2px; }
-  .game-area { height: 340px; }
+  .game-area { height: 280px; }
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
   .nav-links { display: none; }
   .section-title { font-size: 11px; }
@@ -859,4 +956,8 @@ body::after {
   .arch-arrow { transform: rotate(90deg); }
   .article-header h1 { font-size: 16px; }
   .article-nav { flex-direction: column; }
+  .glazy-grid { grid-template-columns: repeat(2, 1fr); }
+  .glazy-banner { max-height: 200px; }
+  .glazy-banner-img { height: 200px; }
+  .hero-bg-donut { width: 220px; height: 220px; }
 }
