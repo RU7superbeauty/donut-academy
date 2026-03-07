@@ -9,7 +9,7 @@ const workflows = [
     difficulty: '⭐⭐',
     time: '20 min',
     commands: ['d0 hl:balance', 'd0 hl:positions', 'd0 hl:limit buy'],
-    status: 'coming-soon',
+    status: 'available',
     color: 'gold',
   },
   {
@@ -20,7 +20,7 @@ const workflows = [
     difficulty: '⭐⭐⭐',
     time: '30 min',
     commands: ['d0 research', 'd0 ta', 'd0 price'],
-    status: 'coming-soon',
+    status: 'available',
     color: 'accent',
   },
   {
@@ -31,7 +31,7 @@ const workflows = [
     difficulty: '⭐⭐⭐⭐',
     time: '45 min',
     commands: ['d0 search', 'd0 ta', 'd0 research'],
-    status: 'coming-soon',
+    status: 'available',
     color: 'purple',
   },
 ];
@@ -48,7 +48,7 @@ const workflows = [
 
 <section class="workflows-section">
   {workflows.map(w => (
-    <div class={`workflow-card wf-${w.color}`}>
+    <a href={`/playbook/${w.slug}/`} class={`workflow-card wf-${w.color}`}>
       <div class="wf-header">
         <div>
           <div class="wf-difficulty">{w.difficulty} · {w.time}</div>
@@ -65,7 +65,7 @@ const workflows = [
           <code class="wf-cmd">{cmd}</code>
         ))}
       </div>
-    </div>
+    </a>
   ))}
 </section>
 
@@ -103,6 +103,7 @@ const workflows = [
 
 .workflows-section { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; display: flex; flex-direction: column; gap: 16px; }
 .workflow-card {
+  text-decoration: none;
   padding: 32px 36px;
   background: var(--card);
   border: 1px solid var(--border);

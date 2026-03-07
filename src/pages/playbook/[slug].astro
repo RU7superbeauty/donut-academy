@@ -1,0 +1,287 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('playbook');
+  return entries.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const { title, subtitle, date, difficulty, time, category, tags, description, commands, prerequisites } = entry.data;
+
+// Estimate reading time
+const wordCount = (entry.body || '').split(/\s+/).length;
+const readingTime = Math.max(5, Math.ceil(wordCount / 200));
+---
+<BaseLayout title={title} description={description}>
+
+<!-- Breadcrumb -->
+<nav class="breadcrumb">
+  <a href="/playbook/">PLAYBOOK</a>
+  <span>›</span>
+  <span class="bc-cat">{category}</span>
+</nav>
+
+<!-- Header -->
+<header class="pb-header">
+  <div class="pb-meta-top">
+    <span class="cat-badge">{category}</span>
+    <span class="meta-sep">·</span>
+    <span class="meta-item">{difficulty}</span>
+    <span class="meta-sep">·</span>
+    <span class="meta-item">⏱ {time}</span>
+    <span class="meta-sep">·</span>
+    <span class="meta-item">📅 {date}</span>
+  </div>
+  <h1 class="pb-title">{title}</h1>
+  <p class="pb-subtitle">{subtitle}</p>
+  <div class="pb-tags">
+    {tags.map((tag: string) => <span class="tag-pill">{tag}</span>)}
+  </div>
+</header>
+
+<!-- Prereqs + Commands sidebar -->
+<div class="pb-layout">
+  <aside class="pb-sidebar">
+    {prerequisites && prerequisites.length > 0 && (
+      <div class="sidebar-block">
+        <div class="sidebar-title">PREREQUISITES</div>
+        <ul class="prereq-list">
+          {prerequisites.map((p: string) => (
+            <li class="prereq-item">
+              <span class="prereq-dot">✓</span>
+              <span>{p}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <div class="sidebar-block">
+      <div class="sidebar-title">D0 COMMANDS USED</div>
+      <div class="cmd-list">
+        {commands.map((cmd: string) => (
+          <code class="cmd-pill">{cmd}</code>
+        ))}
+      </div>
+    </div>
+
+    <div class="sidebar-block">
+      <div class="sidebar-title">QUICK REFS</div>
+      <a href="/learn/quickstart/" class="sidebar-link">Quick Start Guide →</a>
+      <a href="https://github.com/DonutLabs-ai/d0-cli" target="_blank" class="sidebar-link">D0 CLI Docs →</a>
+    </div>
+  </aside>
+
+  <article class="pb-body">
+    <Content />
+
+    <div class="pb-footer">
+      <a href="/playbook/" class="btn-ghost">← BACK TO PLAYBOOK</a>
+    </div>
+  </article>
+</div>
+
+</BaseLayout>
+
+<style>
+.breadcrumb {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 24px 24px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+.breadcrumb a { color: var(--accent); text-decoration: none; }
+.bc-cat { color: var(--gold); font-weight: 700; }
+
+.pb-header {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 28px 24px 36px;
+}
+.pb-meta-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.cat-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--gold);
+  border: 1px solid rgba(232,184,78,0.4);
+  background: rgba(232,184,78,0.08);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.meta-sep { color: var(--border2); }
+.meta-item { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); }
+.pb-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(13px, 2.2vw, 20px);
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.pb-subtitle { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 16px; }
+.pb-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag-pill {
+  font-size: 10px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 3px 8px;
+}
+
+/* Layout */
+.pb-layout {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* Sidebar */
+.pb-sidebar {
+  position: sticky;
+  top: 76px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.sidebar-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+}
+.sidebar-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.prereq-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.prereq-item { display: flex; gap: 8px; font-size: 11px; color: var(--text2); line-height: 1.4; }
+.prereq-dot { color: var(--green); flex-shrink: 0; }
+.cmd-list { display: flex; flex-direction: column; gap: 6px; }
+.cmd-pill {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--accent);
+  background: rgba(172,170,255,0.08);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 3px;
+  word-break: break-all;
+}
+.sidebar-link {
+  display: block;
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration: none;
+  margin-bottom: 6px;
+}
+.sidebar-link:hover { color: var(--accent2); }
+
+/* Article body (reuse article styles) */
+.pb-body {
+  min-width: 0;
+  padding-bottom: 48px;
+}
+.pb-body :global(h2) {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 13px;
+  color: var(--text);
+  margin: 36px 0 14px;
+  line-height: 1.6;
+}
+.pb-body :global(h3) {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 24px 0 10px;
+}
+.pb-body :global(p) { font-size: 14px; color: var(--text2); line-height: 1.85; margin-bottom: 14px; }
+.pb-body :global(ul), .pb-body :global(ol) { margin: 10px 0 14px 20px; }
+.pb-body :global(li) { font-size: 14px; color: var(--text2); line-height: 1.8; margin-bottom: 5px; }
+.pb-body :global(code) {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  background: rgba(172,170,255,0.1);
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+.pb-body :global(pre) {
+  background: #0d0d1a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 20px;
+  overflow-x: auto;
+  margin: 14px 0;
+}
+.pb-body :global(pre code) { background: none; padding: 0; color: var(--text); font-size: 12px; line-height: 1.7; }
+.pb-body :global(blockquote) {
+  border-left: 3px solid var(--gold);
+  padding: 10px 16px;
+  background: rgba(232,184,78,0.05);
+  border-radius: 0 6px 6px 0;
+  margin: 16px 0;
+}
+.pb-body :global(blockquote p) { color: var(--text2); font-style: italic; margin: 0; }
+.pb-body :global(table) { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+.pb-body :global(th) {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--gold);
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border2);
+  text-align: left;
+}
+.pb-body :global(td) { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
+.pb-body :global(strong) { color: var(--text); font-weight: 700; }
+.pb-body :global(a) { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(172,170,255,0.3); }
+.pb-body :global(hr) { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+.pb-footer { border-top: 1px solid var(--border); padding-top: 24px; margin-top: 40px; }
+
+.btn-ghost {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  border: 1px solid var(--border2);
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+.btn-ghost:hover { border-color: var(--accent); }
+
+@media (max-width: 720px) {
+  .pb-layout { grid-template-columns: 1fr; }
+  .pb-sidebar { position: static; }
+}
+</style>

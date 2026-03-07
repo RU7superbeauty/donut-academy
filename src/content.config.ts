@@ -14,4 +14,20 @@ const articles = defineCollection({
   }),
 });
 
-export const collections = { articles };
+const playbook = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/playbook' }),
+  schema: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    date: z.string(),
+    difficulty: z.string(),
+    time: z.string(),
+    category: z.string(),
+    tags: z.array(z.string()),
+    description: z.string(),
+    commands: z.array(z.string()),
+    prerequisites: z.array(z.string()).optional(),
+  }),
+});
+
+export const collections = { articles, playbook };
