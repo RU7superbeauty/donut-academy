@@ -1,0 +1,41 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = 'Donut Academy', description = 'AI-Native Crypto Trading Infrastructure' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+SC:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="topbar">
+    <div class="topbar-inner">
+      <a href="/" class="logo">DONUT <span>ACADEMY</span></a>
+      <div class="nav-links">
+        <a href="/">HOME</a>
+        <a href="/articles/">ARTICLES</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <slot />
+    <div class="footer">
+      <p style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--text2);margin-bottom:4px">DONUT ACADEMY</p>
+      <p>AI-Native Crypto Trading Infrastructure</p>
+      <p style="margin-top:8px;font-family:'Space Mono',monospace">POWERED BY D0 / DYOR / NFA</p>
+    </div>
+  </div>
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>
