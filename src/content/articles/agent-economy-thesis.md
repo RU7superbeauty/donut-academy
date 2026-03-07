@@ -10,7 +10,7 @@ description: "A deep analysis of why AI agents will dominate on-chain trading wi
 
 Here's a number that should terrify every trading platform founder who's still building for humans: in traditional equities, algorithmic trading already accounts for 60-75% of total volume on US exchanges. In FX markets, that number is north of 80%. Crypto? We're sitting at roughly 40-50% on CEXs, and maybe 15-20% on-chain. That gap is the single largest alpha opportunity in the entire crypto infrastructure stack.
 
-I've spent the last 18 months watching the agent ecosystem evolve from toy demos to production-grade systems that can reason about markets, manage risk, and execute trades autonomously. What I've concluded is this: we are at the exact inflection point where language model capabilities meet on-chain composability, and the result will be a complete restructuring of how trading happens.
+The agent ecosystem has evolved from toy demos to production-grade systems that can reason about markets, manage risk, and execute trades autonomously. The industry is at the exact inflection point where language model capabilities meet on-chain composability, and the result will be a complete restructuring of how trading happens.
 
 This isn't a prediction about some far-future scenario. The components exist today. The question is who assembles them first.
 
@@ -37,9 +37,9 @@ That's 14 discrete interactions for a single position. And this is on Hyperliqui
 
 The industry's answer to this friction has been threefold, and all three are inadequate:
 
-**Copy-trading platforms.** Services like Bitget Copy Trading, eToro, or on-chain followers through platforms like Copin.io let you mirror "top traders." The problem is structural: there's a 2-15 second signal delay between the leader executing and the copy executing, which in volatile crypto markets means you're systematically getting worse entries. Copin's own data shows copy-traders underperform their leaders by 12-18% on average over a 90-day window. You inherit the strategy but not the timing, and timing is half the alpha.
+**Copy-trading platforms.** Services like Bitget Copy Trading, eToro, or on-chain followers through platforms like Copin.io let you mirror "top traders." The problem is structural: there's a 2-15 second signal delay between the leader executing and the copy executing, which in volatile crypto markets means you're systematically getting worse entries. Copy-trading structurally underperforms due to execution delays — you inherit the strategy but not the timing, and timing is half the alpha.
 
-**Grid bots and rule-based automation.** Platforms like 3Commas, Pionex, and Hummingbot let you set up rule-based strategies: buy at X, sell at Y, grid within a range. These work fine in ranging markets. The moment you get a trending breakout or a black swan event, they blow up. A 2024 analysis of grid bot performance during the March 2024 ETH rally showed that 67% of grid bots in the $3,200-$3,800 range got fully filled on one side and missed the move to $4,000+. Rule-based systems don't reason. They don't adapt. They execute a static decision tree.
+**Grid bots and rule-based automation.** Platforms like 3Commas, Pionex, and Hummingbot let you set up rule-based strategies: buy at X, sell at Y, grid within a range. These work fine in ranging markets. The moment you get a trending breakout or a black swan event, they blow up. During sharp directional moves, grid bots routinely get fully filled on one side and miss the breakout entirely — the structural failure mode of any static range strategy. Rule-based systems don't reason. They don't adapt. They execute a static decision tree.
 
 **Sniper bots and MEV.** On the sophisticated end, you have MEV bots and token snipers that front-run transactions on-chain. These are fast but narrow — they exploit a single mechanic (sandwich attacks, front-running new liquidity pools) and add zero strategic intelligence. Flashbots data shows MEV extraction on Ethereum has generated over $780M cumulatively since 2020, but this is a zero-sum extraction game, not a scalable trading paradigm.
 
@@ -55,7 +55,7 @@ Consider this natural language instruction:
 
 > "Buy ETH if RSI crosses below 30 on the 4-hour chart, but only if BTC is above its 200-day MA, and size the position at 2% of my portfolio with a 1.5:1 reward-to-risk ratio."
 
-A rule-based bot cannot parse this. It needs each condition pre-programmed in code. A GPT-4 class model? It parses this correctly 87-92% of the time (based on internal benchmarks across 1,200 trading intent samples we've tested). Not just the individual conditions, but the logical relationships between them — the conditional dependency, the portfolio-relative sizing, the derived stop-loss from the R:R ratio.
+A rule-based bot cannot parse this. It needs each condition pre-programmed in code. A GPT-4 class model? Studies on LLM intent parsing show it handles structured instructions like this with high reliability. Not just the individual conditions, but the logical relationships between them — the conditional dependency, the portfolio-relative sizing, the derived stop-loss from the R:R ratio.
 
 Here's what that parsing actually looks like:
 
@@ -232,7 +232,7 @@ Imagine this pipeline, running 24/7 with zero human intervention:
 - **Agent D** (Hedging): Simultaneously opens a correlated hedge on a prediction market — buys "ETH above $4,000 by March 31" at 42 cents, creating a synthetic options position.
 - **Agent E** (Risk Management): Monitors the aggregate portfolio across all agents, enforces max drawdown limits, correlation exposure caps, and can force-close positions if risk thresholds are breached.
 
-This isn't science fiction. The pieces exist. Autonomous agents already manage over $5B in total value locked across DeFi protocols like Yearn, Aave, and Compound through automated vault strategies. What's new is the reasoning layer — the ability to coordinate across agents using natural language protocols rather than rigid smart contract interfaces.
+This isn't science fiction. The pieces exist. Autonomous agents already manage billions in total value locked across DeFi protocols like Yearn, Aave, and Compound through automated vault strategies. What's new is the reasoning layer — the ability to coordinate across agents using natural language protocols rather than rigid smart contract interfaces.
 
 The **composable skill system** is what makes multi-agent coordination practical. In the Clawhub ecosystem, D0 operates as a trading skill that any agent can invoke. Consider the composition:
 
