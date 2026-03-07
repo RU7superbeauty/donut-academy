@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donut Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+SC:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0a0a0a;
+  --surface: #111111;
+  --card:    #0e0e0e;
+  --border:  #222222;
+  --border2: #333333;
+  --text:    #e8e8e8;
+  --text2:   #888888;
+  --muted:   #555555;
+  --accent:  #ACAAFF;
+  --accent2: #c8c7ff;
+  --gold:    #FFE098;
+  --green:   #069742;
+  --red:     #f87171;
+  --topbar-h: 54px;
+  --max-w:   860px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans SC', -apple-system, sans-serif;
+  line-height: 1.6;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+  pointer-events: none;
+  z-index: 9999;
+}
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 20px; }
+
+/* Topbar */
+.topbar {
+  position: sticky;
+  top: 0;
+  height: var(--topbar-h);
+  background: rgba(10,10,10,0.92);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+.topbar-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+.logo span { color: var(--text); }
+.nav-links { display: flex; gap: 4px; }
+.nav-links a {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text2);
+  text-decoration: none;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+  letter-spacing: 0.3px;
+}
+.nav-links a:hover, .nav-links a.active {
+  color: var(--accent);
+  border-color: var(--border2);
+}
+
+/* Section */
+.section { padding: 48px 0 0; }
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.section-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  background: #1a1a2e;
+  border: 1px solid #2a2a4e;
+  padding: 2px 8px;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 1.5px;
+  color: var(--text);
+}
+.section-sub {
+  font-size: 12px;
+  color: var(--text2);
+}
+.section-divider {
+  height: 1px;
+  background: var(--border);
+  margin-top: 48px;
+}
+.section-desc {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 20px;
+  line-height: 1.8;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 72px 0 48px;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px;
+  letter-spacing: 4px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.hero h1 span { color: var(--accent); }
+.hero .subtitle {
+  font-size: 15px;
+  color: var(--text2);
+  margin-bottom: 16px;
+}
+.hero .tagline {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.hero-pills {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.hero-pill {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+}
+.hero-pill.hl { background: #1a1a2e; color: var(--accent); border-color: #2a2a4e; }
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  padding: 20px 24px;
+  transition: border-color 0.15s;
+}
+.card:hover { border-color: var(--border2); }
+.card.accent-purple { border-left: 3px solid var(--accent); }
+.card.accent-gold   { border-left: 3px solid var(--gold); }
+.card.accent-green  { border-left: 3px solid var(--green); }
+.card.accent-red    { border-left: 3px solid var(--red); }
+
+.card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.card-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.card p {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+}
+.card ul { list-style: none; padding: 0; }
+.card li {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+  padding: 3px 0;
+}
+.card li::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
+
+/* Tags */
+.tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 0;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: inline-block;
+  background: var(--border);
+  color: var(--text2);
+  border: 1px solid var(--border2);
+}
+.tag.tag-accent { background: #1a1a2e; color: var(--accent); border-color: #2a2a4e; }
+.tag.tag-gold   { background: #1a1500; color: var(--gold);   border-color: #3a3000; }
+.tag.tag-green  { background: #001a08; color: var(--green);  border-color: #003015; }
+.tag.tag-red    { background: #1a0000; color: var(--red);    border-color: #3a0000; }
+
+.num { font-family: 'Space Mono', monospace; font-size: 13px; }
+
+/* Thesis box */
+.thesis-box {
+  background: var(--card);
+  border: 1px solid var(--accent);
+  padding: 24px 28px;
+  margin-bottom: 24px;
+}
+.thesis-box p {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.7;
+}
+.thesis-box .formula {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: rgba(172,170,255,0.05);
+  border-left: 2px solid var(--accent);
+}
+
+/* Architecture diagram */
+.arch-flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 20px 0;
+  overflow-x: auto;
+}
+.arch-node {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 14px 18px;
+  text-align: center;
+  min-width: 130px;
+  flex-shrink: 0;
+}
+.arch-node .arch-icon {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+.arch-node .arch-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+.arch-node .arch-desc {
+  font-size: 11px;
+  color: var(--text2);
+  margin-top: 4px;
+}
+.arch-node.hl { border-color: var(--accent); background: rgba(172,170,255,0.04); }
+.arch-arrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  color: var(--muted);
+  padding: 0 4px;
+  flex-shrink: 0;
+}
+
+/* Principle list */
+.principle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.principle-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  transition: border-color 0.15s;
+}
+.principle-row:hover { border-color: var(--border2); }
+.principle-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 36px;
+  opacity: 0.5;
+}
+.principle-body { flex: 1; }
+.principle-body h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.principle-body p {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.7;
+}
+
+/* Research card */
+.research-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 20px 24px;
+  transition: border-color 0.15s;
+}
+.research-card:hover { border-color: var(--border2); }
+.research-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.research-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.research-card p {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.7;
+}
+.research-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+/* Tier badges */
+.tier-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.tier-badge {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+.tier-info { flex: 1; }
+.tier-info .tier-name {
+  font-size: 13px;
+  font-weight: 600;
+}
+.tier-info .tier-freq {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--text2);
+}
+
+/* Comparison table */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 16px 0;
+}
+.compare-table th {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border2);
+  background: var(--surface);
+}
+.compare-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  vertical-align: top;
+}
+.compare-table tr:hover td { background: #131313; }
+
+/* Insight box */
+.insight-box {
+  padding: 16px 20px;
+  background: rgba(172,170,255,0.03);
+  border-left: 2px solid var(--accent);
+  margin: 16px 0;
+}
+.insight-box p {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.7;
+}
+.insight-box .insight-src {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* Animations */
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  animation: reveal 0.3s ease forwards;
+  opacity: 0;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 48px 0 32px;
+  font-size: 11px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  margin-top: 64px;
+}
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 36px; letter-spacing: 2px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .section-title { font-size: 20px; }
+  .arch-flow { flex-wrap: wrap; justify-content: center; }
+  .arch-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<nav class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">DONUT <span>ACADEMY</span></div>
+    <div class="nav-links">
+      <a href="#vision" class="active">VISION</a>
+      <a href="#architecture">ARCH</a>
+      <a href="#methodology">METHOD</a>
+      <a href="#frontier">FRONTIER</a>
+      <a href="#research">RESEARCH</a>
+      <a href="#curriculum">CURRICULUM</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+  <h1>DONUT <span>ACADEMY</span></h1>
+  <p class="subtitle">AI-Native Crypto Trading Infrastructure / AI 原生加密交易基础设施</p>
+  <p class="tagline">Learn the architecture. Understand the principles. Build the future.</p>
+  <div class="hero-pills">
+    <span class="hero-pill hl">AI AGENTS</span>
+    <span class="hero-pill">NON-CUSTODIAL</span>
+    <span class="hero-pill">MULTI-EXCHANGE</span>
+    <span class="hero-pill hl">ZERO-CONFIG</span>
+    <span class="hero-pill">OPEN SOURCE</span>
+  </div>
+</div>
+
+<!-- S1: Vision -->
+<div class="section" id="vision">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <span class="section-title">THE D0 THESIS</span>
+    <span class="section-sub">D0 核心命题</span>
+  </div>
+
+  <div class="thesis-box">
+    <p>交易的未来属于 <strong style="color:var(--accent)">AI Agent</strong>，而不是人类点击按钮。</p>
+    <p style="margin-top:8px;font-size:13px;color:var(--text2)">D0 是第一个为 AI Agent 原生设计的加密交易 CLI 和执行层。不是给人用的 GUI 加了个 API，而是从第一行代码开始就为 Agent 而生。</p>
+    <div class="formula">HUMAN INTENT -> AI UNDERSTANDING -> D0 EXECUTION -> ON-CHAIN SETTLEMENT</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card accent-purple">
+      <div class="card-title">WHY NOW</div>
+      <ul>
+        <li>LLM 能力突破 — Agent 可以理解复杂交易意图</li>
+        <li>链上基础设施成熟 — DEX 流动性+速度可用</li>
+        <li>非托管需求激增 — CEX 信任危机后的确定性趋势</li>
+        <li>现有工具的缺口 — 没有 Agent-native 交易基础设施</li>
+      </ul>
+    </div>
+    <div class="card accent-gold">
+      <div class="card-title">D0 DIFFERENTIATOR</div>
+      <ul>
+        <li><strong style="color:var(--gold)">Zero-Config</strong> — 读取操作零配置，开箱即用</li>
+        <li><strong style="color:var(--gold)">Agent-First</strong> — CLI 即 API，天然适配 AI 调用</li>
+        <li><strong style="color:var(--gold)">Non-Custodial</strong> — 私钥本地，链上结算</li>
+        <li><strong style="color:var(--gold)">Multi-Exchange</strong> — Hyperliquid, Polymarket 等一键接入</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- S2: Architecture -->
+<div class="section" id="architecture">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <span class="section-title">AGENT EXECUTION ARCHITECTURE</span>
+    <span class="section-sub">Agent 执行架构</span>
+  </div>
+
+  <p class="section-desc">D0 的核心架构：将自然语言意图转化为链上执行。每一层都可独立运作，也可由 AI Agent 端到端驱动。</p>
+
+  <div class="arch-flow">
+    <div class="arch-node">
+      <div class="arch-name">INTENT</div>
+      <div class="arch-desc">自然语言输入<br>"Buy 0.1 ETH"</div>
+    </div>
+    <span class="arch-arrow">-></span>
+    <div class="arch-node hl">
+      <div class="arch-name">AI PARSE</div>
+      <div class="arch-desc">意图识别<br>参数提取</div>
+    </div>
+    <span class="arch-arrow">-></span>
+    <div class="arch-node">
+      <div class="arch-name">STRATEGY</div>
+      <div class="arch-desc">策略路由<br>风控校验</div>
+    </div>
+    <span class="arch-arrow">-></span>
+    <div class="arch-node hl">
+      <div class="arch-name">D0 CLI</div>
+      <div class="arch-desc">指令执行<br>签名广播</div>
+    </div>
+    <span class="arch-arrow">-></span>
+    <div class="arch-node">
+      <div class="arch-name">ON-CHAIN</div>
+      <div class="arch-desc">链上结算<br>状态确认</div>
+    </div>
+  </div>
+
+  <div class="grid-3" style="margin-top:20px">
+    <div class="card">
+      <div class="card-label">Read Layer</div>
+      <div class="card-title" style="font-size:16px">DATA ACCESS</div>
+      <p>价格、K线、订单簿、持仓、资金费率。<strong style="color:var(--green)">无需私钥</strong>，零配置即可调用。</p>
+      <div style="margin-top:10px">
+        <span class="tag tag-green">NO KEY NEEDED</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Write Layer</div>
+      <div class="card-title" style="font-size:16px">EXECUTION</div>
+      <p>下单、撤单、平仓、止损。EIP-712 签名，私钥不离开本地，链上验证。</p>
+      <div style="margin-top:10px">
+        <span class="tag tag-accent">LOCAL SIGNING</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Strategy Layer</div>
+      <div class="card-title" style="font-size:16px">AUTOMATION</div>
+      <p>网格交易、趋势跟踪、套利策略。Agent 可自主组合策略模块执行。</p>
+      <div style="margin-top:10px">
+        <span class="tag tag-gold">AGENT-DRIVEN</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- S3: Product Methodology -->
+<div class="section" id="methodology">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <span class="section-title">PRODUCT BREAKTHROUGH METHODOLOGY</span>
+    <span class="section-sub">D0 产品突破方法论</span>
+  </div>
+
+  <p class="section-desc">D0 的产品设计遵循五条核心原则。每一条都指向同一个目标：<strong style="color:var(--text)">让 AI Agent 成为一等公民</strong>。</p>
+
+  <div class="principle-list">
+    <div class="principle-row">
+      <span class="principle-num">01</span>
+      <div class="principle-body">
+        <h4>CLI-as-API / 命令行即接口</h4>
+        <p>不是先做 GUI 再包 API，而是 CLI 本身就是标准接口。AI Agent 可以像人类一样直接调用命令行，无需额外 SDK 或封装层。这消除了传统 API 集成的摩擦。</p>
+      </div>
+    </div>
+    <div class="principle-row">
+      <span class="principle-num">02</span>
+      <div class="principle-body">
+        <h4>Zero-Config Progressive Disclosure / 零配置渐进暴露</h4>
+        <p>读取操作（价格、行情、账户）零配置直接可用，降低首次体验门槛到接近零。只有执行交易时才需要配置私钥。<span class="num" style="color:var(--green)">80%</span> 的功能不需要任何 setup。</p>
+      </div>
+    </div>
+    <div class="principle-row">
+      <span class="principle-num">03</span>
+      <div class="principle-body">
+        <h4>Non-Custodial by Design / 架构级非托管</h4>
+        <p>不是 "我们承诺不动你的钱"，而是架构上不可能。私钥永远在本地，EIP-712 签名在用户设备上完成，D0 从不接触私钥。信任不来自承诺，来自密码学。</p>
+      </div>
+    </div>
+    <div class="principle-row">
+      <span class="principle-num">04</span>
+      <div class="principle-body">
+        <h4>Exchange Abstraction / 交易所抽象层</h4>
+        <p>Hyperliquid、Polymarket、以及未来的更多协议，通过统一的命令语义对 Agent 暴露。Agent 不需要知道底层是哪条链、哪个协议，D0 处理所有差异。</p>
+      </div>
+    </div>
+    <div class="principle-row">
+      <span class="principle-num">05</span>
+      <div class="principle-body">
+        <h4>Composable Skill System / 可组合技能系统</h4>
+        <p>D0 作为 Clawhub 上的 AI Skill 发布，可以与其他 Skill 自由组合。一个 Agent 可以同时使用 D0 (交易) + 数据分析 Skill + 新闻 Skill，形成完整的自主交易 pipeline。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- S4: AI Frontier -->
+<div class="section" id="frontier">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <span class="section-title">AI FRONTIER PERSPECTIVES</span>
+    <span class="section-sub">AI 前沿观点</span>
+  </div>
+
+  <p class="section-desc">AI + Crypto 交叉领域正在发生的范式转移，以及 D0 在其中的位置。</p>
+
+  <div class="insight-box">
+    <p>"未来 3 年，<strong style="color:var(--accent)">90% 的链上交易将由 AI Agent 发起</strong>，而不是人类手动操作。谁拥有 Agent 的执行层，谁就拥有链上流量的入口。"</p>
+    <div class="insight-src">— D0 THESIS / 2026</div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:2px;margin-top:20px">
+    <div class="card accent-purple">
+      <div class="card-title">PARADIGM 1: AGENT-TO-AGENT ECONOMY</div>
+      <div class="card-label">Agent 经济体</div>
+      <p>当 AI Agent 可以自主管理资金和执行交易，Agent 之间将形成新的经济网络。一个 Agent 的套利信号可以直接触发另一个 Agent 的对冲操作。D0 提供这个网络的<strong style="color:var(--text)">交易结算层</strong>。</p>
+      <div class="research-topics">
+        <span class="tag tag-accent">MULTI-AGENT</span>
+        <span class="tag tag-accent">AUTONOMOUS</span>
+        <span class="tag tag-accent">SETTLEMENT</span>
+      </div>
+    </div>
+
+    <div class="card accent-purple">
+      <div class="card-title">PARADIGM 2: INTENT-CENTRIC EXECUTION</div>
+      <div class="card-label">意图驱动执行</div>
+      <p>从 "在 Hyperliquid 下一个 ETH-USDC 限价单" 到 "帮我在 ETH 下跌 5% 时抄底"。用户只表达意图，AI 负责路由、时机、分仓、风控。D0 的 CLI 语义设计天然支持意图解析。</p>
+      <div class="research-topics">
+        <span class="tag tag-accent">NLP</span>
+        <span class="tag tag-accent">ROUTING</span>
+        <span class="tag tag-accent">RISK MGMT</span>
+      </div>
+    </div>
+
+    <div class="card accent-purple">
+      <div class="card-title">PARADIGM 3: REAL-TIME RISK AS FIRST-CLASS</div>
+      <div class="card-label">实时风控一等公民</div>
+      <p>传统交易系统的风控是附加层。D0 将风控嵌入执行路径 — Agent 每次下单前自动校验仓位、杠杆、止损。风控不是 "可选功能"，而是<strong style="color:var(--text)">执行的前提条件</strong>。毫秒级仓位保护。</p>
+      <div class="research-topics">
+        <span class="tag tag-accent">EMBEDDED RISK</span>
+        <span class="tag tag-accent">PRE-EXECUTION</span>
+        <span class="tag tag-accent">MS LATENCY</span>
+      </div>
+    </div>
+
+    <div class="card accent-purple">
+      <div class="card-title">PARADIGM 4: VERIFIABLE STRATEGY TRANSPARENCY</div>
+      <div class="card-label">可验证策略透明度</div>
+      <p>Agent 的每一笔交易都在链上可验证。策略逻辑开源，执行结果链上可查。这打破了传统 "黑箱量化" 的信任问题 — 你不需要信任 Agent，你只需要验证链上记录。</p>
+      <div class="research-topics">
+        <span class="tag tag-accent">ON-CHAIN PROOF</span>
+        <span class="tag tag-accent">OPEN SOURCE</span>
+        <span class="tag tag-accent">TRUSTLESS</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- S5: Donut Research -->
+<div class="section" id="research">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <span class="section-title">DONUT RESEARCH</span>
+    <span class="section-sub">研究方向</span>
+  </div>
+
+  <p class="section-desc">Donut Research 聚焦 AI 交易基础设施的核心问题。以下是当前活跃研究课题。</p>
+
+  <div style="display:flex;flex-direction:column;gap:2px">
+    <div class="research-card" style="border-left:3px solid var(--accent)">
+      <div class="research-meta">
+        <span class="tag tag-accent">ACTIVE</span>
+        <span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted)">DR-001</span>
+      </div>
+      <h3>AI Agent 交易意图解析的准确率边界</h3>
+      <p>研究 LLM 在模糊交易指令下的意图识别准确率。"帮我搞点 ETH" vs "市价买入 0.5 ETH" — 模糊度越高，误执行风险越大。如何设计 confirmation loop 在自主性和安全性之间取得平衡？</p>
+      <div class="research-topics">
+        <span class="tag">INTENT PARSING</span>
+        <span class="tag">SAFETY</span>
+        <span class="tag">CONFIRMATION UX</span>
+      </div>
+    </div>
+
+    <div class="research-card" style="border-left:3px solid var(--accent)">
+      <div class="research-meta">
+        <span class="tag tag-accent">ACTIVE</span>
+        <span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted)">DR-002</span>
+      </div>
+      <h3>跨协议统一执行语义</h3>
+      <p>Hyperliquid (永续合约) 和 Polymarket (预测市场) 的订单语义完全不同。如何定义一套统一的抽象层，让 Agent 无需感知底层差异，同时不丢失协议特有功能？</p>
+      <div class="research-topics">
+        <span class="tag">ABSTRACTION</span>
+        <span class="tag">MULTI-PROTOCOL</span>
+        <span class="tag">SEMANTIC DESIGN</span>
+      </div>
+    </div>
+
+    <div class="research-card" style="border-left:3px solid var(--gold)">
+      <div class="research-meta">
+        <span class="tag tag-gold">EXPLORING</span>
+        <span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted)">DR-003</span>
+      </div>
+      <h3>Agent 自主风控的失效模式分析</h3>
+      <p>当市场极端波动时 (黑天鹅)，Agent 的风控逻辑可能因数据延迟、流动性枯竭或级联清算而失效。研究 failsafe 机制：硬性止损 vs 熔断 vs 人工接管触发条件。</p>
+      <div class="research-topics">
+        <span class="tag">RISK CONTROL</span>
+        <span class="tag">BLACK SWAN</span>
+        <span class="tag">FAILSAFE</span>
+      </div>
+    </div>
+
+    <div class="research-card" style="border-left:3px solid var(--gold)">
+      <div class="research-meta">
+        <span class="tag tag-gold">EXPLORING</span>
+        <span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted)">DR-004</span>
+      </div>
+      <h3>多 Agent 协同交易中的博弈均衡</h3>
+      <p>当多个 AI Agent 同时使用相同策略 (如资金费率套利) 时，alpha 会快速消失。研究 Agent 间的博弈动态：信息不对称如何被 AI 压缩？策略同质化的均衡点在哪？</p>
+      <div class="research-topics">
+        <span class="tag">GAME THEORY</span>
+        <span class="tag">ALPHA DECAY</span>
+        <span class="tag">MULTI-AGENT</span>
+      </div>
+    </div>
+
+    <div class="research-card" style="border-left:3px solid var(--gold)">
+      <div class="research-meta">
+        <span class="tag tag-gold">EXPLORING</span>
+        <span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted)">DR-005</span>
+      </div>
+      <h3>链上行为指纹与 MM 模式识别</h3>
+      <p>做市商 (MM) 的链上行为有可识别的模式 — 阶梯拉盘 (C型)、掩护出货 (E型)。AI 能否从链上数据实时检测 MM 行为模式？准确率和延迟的 trade-off 在哪？</p>
+      <div class="research-topics">
+        <span class="tag">ON-CHAIN ANALYTICS</span>
+        <span class="tag">PATTERN RECOGNITION</span>
+        <span class="tag">MM DETECTION</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- S6: Curriculum -->
+<div class="section" id="curriculum">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <span class="section-title">ACADEMY CURRICULUM</span>
+    <span class="section-sub">课程体系</span>
+  </div>
+
+  <p class="section-desc">三层内容体系，从基础到前沿，每一层都以 D0 为实战平台。</p>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <!-- Tier 1 -->
+    <div class="card accent-green">
+      <div class="tier-header">
+        <span class="tier-badge" style="color:var(--green)">TIER 1</span>
+        <div class="tier-info">
+          <div class="tier-name">INTRO / 入门</div>
+          <div class="tier-freq">WEEKLY UPDATES</div>
+        </div>
+        <span class="tag tag-green">BEGINNER</span>
+      </div>
+      <table class="compare-table" style="margin:0">
+        <thead><tr><th>Topic</th><th>Description</th><th>D0 Integration</th></tr></thead>
+        <tbody>
+          <tr><td>加密货币基础</td><td>钱包、链、代币标准、Gas 机制</td><td>D0 读取链上数据实操</td></tr>
+          <tr><td>K线与技术分析入门</td><td>均线、RSI、支撑阻力、趋势识别</td><td>D0 实时行情 + K线数据获取</td></tr>
+          <tr><td>风险管理基础</td><td>仓位管理、止损设置、风险回报比</td><td>D0 止损/仓位命令实操</td></tr>
+          <tr><td>市场情绪分析</td><td>恐贪指数、韩溢价、社交情绪</td><td>D0 数据接口 + 情绪指标查询</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tier 2 -->
+    <div class="card accent-gold">
+      <div class="tier-header">
+        <span class="tier-badge" style="color:var(--gold)">TIER 2</span>
+        <div class="tier-info">
+          <div class="tier-name">ADVANCED / 进阶</div>
+          <div class="tier-freq">BI-WEEKLY</div>
+        </div>
+        <span class="tag tag-gold">TRADER</span>
+      </div>
+      <table class="compare-table" style="margin:0">
+        <thead><tr><th>Topic</th><th>Description</th><th>D0 Integration</th></tr></thead>
+        <tbody>
+          <tr><td>量化策略深潜</td><td>网格交易、趋势跟踪、均值回归、套利</td><td>D0 策略模块实盘演示</td></tr>
+          <tr><td>合约与资金费率</td><td>永续合约机制、期现差价、funding rate 策略</td><td>D0 Hyperliquid 合约实操</td></tr>
+          <tr><td>回测方法论</td><td>历史数据回测框架、过拟合陷阱、Walk-forward</td><td>D0 数据导出 + 本地回测流程</td></tr>
+          <tr><td>预测市场</td><td>Polymarket 机制、定价原理、套利机会</td><td>D0 Polymarket 模块实操</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tier 3 -->
+    <div class="card accent-purple">
+      <div class="tier-header">
+        <span class="tier-badge" style="color:var(--accent)">TIER 3</span>
+        <div class="tier-info">
+          <div class="tier-name">FRONTIER / 前沿</div>
+          <div class="tier-freq">MONTHLY DEEP-DIVE</div>
+        </div>
+        <span class="tag tag-accent">BUILDER</span>
+      </div>
+      <table class="compare-table" style="margin:0">
+        <thead><tr><th>Topic</th><th>Description</th><th>D0 Integration</th></tr></thead>
+        <tbody>
+          <tr><td>AI 交易 Agent 架构</td><td>意图解析、策略路由、执行引擎、风控管线</td><td>D0 内部架构 Deep-dive</td></tr>
+          <tr><td>实时风控实现</td><td>毫秒级仓位保护、熔断机制、级联清算防护</td><td>D0 Risk Layer 源码解读</td></tr>
+          <tr><td>开源策略 Walkthrough</td><td>从零构建一个完整交易策略并发布为 Skill</td><td>D0 + Clawhub Skill 发布</td></tr>
+          <tr><td>多 Agent 协同系统</td><td>Agent 间通信、信号共享、分布式执行</td><td>多 D0 实例协同实验</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--text2);margin-bottom:4px">DONUT ACADEMY</p>
+  <p>AI-Native Crypto Trading Infrastructure</p>
+  <p style="margin-top:8px;font-family:'Space Mono',monospace">POWERED BY D0 / DYOR / NFA</p>
+</div>
+
+</div>
+
+<script>
+// Smooth scroll for nav
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+    a.classList.add('active');
+  });
+});
+
+// Update active nav on scroll
+const sections = document.querySelectorAll('.section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+
+// Reveal animation on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('reveal');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.card, .principle-row, .research-card, .arch-node').forEach((el, i) => {
+  el.style.animationDelay = `calc(${i % 8} * 40ms)`;
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
