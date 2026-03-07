@@ -7,6 +7,13 @@ const sortedArticles = articles.sort((a, b) => new Date(b.data.date).getTime() -
 
 const categories = ['ALL', 'AI FRONTIER', 'D0 METHOD', 'RESEARCH'];
 
+const categoryLabel: Record<string, string> = {
+  'ALL': 'ALL / 全部',
+  'AI FRONTIER': 'AI FRONTIER / AI 前沿',
+  'D0 METHOD': 'D0 METHOD / 方法论',
+  'RESEARCH': 'RESEARCH / 研究',
+};
+
 function getCategoryClass(cat: string) {
   switch(cat) {
     case 'AI FRONTIER': return 'tag-accent';
@@ -36,7 +43,7 @@ function estimateReadingTime(body: string): number {
         class={`category-filter ${cat === 'ALL' ? 'active' : ''}`}
         data-category={cat}
       >
-        {cat}
+        {categoryLabel[cat] ?? cat}
       </button>
     ))}
   </div>
@@ -45,9 +52,9 @@ function estimateReadingTime(body: string): number {
     {sortedArticles.map(article => (
       <a href={`/articles/${article.id}/`} class="article-card" data-category={article.data.category}>
         <div class="article-card-meta">
-          <span class={`tag ${getCategoryClass(article.data.category)}`}>{article.data.category}</span>
+          <span class={`tag ${getCategoryClass(article.data.category)}`}>{categoryLabel[article.data.category] ?? article.data.category}</span>
           <span class="date">{article.data.date}</span>
-          <span class="reading-time">{estimateReadingTime(article.body ?? '')} MIN READ</span>
+          <span class="reading-time">{estimateReadingTime(article.body ?? '')} MIN / 分钟</span>
         </div>
         <h3>{article.data.title}</h3>
         <p>{article.data.description}</p>
