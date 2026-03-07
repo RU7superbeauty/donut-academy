@@ -1,0 +1,16 @@
+{
+  "name": "donut-academy",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/vercel": "^9.0.4",
+    "astro": "^5.18.0"
+  }
+}

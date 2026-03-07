@@ -1,0 +1,79 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    subtitle: string;
+    date: string;
+    author: string;
+    category: string;
+    tags: string[];
+    description: string;
+  };
+  headings: { depth: number; slug: string; text: string }[];
+  readingTime: number;
+}
+
+const { frontmatter, headings, readingTime } = Astro.props;
+
+const categoryClass = {
+  'AI FRONTIER': 'tag-accent',
+  'D0 METHOD': 'tag-gold',
+  'RESEARCH': 'tag-green',
+}[frontmatter.category] || 'tag-accent';
+
+const allArticles = await getCollection('articles');
+const sortedArticles = allArticles.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const currentIndex = sortedArticles.findIndex(a => a.data.title === frontmatter.title);
+const prevArticle = currentIndex < sortedArticles.length - 1 ? sortedArticles[currentIndex + 1] : null;
+const nextArticle = currentIndex > 0 ? sortedArticles[currentIndex - 1] : null;
+
+const tocHeadings = headings.filter(h => h.depth <= 3);
+---
+<BaseLayout title={`${frontmatter.title} — Donut Academy`} description={frontmatter.description}>
+  <a href="/articles/" class="back-link">&lt;- ALL ARTICLES</a>
+
+  <div class="article-header">
+    <div class="article-meta" style="margin-bottom: 16px;">
+      <span class={`tag ${categoryClass}`}>{frontmatter.category}</span>
+      <span>{frontmatter.date}</span>
+      <span>{readingTime} MIN READ</span>
+    </div>
+    <h1>{frontmatter.title}</h1>
+    <p class="subtitle">{frontmatter.subtitle}</p>
+    <div class="article-meta">
+      <span>BY {frontmatter.author.toUpperCase()}</span>
+      {frontmatter.tags.map(tag => (
+        <span class="tag">{tag}</span>
+      ))}
+    </div>
+  </div>
+
+  {tocHeadings.length > 0 && (
+    <div class="toc">
+      <div class="toc-title">Table of Contents</div>
+      <ol>
+        {tocHeadings.map(h => (
+          <li style={h.depth === 3 ? 'margin-left: 16px;' : ''}>
+            <a href={`#${h.slug}`}>{h.text}</a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )}
+
+  <div class="article-body">
+    <slot />
+  </div>
+
+  <div class="article-nav">
+    {prevArticle ? (
+      <a href={`/articles/${prevArticle.id}/`}>&lt;- {prevArticle.data.title}</a>
+    ) : <span></span>}
+    {nextArticle ? (
+      <a href={`/articles/${nextArticle.id}/`}>{nextArticle.data.title} -&gt;</a>
+    ) : <span></span>}
+  </div>
+</BaseLayout>
