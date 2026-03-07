@@ -13,8 +13,9 @@
   --gold:    #e8b84e;
   --green:   #069742;
   --red:     #f87171;
-  --topbar-h: 54px;
-  --max-w:   860px;
+  --topbar-h: 60px;
+  --max-w:   1080px;
+  --content-w: 780px;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {

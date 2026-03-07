@@ -18,62 +18,394 @@ interface Props {
 
 const { frontmatter, headings, readingTime } = Astro.props;
 
-const categoryClass = {
-  'AI FRONTIER': 'tag-accent',
-  'D0 METHOD': 'tag-gold',
-  'RESEARCH': 'tag-green',
-}[frontmatter.category] || 'tag-accent';
+const categoryColor: Record<string, string> = {
+  'AI FRONTIER': '#ACAAFF',
+  'D0 METHOD': '#e8b84e',
+  'RESEARCH': '#069742',
+};
+const accentColor = categoryColor[frontmatter.category] || '#ACAAFF';
 
 const allArticles = await getCollection('articles');
-const sortedArticles = allArticles.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
-const currentIndex = sortedArticles.findIndex(a => a.data.title === frontmatter.title);
-const prevArticle = currentIndex < sortedArticles.length - 1 ? sortedArticles[currentIndex + 1] : null;
-const nextArticle = currentIndex > 0 ? sortedArticles[currentIndex - 1] : null;
+const sorted = allArticles.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const currentIndex = sorted.findIndex(a => a.data.title === frontmatter.title);
+const prevArticle = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
+const nextArticle = currentIndex > 0 ? sorted[currentIndex - 1] : null;
 
 const tocHeadings = headings.filter(h => h.depth <= 3);
 ---
-<BaseLayout title={`${frontmatter.title} — Donut Academy`} description={frontmatter.description}>
-  <a href="/articles/" class="back-link">&lt;- ALL ARTICLES</a>
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+>
 
-  <div class="article-header">
-    <div class="article-meta" style="margin-bottom: 16px;">
-      <span class={`tag ${categoryClass}`}>{frontmatter.category}</span>
-      <span>{frontmatter.date}</span>
-      <span>{readingTime} MIN READ</span>
-    </div>
-    <h1>{frontmatter.title}</h1>
-    <p class="subtitle">{frontmatter.subtitle}</p>
-    <div class="article-meta">
-      <span>BY {frontmatter.author.toUpperCase()}</span>
-      {frontmatter.tags.map(tag => (
-        <span class="tag">{tag}</span>
-      ))}
-    </div>
+<!-- Breadcrumb -->
+<nav class="breadcrumb">
+  <a href="/research/">RESEARCH</a>
+  <span>›</span>
+  <span class="bc-cat" style={`color: ${accentColor}`}>{frontmatter.category}</span>
+</nav>
+
+<!-- Article Header -->
+<header class="article-header">
+  <div class="article-meta-top">
+    <span class="cat-badge" style={`color: ${accentColor}; border-color: ${accentColor}40; background: ${accentColor}12`}>
+      {frontmatter.category}
+    </span>
+    <span class="meta-sep">·</span>
+    <span class="meta-date">{frontmatter.date}</span>
+    <span class="meta-sep">·</span>
+    <span class="meta-read">⏱ {readingTime} min read</span>
   </div>
 
+  <h1 class="article-title">{frontmatter.title}</h1>
+  <p class="article-subtitle">{frontmatter.subtitle}</p>
+
+  <div class="article-tags">
+    {frontmatter.tags.map(tag => (
+      <span class="tag-pill">{tag}</span>
+    ))}
+  </div>
+</header>
+
+<!-- Article Layout: TOC + Body -->
+<div class="article-layout">
+
+  <!-- TOC Sidebar -->
   {tocHeadings.length > 0 && (
-    <div class="toc">
-      <div class="toc-title">Table of Contents</div>
-      <ol>
+    <aside class="toc-sidebar" id="tocSidebar">
+      <div class="toc-header">TABLE OF CONTENTS</div>
+      <nav class="toc-nav">
         {tocHeadings.map(h => (
-          <li style={h.depth === 3 ? 'margin-left: 16px;' : ''}>
-            <a href={`#${h.slug}`}>{h.text}</a>
-          </li>
+          <a
+            href={`#${h.slug}`}
+            class={`toc-link toc-h${h.depth}`}
+          >
+            {h.text}
+          </a>
         ))}
-      </ol>
-    </div>
+      </nav>
+    </aside>
   )}
 
-  <div class="article-body">
+  <!-- Article Body -->
+  <article class="article-body">
     <slot />
-  </div>
 
-  <div class="article-nav">
-    {prevArticle ? (
-      <a href={`/articles/${prevArticle.id}/`}>&lt;- {prevArticle.data.title}</a>
-    ) : <span></span>}
-    {nextArticle ? (
-      <a href={`/articles/${nextArticle.id}/`}>{nextArticle.data.title} -&gt;</a>
-    ) : <span></span>}
-  </div>
+    <!-- Article Footer -->
+    <div class="article-footer">
+      <div class="author-block">
+        <div class="author-avatar">DR</div>
+        <div>
+          <div class="author-name">{frontmatter.author}</div>
+          <div class="author-sub">Donut Research · {frontmatter.date}</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+</div>
+
+<!-- Prev / Next nav -->
+<nav class="article-nav">
+  {prevArticle ? (
+    <a href={`/articles/${prevArticle.id}/`} class="nav-article nav-prev">
+      <span class="nav-dir">← PREVIOUS</span>
+      <span class="nav-title">{prevArticle.data.title}</span>
+    </a>
+  ) : <div></div>}
+  {nextArticle ? (
+    <a href={`/articles/${nextArticle.id}/`} class="nav-article nav-next">
+      <span class="nav-dir">NEXT →</span>
+      <span class="nav-title">{nextArticle.data.title}</span>
+    </a>
+  ) : <div></div>}
+</nav>
+
 </BaseLayout>
+
+<script>
+// Highlight active TOC item on scroll
+const tocLinks = document.querySelectorAll('.toc-link');
+const headingEls = document.querySelectorAll('article h2, article h3');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      tocLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+      active?.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0% -70% 0%' });
+
+headingEls.forEach(el => observer.observe(el));
+</script>
+
+<style>
+.breadcrumb {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 24px 24px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+.breadcrumb a { color: var(--accent); text-decoration: none; }
+.bc-cat { font-weight: 700; }
+
+/* Header */
+.article-header {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 32px 24px 40px;
+}
+.article-meta-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.cat-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+.meta-sep { color: var(--border2); }
+.meta-date, .meta-read {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--text2);
+}
+.article-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(14px, 2.5vw, 24px);
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.article-subtitle {
+  font-size: 16px;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  max-width: 600px;
+}
+.article-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag-pill {
+  font-size: 10px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 3px 8px;
+}
+
+/* Layout */
+.article-layout {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* TOC */
+.toc-sidebar {
+  position: sticky;
+  top: 76px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.toc-header {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.toc-nav { display: flex; flex-direction: column; gap: 2px; }
+.toc-link {
+  font-size: 12px;
+  color: var(--text2);
+  text-decoration: none;
+  padding: 5px 8px;
+  border-radius: 4px;
+  border-left: 2px solid transparent;
+  transition: all 0.15s;
+  line-height: 1.4;
+}
+.toc-link:hover { color: var(--text); background: rgba(172,170,255,0.06); }
+.toc-link.active { color: var(--accent); border-left-color: var(--accent); background: rgba(172,170,255,0.06); }
+.toc-h3 { padding-left: 20px; font-size: 11px; }
+
+/* Article body */
+.article-body {
+  min-width: 0;
+  padding-bottom: 48px;
+}
+.article-body :global(h2) {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  color: var(--text);
+  margin: 40px 0 16px;
+  line-height: 1.6;
+  padding-top: 8px;
+}
+.article-body :global(h3) {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 28px 0 12px;
+}
+.article-body :global(p) {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.85;
+  margin-bottom: 16px;
+}
+.article-body :global(ul), .article-body :global(ol) {
+  margin: 12px 0 16px 20px;
+}
+.article-body :global(li) {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.8;
+  margin-bottom: 6px;
+}
+.article-body :global(code) {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  background: rgba(172,170,255,0.1);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.article-body :global(pre) {
+  background: #0d0d1a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  overflow-x: auto;
+  margin: 16px 0;
+}
+.article-body :global(pre code) {
+  background: none;
+  padding: 0;
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.article-body :global(blockquote) {
+  border-left: 3px solid var(--accent);
+  padding: 12px 20px;
+  background: rgba(172,170,255,0.05);
+  border-radius: 0 6px 6px 0;
+  margin: 20px 0;
+}
+.article-body :global(blockquote p) { color: var(--text); font-style: italic; margin: 0; }
+.article-body :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 13px;
+}
+.article-body :global(th) {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--accent);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border2);
+  text-align: left;
+}
+.article-body :global(td) {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  vertical-align: top;
+}
+.article-body :global(tr:hover td) { background: rgba(172,170,255,0.03); }
+.article-body :global(strong) { color: var(--text); font-weight: 700; }
+.article-body :global(a) { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(172,170,255,0.3); }
+.article-body :global(a:hover) { border-bottom-color: var(--accent); }
+.article-body :global(hr) { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+/* Author block */
+.article-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+  margin-top: 48px;
+}
+.author-block { display: flex; align-items: center; gap: 14px; }
+.author-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.author-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.author-sub { font-size: 11px; color: var(--muted); font-family: 'Space Mono', monospace; margin-top: 2px; }
+
+/* Article nav */
+.article-nav {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 32px;
+}
+.nav-article {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+.nav-article:hover { border-color: var(--border2); }
+.nav-dir {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.nav-next .nav-dir { text-align: right; }
+.nav-title { font-size: 12px; color: var(--text2); line-height: 1.4; }
+.nav-next .nav-title { text-align: right; }
+
+/* Responsive: hide TOC on mobile */
+@media (max-width: 860px) {
+  .article-layout { grid-template-columns: 1fr; }
+  .toc-sidebar { display: none; }
+  .article-nav { grid-template-columns: 1fr; }
+  .nav-next .nav-dir, .nav-next .nav-title { text-align: left; }
+}
+</style>

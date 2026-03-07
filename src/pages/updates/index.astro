@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const changelog = [
+  {
+    version: 'v0.3.0',
+    date: '2026-03-08',
+    type: 'major',
+    title: 'Donut Academy Launch',
+    items: [
+      'New website architecture — Learn / Playbook / Research / Updates',
+      'Quick Start guide (30-minute path to first trade)',
+      'Playbook section with 3 upcoming trading workflows',
+      'Research section with category filtering',
+      'New BaseLayout with full navigation and footer',
+    ],
+  },
+  {
+    version: 'v0.2.0',
+    date: '2026-03-07',
+    type: 'content',
+    title: 'Factual Accuracy Pass',
+    items: [
+      'Corrected Non-Custodial → Turnkey Secured (actual architecture)',
+      'Removed OPEN SOURCE pill (D0 is private beta)',
+      'Fixed command syntax: d0 long → d0 hl:limit buy throughout all articles',
+      'Updated Principle 2 & 3 in d0-design-principles.md',
+      'Corrected Clawhub description → npm package distribution',
+    ],
+  },
+  {
+    version: 'v0.1.0',
+    date: '2026-03-07',
+    type: 'content',
+    title: 'Initial Content',
+    items: [
+      '15 research articles published (DR-001 ~ DR-005 + methodology series)',
+      'Homepage with 6 sections and 4 mini-games',
+      'D0 design principles, architecture deep-dives',
+      'Curriculum framework (Tier 1/2/3)',
+      'Astro + Vercel deployment setup',
+    ],
+  },
+];
+---
+<BaseLayout title="Updates" description="D0 and Donut Academy changelog — version history and release notes.">
+
+<section class="page-hero">
+  <div class="section-label">CHANGELOG</div>
+  <h1 class="page-title">Updates</h1>
+  <p class="page-desc">D0 CLI 和 Donut Academy 的版本历史与更新记录。</p>
+</section>
+
+<section class="changelog-section">
+  {changelog.map(entry => (
+    <div class="entry">
+      <div class="entry-meta">
+        <div class={`entry-type type-${entry.type}`}>{entry.type.toUpperCase()}</div>
+        <div class="entry-version">{entry.version}</div>
+        <div class="entry-date">{entry.date}</div>
+      </div>
+      <div class="entry-body">
+        <h2 class="entry-title">{entry.title}</h2>
+        <ul class="entry-items">
+          {entry.items.map(item => (
+            <li class="entry-item">
+              <span class="item-dot">·</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  ))}
+</section>
+
+</BaseLayout>
+
+<style>
+.page-hero { max-width: var(--max-w); margin: 0 auto; padding: 64px 24px 40px; }
+.page-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(18px, 3vw, 28px);
+  color: var(--text);
+  margin: 8px 0 16px;
+  line-height: 1.5;
+}
+.page-desc { font-size: 14px; color: var(--text2); line-height: 1.8; }
+
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.changelog-section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-left: 2px solid var(--border);
+  margin-left: calc(24px + 80px);
+  position: relative;
+}
+
+@media (max-width: 600px) {
+  .changelog-section { margin-left: 24px; }
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 32px;
+  padding: 32px 0 32px 32px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.entry::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 38px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+}
+
+@media (max-width: 600px) {
+  .entry { grid-template-columns: 1fr; gap: 12px; }
+}
+
+.entry-meta { display: flex; flex-direction: column; gap: 6px; padding-top: 2px; }
+.entry-type {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  width: fit-content;
+}
+.type-major { color: var(--accent); background: rgba(172,170,255,0.12); }
+.type-content { color: var(--gold); background: rgba(232,184,78,0.1); }
+.type-fix { color: var(--green); background: rgba(6,151,66,0.1); }
+
+.entry-version {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+.entry-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+}
+.entry-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 14px; }
+.entry-items { display: flex; flex-direction: column; gap: 8px; list-style: none; }
+.entry-item { display: flex; gap: 10px; font-size: 13px; color: var(--text2); line-height: 1.6; }
+.item-dot { color: var(--accent); flex-shrink: 0; font-weight: 700; }
+</style>
