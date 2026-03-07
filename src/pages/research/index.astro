@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const articles = await getCollection('articles');
+const sorted = articles.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const categories = ['ALL', ...new Set(sorted.map(a => a.data.category))];
+---
+<BaseLayout title="Research" description="Donut Research — Deep dives into AI agent trading infrastructure, risk, and market microstructure.">
+
+<section class="page-hero">
+  <div class="section-label">DONUT RESEARCH</div>
+  <h1 class="page-title">Research Papers</h1>
+  <p class="page-desc">AI × Crypto 交叉领域的深度研究。从意图解析到博弈均衡，每篇都以 D0 为实验平台。</p>
+</section>
+
+<section class="filter-section">
+  <div class="filter-tabs" id="filterTabs">
+    {categories.map(cat => (
+      <button class={`filter-btn ${cat === 'ALL' ? 'active' : ''}`} data-cat={cat}>
+        {cat}
+      </button>
+    ))}
+  </div>
+</section>
+
+<section class="articles-list">
+  {sorted.map(article => (
+    <a
+      href={`/articles/${article.slug}/`}
+      class="article-row"
+      data-cat={article.data.category}
+    >
+      <div class="ar-left">
+        <div class="ar-cat">{article.data.category}</div>
+        <h2 class="ar-title">{article.data.title}</h2>
+        <p class="ar-desc">{article.data.description}</p>
+        <div class="ar-tags">
+          {article.data.tags?.slice(0,4).map((tag: string) => (
+            <span class="ar-tag">{tag}</span>
+          ))}
+        </div>
+      </div>
+      <div class="ar-right">
+        <span class="ar-date">{article.data.date}</span>
+        <span class="ar-arrow">→</span>
+      </div>
+    </a>
+  ))}
+</section>
+
+</BaseLayout>
+
+<script>
+  const btns = document.querySelectorAll('.filter-btn');
+  const rows = document.querySelectorAll('.article-row');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = (btn as HTMLElement).dataset.cat;
+      rows.forEach(row => {
+        const el = row as HTMLElement;
+        if (cat === 'ALL' || el.dataset.cat === cat) {
+          el.style.display = '';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+.page-hero { max-width: var(--max-w); margin: 0 auto; padding: 64px 24px 32px; }
+.page-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(18px, 3vw, 28px);
+  color: var(--text);
+  margin: 8px 0 16px;
+  line-height: 1.5;
+}
+.page-desc { font-size: 14px; color: var(--text2); line-height: 1.8; max-width: 540px; }
+
+.filter-section { max-width: var(--max-w); margin: 0 auto; padding: 0 24px 24px; }
+.filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--text2);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover, .filter-btn.active {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(172,170,255,0.08);
+}
+
+.articles-list { max-width: var(--max-w); margin: 0 auto; padding: 0 24px 80px; }
+.article-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: background 0.1s;
+}
+.article-row:hover .ar-title { color: var(--accent); }
+.ar-left { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.ar-cat {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent);
+}
+.ar-title { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.4; transition: color 0.15s; }
+.ar-desc { font-size: 12px; color: var(--text2); line-height: 1.7; max-width: 600px; }
+.ar-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.ar-tag {
+  font-size: 10px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+.ar-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.ar-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.ar-arrow { font-size: 16px; color: var(--accent); }
+
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+</style>

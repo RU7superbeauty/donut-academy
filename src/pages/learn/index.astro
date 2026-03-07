@@ -1,0 +1,216 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Learn D0" description="Structured curriculum from D0 Quick Start to autonomous trading pipelines.">
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="section-label">CURRICULUM</div>
+    <h1 class="page-title">Learn D0</h1>
+    <p class="page-desc">从安装到构建自主交易 pipeline，三层课程体系，每一层都以 D0 为实战平台。</p>
+  </div>
+</section>
+
+<!-- Quick Start CTA -->
+<section class="qs-cta-section">
+  <a href="/learn/quickstart/" class="qs-cta-card">
+    <div class="qs-badge">START HERE</div>
+    <h2 class="qs-title">⚡ Quick Start — 30 Minutes to First Trade</h2>
+    <p class="qs-desc">安装 D0 → 登录 → 查询行情 → 执行第一笔交易。完整流程，30 分钟搞定。</p>
+    <span class="qs-cta-btn">BEGIN →</span>
+  </a>
+</section>
+
+<!-- Tiers -->
+<section class="tiers-section">
+  {[
+    {
+      tier: 'TIER 1', label: 'INTRO / 入门', color: 'green',
+      courses: [
+        { title: '加密货币基础', desc: '钱包、链、代币标准、Gas 机制', time: '20 min', d0: 'd0 price · d0 search' },
+        { title: 'K线与技术分析', desc: '均线、RSI、支撑阻力、趋势识别', time: '25 min', d0: 'd0 ta · d0 research' },
+        { title: '风险管理基础', desc: '仓位管理、止损设置、风险回报比', time: '20 min', d0: 'd0 hl:stop-loss' },
+        { title: '市场情绪分析', desc: '恐贪指数、资金费率、链上情绪', time: '15 min', d0: 'd0 sentiment · d0 hl:balance' },
+      ]
+    },
+    {
+      tier: 'TIER 2', label: 'ADVANCED / 进阶', color: 'gold',
+      courses: [
+        { title: '量化策略深潜', desc: '网格交易、趋势跟踪、均值回归', time: '30 min', d0: 'd0 hl:limit · d0 hl:orders' },
+        { title: '合约与资金费率', desc: '永续合约机制、funding rate 策略', time: '30 min', d0: 'd0 hl:positions · d0 balance' },
+        { title: '回测方法论', desc: '历史数据回测框架、Walk-forward', time: '25 min', d0: 'd0 ta --history' },
+        { title: '预测市场', desc: 'Polymarket 机制、定价原理、套利', time: '25 min', d0: 'd0 call DONUT_POLYMARKET_*' },
+      ]
+    },
+    {
+      tier: 'TIER 3', label: 'FRONTIER / 前沿', color: 'accent',
+      courses: [
+        { title: 'AI 交易 Agent 架构', desc: '意图解析、策略路由、执行引擎', time: '40 min', d0: 'Full pipeline' },
+        { title: '实时风控实现', desc: '仓位保护、熔断机制、级联防护', time: '35 min', d0: 'd0 hl:stop-loss · leverage' },
+        { title: '开源策略 Walkthrough', desc: '从零构建完整交易策略', time: '45 min', d0: 'End-to-end' },
+        { title: '多 Agent 协同系统', desc: 'Agent 间通信、信号共享', time: '40 min', d0: 'Multi-instance' },
+      ]
+    },
+  ].map(tier => (
+    <div class={`tier-block tier-${tier.color}`}>
+      <div class="tier-header">
+        <div class="tier-badge">{tier.tier}</div>
+        <h3 class="tier-label">{tier.label}</h3>
+      </div>
+      <div class="tier-courses">
+        {tier.courses.map((c, i) => (
+          <div class="course-card">
+            <div class="course-num">{String(i + 1).padStart(2, '0')}</div>
+            <div class="course-body">
+              <h4 class="course-title">{c.title}</h4>
+              <p class="course-desc">{c.desc}</p>
+              <div class="course-meta">
+                <span class="course-time">⏱ {c.time}</span>
+                <code class="course-d0">{c.d0}</code>
+              </div>
+            </div>
+            <div class="course-status">SOON</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+</section>
+
+</BaseLayout>
+
+<style>
+.page-hero { max-width: var(--max-w); margin: 0 auto; padding: 64px 24px 40px; }
+.page-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(18px, 3vw, 28px);
+  color: var(--text);
+  margin: 8px 0 16px;
+  line-height: 1.5;
+}
+.page-desc { font-size: 14px; color: var(--text2); line-height: 1.8; max-width: 540px; }
+
+.qs-cta-section { max-width: var(--max-w); margin: 0 auto; padding: 0 24px 48px; }
+.qs-cta-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 36px 40px;
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.qs-cta-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 0% 50%, rgba(172,170,255,0.08), transparent 60%);
+  pointer-events: none;
+}
+.qs-cta-card:hover { transform: translateY(-2px); }
+.qs-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: #131320;
+  background: var(--accent);
+  padding: 3px 10px;
+  border-radius: 3px;
+  width: fit-content;
+}
+.qs-title { font-size: 18px; font-weight: 700; color: var(--text); }
+.qs-desc { font-size: 13px; color: var(--text2); line-height: 1.7; max-width: 560px; }
+.qs-cta-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-top: 4px;
+}
+
+.tiers-section { max-width: var(--max-w); margin: 0 auto; padding: 0 24px 80px; display: flex; flex-direction: column; gap: 32px; }
+.tier-block { border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+.tier-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.tier-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+.tier-green .tier-badge { color: var(--green); border: 1px solid var(--green); }
+.tier-gold .tier-badge { color: var(--gold); border: 1px solid var(--gold); }
+.tier-accent .tier-badge { color: var(--accent); border: 1px solid var(--accent); }
+.tier-label { font-family: 'Press Start 2P', monospace; font-size: 12px; color: var(--text); }
+
+.tier-courses { display: grid; grid-template-columns: repeat(2, 1fr); }
+.course-card {
+  display: flex;
+  gap: 16px;
+  padding: 20px 24px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+  transition: background 0.15s;
+}
+.course-card:nth-child(even) { border-right: none; }
+.course-card:nth-last-child(-n+2) { border-bottom: none; }
+.course-card:hover { background: var(--surface); }
+.course-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.course-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.course-desc { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 10px; }
+.course-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.course-time { font-size: 11px; color: var(--muted); }
+.course-d0 {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--accent);
+  background: rgba(172,170,255,0.08);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.course-status {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 3px 6px;
+  border-radius: 3px;
+  height: fit-content;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+@media (max-width: 600px) {
+  .tier-courses { grid-template-columns: 1fr; }
+  .course-card:nth-child(even) { border-right: 1px solid var(--border); }
+  .course-card { border-right: none !important; }
+  .course-card:last-child { border-bottom: none; }
+}
+</style>

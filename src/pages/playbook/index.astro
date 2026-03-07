@@ -1,0 +1,176 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const workflows = [
+  {
+    slug: 'funding-rate-arb',
+    title: 'Funding Rate Arbitrage',
+    subtitle: '资金费率套利',
+    desc: '当资金费率显著偏离零时，持有反向仓位收取费率溢价。完整的 D0 实现流程，包括入场判断、仓位管理和止损设置。',
+    difficulty: '⭐⭐',
+    time: '20 min',
+    commands: ['d0 hl:balance', 'd0 hl:positions', 'd0 hl:limit buy'],
+    status: 'coming-soon',
+    color: 'gold',
+  },
+  {
+    slug: 'whale-monitor',
+    title: 'Whale Movement Monitor',
+    subtitle: '鲸鱼动向监控',
+    desc: '追踪大额链上转账和鲸鱼钱包动态，结合 D0 技术分析在关键价格位自动发出提醒。',
+    difficulty: '⭐⭐⭐',
+    time: '30 min',
+    commands: ['d0 research', 'd0 ta', 'd0 price'],
+    status: 'coming-soon',
+    color: 'accent',
+  },
+  {
+    slug: 'mm-detection',
+    title: 'MM Pattern Detection',
+    subtitle: '做市商行为识别',
+    desc: '从链上数据识别 C型（阶梯拉盘）和 E型（掩护出货）做市商行为模式，在异常信号出现时提前布局。',
+    difficulty: '⭐⭐⭐⭐',
+    time: '45 min',
+    commands: ['d0 search', 'd0 ta', 'd0 research'],
+    status: 'coming-soon',
+    color: 'purple',
+  },
+];
+---
+<BaseLayout title="Playbook" description="Real trading workflows with D0 — funding rate arb, whale monitoring, MM detection.">
+
+<section class="page-hero">
+  <div class="section-label">PLAYBOOK</div>
+  <h1 class="page-title">Trading Workflows</h1>
+  <p class="page-desc">
+    不讲原理，直接给完整的可执行 workflow。每个 Playbook 都包含：策略逻辑、D0 命令序列、入场出场规则、风险控制。
+  </p>
+</section>
+
+<section class="workflows-section">
+  {workflows.map(w => (
+    <div class={`workflow-card wf-${w.color}`}>
+      <div class="wf-header">
+        <div>
+          <div class="wf-difficulty">{w.difficulty} · {w.time}</div>
+          <h2 class="wf-title">{w.title}</h2>
+          <div class="wf-subtitle">{w.subtitle}</div>
+        </div>
+        <div class={`wf-status ${w.status}`}>
+          {w.status === 'coming-soon' ? 'COMING SOON' : 'AVAILABLE'}
+        </div>
+      </div>
+      <p class="wf-desc">{w.desc}</p>
+      <div class="wf-commands">
+        {w.commands.map(cmd => (
+          <code class="wf-cmd">{cmd}</code>
+        ))}
+      </div>
+    </div>
+  ))}
+</section>
+
+<section class="suggest-section">
+  <div class="suggest-inner">
+    <h3 class="suggest-title">有好的 workflow 想贡献？</h3>
+    <p class="suggest-desc">Donut Academy 是开放的。如果你有真实跑通的交易策略，欢迎提交 PR。</p>
+    <a href="https://github.com/RU7superbeauty/donut-academy" target="_blank" class="btn-ghost">
+      CONTRIBUTE ON GITHUB →
+    </a>
+  </div>
+</section>
+
+</BaseLayout>
+
+<style>
+.page-hero { max-width: var(--max-w); margin: 0 auto; padding: 64px 24px 40px; }
+.page-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(18px, 3vw, 28px);
+  color: var(--text);
+  margin: 8px 0 16px;
+  line-height: 1.5;
+}
+.page-desc { font-size: 14px; color: var(--text2); line-height: 1.8; max-width: 560px; }
+
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.workflows-section { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; display: flex; flex-direction: column; gap: 16px; }
+.workflow-card {
+  padding: 32px 36px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.15s;
+}
+.wf-gold:hover { border-color: var(--gold); }
+.wf-accent:hover { border-color: var(--accent); }
+.wf-purple:hover { border-color: #9f7aea; }
+
+.wf-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 16px; }
+.wf-difficulty {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+.wf-title { font-family: 'Press Start 2P', monospace; font-size: 14px; color: var(--text); line-height: 1.5; margin-bottom: 4px; }
+.wf-subtitle { font-size: 13px; color: var(--text2); }
+.wf-status {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.wf-status.coming-soon { color: var(--muted); border: 1px solid var(--border); }
+.wf-status.available { color: var(--green); border: 1px solid var(--green); }
+
+.wf-desc { font-size: 13px; color: var(--text2); line-height: 1.8; margin-bottom: 20px; max-width: 640px; }
+.wf-commands { display: flex; gap: 8px; flex-wrap: wrap; }
+.wf-cmd {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  background: rgba(172,170,255,0.08);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.suggest-section { max-width: var(--max-w); margin: 0 auto; padding: 48px 24px 80px; }
+.suggest-inner {
+  padding: 36px 40px;
+  background: var(--surface);
+  border: 1px dashed var(--border2);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.suggest-title { font-size: 16px; font-weight: 700; color: var(--text); }
+.suggest-desc { font-size: 13px; color: var(--text2); line-height: 1.7; flex: 1; }
+
+.btn-ghost {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  border: 1px solid var(--border2);
+  padding: 12px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: border-color 0.15s;
+  white-space: nowrap;
+}
+.btn-ghost:hover { border-color: var(--accent); }
+</style>
