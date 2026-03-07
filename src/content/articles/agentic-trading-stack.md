@@ -33,7 +33,7 @@ The agentic trading stack is not a metaphor. It's a literal architectural decomp
 │  Risk: stop-loss at -3%, take-profit at +8%      │
 ├─────────────────────────────────────────────────┤
 │  LAYER 4: EXECUTION                             │
-│  d0 buy ETH 0.25 --leverage 2 --stop-loss 3%    │
+│  d0 hl:limit buy ETH 0.25 3200    │
 │  Sign with local key → broadcast → confirm       │
 ├─────────────────────────────────────────────────┤
 │  LAYER 5: SETTLEMENT                            │
@@ -128,7 +128,7 @@ An LLM is a text-in, text-out machine. A CLI is a text-in, text-out machine. The
 }
 
 # CLI command (what actually gets executed)
-d0 buy ETH 0.1 --leverage 3 --stop-loss 5%
+d0 hl:limit buy ETH 0.1 3200
 ```
 
 No SDK to install. No dependency to manage. No version conflict to debug. The agent constructs a string and executes it — cognitive overhead near zero.
@@ -147,7 +147,7 @@ d0 price BTC ETH SOL
 # → ETH/USD: $2,847.32 (+2.4% 24h)
 # → SOL/USD: $148.67 (-0.8% 24h)
 
-d0 positions
+d0 hl:positions
 # → No active positions (read-only mode)
 ```
 
@@ -166,10 +166,10 @@ The command grammar scales without changing shape:
 
 ```bash
 # Simple buy — 4 tokens
-d0 buy ETH 0.1
+d0 hl:market buy ETH 0.1
 
 # Leveraged buy with risk management — same pattern, more params
-d0 buy ETH 0.1 --leverage 3 --stop-loss 5% --take-profit 12%
+d0 hl:limit buy ETH 0.1 3200  # set stop-loss and take-profit separately
 
 # Grid strategy — strategies are just commands too
 d0 strategy grid ETH 1800-2200 --grids 10 --size 0.05
@@ -208,7 +208,7 @@ stop_loss = client.futures.create_order(
 And the same trade with D0:
 
 ```bash
-d0 buy ETH 0.1 --leverage 3 --stop-loss 5%
+d0 hl:limit buy ETH 0.1 3200
 ```
 
 One line. The stop-loss is calculated relative to entry automatically. The leverage is set in the same command. The signing happens behind the scenes. For an AI agent, this is the difference between "I need to reason about 14 parameters across 2 API calls" and "I need to construct one sentence."
@@ -252,7 +252,7 @@ d0 auth setup --key <private-key>
 # → Key encrypted with AES-256-GCM, stored at ~/.d0/keystore
 
 # Every subsequent trade: key stays local
-d0 buy ETH 0.1
+d0 hl:market buy ETH 0.1
 # → Order constructed → signed locally → signature submitted → confirmed
 # → Private key never transmitted
 ```
@@ -275,11 +275,11 @@ Fundamentally different products. Different data models, API schemas, settlement
 
 ```bash
 # Trading a Hyperliquid perpetual
-d0 buy ETH 0.1 --exchange hyperliquid
+d0 hl:limit buy ETH 0.1 3200
 # → Places a perpetual contract order on Hyperliquid
 
 # Trading a Polymarket prediction market
-d0 buy "ETH above 5K by June" 50 --exchange polymarket
+d0 call DONUT_POLYMARKET_BUY  # polymarket integration via d0 call
 # → Buys $50 of YES shares on Polymarket
 
 # Same command structure. Same flag grammar. Same output format.
@@ -317,7 +317,7 @@ Pipeline: Event-Driven Prediction Market Trading
    → Edge: +16 percentage points
 
 3. D0 TRADING SKILL executes
-   → d0 buy "Fed holds rates March" 200 --exchange polymarket
+   → d0 call DONUT_POLYMARKET_BUY  # polymarket integration via d0 call
    → Position: 200 YES shares at $0.62
    → Expected value: $200 × (0.78/0.62) = $251.61
 

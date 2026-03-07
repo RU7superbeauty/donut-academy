@@ -23,27 +23,27 @@ An agent without data is just an expensive random number generator. The data lay
 Using D0, basic price data access requires zero configuration:
 
 ```bash
-# Current price — no API key, no setup
+# Current price — requires d0 login first
 d0 price SOL
 
-# Historical candles
-d0 candles ETH --interval 1h --limit 100
+# Technical analysis (includes candles, RSI, MACD)
+d0 ta ETH
 
-# Order book depth
-d0 orderbook ETH-USDC --exchange hyperliquid
+# Token research (fundamentals + on-chain)
+d0 research ETH
 ```
 
 **On-chain metrics** add a layer that traditional finance doesn't have: transparent, real-time data about market participant behavior. Funding rates, open interest, liquidation levels, whale wallet activity — all visible on-chain.
 
 ```bash
-# Funding rate — critical for perp strategies
-d0 funding ETH --exchange hyperliquid
+# Funding rate + positions on HyperLiquid
+d0 hl:positions
 
-# Open interest
-d0 openinterest ETH --exchange hyperliquid
+# Account balance on HyperLiquid
+d0 hl:balance
 
-# Account positions and balances
-d0 positions --exchange hyperliquid
+# Portfolio overview (wallet + perps + HL)
+d0 balance
 ```
 
 **News and sentiment** are where the LLM's natural language capabilities add genuine value. The agent can process news feeds, social media, and on-chain governance proposals to extract signals that pure quantitative systems miss.
@@ -295,10 +295,10 @@ d0 trade buy ETH --size 0.5 --price 3202 --exchange hyperliquid
 
 ```bash
 # Check position after execution
-d0 positions --exchange hyperliquid
+d0 hl:positions
 
-# Verify specific order status
-d0 orders --exchange hyperliquid --status open
+# Verify open orders
+d0 hl:orders
 ```
 
 **Common mistake #4: No stop-loss.** The most expensive three words in trading: "It'll come back." An agent without stop-losses will hold losing positions indefinitely, tying up capital and accumulating unrealized losses. Every position needs a stop.
@@ -311,10 +311,10 @@ Once positions are live, monitoring becomes critical. The agent needs to track t
 
 ```bash
 # Current positions with P&L
-d0 positions --exchange hyperliquid --pnl
+d0 hl:positions
 
-# Specific market status
-d0 trade status --market "event-slug" --exchange polymarket
+# Portfolio overview including fills history
+d0 hl:fills
 ```
 
 **P&L calculation** should be running continuously, decomposed into components:
