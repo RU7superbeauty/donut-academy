@@ -30,4 +30,20 @@ const playbook = defineCollection({
   }),
 });
 
-export const collections = { articles, playbook };
+const courses = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/courses' }),
+  schema: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    date: z.string(),
+    tier: z.enum(['1', '2', '3']),
+    order: z.number(),
+    time: z.string(),
+    tags: z.array(z.string()),
+    description: z.string(),
+    commands: z.array(z.string()).optional(),
+    status: z.enum(['available', 'coming-soon']).default('available'),
+  }),
+});
+
+export const collections = { articles, playbook, courses };
