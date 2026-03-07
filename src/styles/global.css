@@ -825,6 +825,30 @@ body::after {
 }
 .back-link:hover { text-decoration: underline; }
 
+/* Section deep-dive links */
+.more-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+.more-link {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  text-decoration: none;
+  background: rgba(255,255,255,0.02);
+}
+.more-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 @media (max-width: 640px) {
   .hero h1 { font-size: 20px; letter-spacing: 2px; }
   .game-area { height: 340px; }
