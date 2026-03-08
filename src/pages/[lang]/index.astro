@@ -1,0 +1,691 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { languages, type Lang, useTranslations } from '../../i18n';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+
+const articles = await getCollection('articles');
+const featured = articles
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 6);
+---
+<BaseLayout
+  title="Donut Academy — AI-Native Crypto Trading"
+  description={t('hero.sub')}
+  lang={lang}
+>
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      <span>{t('hero.badge')}</span>
+    </div>
+
+    <h1 class="hero-headline" set:html={t('hero.headline').replace('\n', '<br>')} />
+    <p class="hero-sub">{t('hero.sub')}</p>
+
+    <div class="hero-actions">
+      <a href={`/${lang}/learn/quickstart/`} class="btn-primary">{t('hero.cta_start')}</a>
+      <a href={`/${lang}/learn/`} class="btn-ghost">{t('hero.cta_browse')}</a>
+    </div>
+
+    <!-- Terminal Demo -->
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+        <span class="terminal-title">d0 — zsh</span>
+      </div>
+      <div class="terminal-body" id="terminalBody">
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">d0 login</span></div>
+        <div class="t-line t-out">✓ Authenticated as @you · Turnkey wallet ready</div>
+        <div class="t-line t-gap"></div>
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">d0 price ETH</span></div>
+        <div class="t-line t-out">ETH/USDC  <span class="t-hl">$3,247.50</span>  +2.3% 24h  Vol $18.2B</div>
+        <div class="t-line t-gap"></div>
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">d0 ta BTC</span></div>
+        <div class="t-line t-out">RSI(14) <span class="t-gold">34.2</span> · MACD <span class="t-green">bullish cross</span> · Signal: <span class="t-hl">LONG</span></div>
+        <div class="t-line t-gap"></div>
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">d0 hl:limit buy ETH 0.1 3200</span></div>
+        <div class="t-line t-out t-success">✓ Order placed · Filled @ $3,200.40 · Position open</div>
+        <div class="t-line t-gap"></div>
+        <div class="t-line t-cursor"><span class="t-prompt">$</span> <span class="cursor-blink">▊</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<section class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><span class="stat-num">169+</span><span class="stat-label">{t('stats.tools')}</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><span class="stat-num">3</span><span class="stat-label">{t('stats.exchanges')}</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><span class="stat-num">5</span><span class="stat-label">{t('stats.research')}</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><span class="stat-num">30min</span><span class="stat-label">{t('stats.first_trade')}</span></div>
+  </div>
+</section>
+
+<!-- THREE PATHS -->
+<section class="paths-section">
+  <div class="section-label">{t('paths.label')}</div>
+  <h2 class="section-heading">{t('paths.heading')}</h2>
+  <div class="paths-grid">
+    <a href={`/${lang}/learn/quickstart/`} class="path-card">
+      <div class="path-icon">🚀</div>
+      <div class="path-tier">{t('path.qs.tier')}</div>
+      <h3 class="path-title">{t('path.qs.title')}</h3>
+      <p class="path-desc">{t('path.qs.desc')}</p>
+      <div class="path-meta"><span>{t('path.qs.steps')}</span><span>{t('path.qs.time')}</span><span class="path-arrow">→</span></div>
+    </a>
+    <a href={`/${lang}/playbook/`} class="path-card path-card-gold">
+      <div class="path-icon">⚡</div>
+      <div class="path-tier">{t('path.pb.tier')}</div>
+      <h3 class="path-title">{t('path.pb.title')}</h3>
+      <p class="path-desc">{t('path.pb.desc')}</p>
+      <div class="path-meta"><span>{t('path.pb.steps')}</span><span>{t('path.pb.time')}</span><span class="path-arrow">→</span></div>
+    </a>
+    <a href={`/${lang}/research/`} class="path-card path-card-purple">
+      <div class="path-icon">🔬</div>
+      <div class="path-tier">{t('path.rs.tier')}</div>
+      <h3 class="path-title">{t('path.rs.title')}</h3>
+      <p class="path-desc">{t('path.rs.desc')}</p>
+      <div class="path-meta"><span>{t('path.rs.steps')}</span><span>{t('path.rs.time')}</span><span class="path-arrow">→</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- QUICK START STRIP -->
+<section class="quickstart-strip">
+  <div class="qs-inner">
+    <div class="qs-text">
+      <div class="section-label">{t('qs.label')}</div>
+      <h2 class="qs-heading">{t('qs.heading')}</h2>
+      <p class="qs-desc">{t('qs.desc')}</p>
+      <a href={`/${lang}/learn/quickstart/`} class="btn-primary" style="margin-top:20px">{t('qs.cta')}</a>
+    </div>
+    <div class="qs-code">
+      <div class="code-block">
+        <div class="code-line"><span class="code-comment"># 1. Install</span></div>
+        <div class="code-line copyable"><code>npm install -g @donutlabs-ai/d0-cli</code><button class="copy-btn" data-copy="npm install -g @donutlabs-ai/d0-cli">COPY</button></div>
+        <div class="code-line"><span class="code-comment"># 2. Authenticate</span></div>
+        <div class="code-line copyable"><code>d0 login</code><button class="copy-btn" data-copy="d0 login">COPY</button></div>
+        <div class="code-line"><span class="code-comment"># 3. Your first query</span></div>
+        <div class="code-line copyable"><code>d0 price ETH</code><button class="copy-btn" data-copy="d0 price ETH">COPY</button></div>
+        <div class="code-output"><span class="out-text">ETH/USDC  <strong>$3,247.50</strong>  +2.3% 24h</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED ARTICLES -->
+<section class="articles-section">
+  <div class="articles-header">
+    <div>
+      <div class="section-label">{t('articles.label')}</div>
+      <h2 class="section-heading">{t('articles.heading')}</h2>
+    </div>
+    <a href={`/${lang}/research/`} class="link-all">{t('articles.view_all')}</a>
+  </div>
+  <div class="articles-grid">
+    {featured.map(article => (
+      <a href={`/${lang}/articles/${article.id}/`} class="article-card">
+        <div class="article-cat">{article.data.category}</div>
+        <h3 class="article-title">{article.data.title}</h3>
+        <p class="article-desc">{article.data.description?.slice(0, 100)}…</p>
+        <div class="article-meta">
+          <span>{article.data.date}</span>
+          <span class="article-read">5 {t('articles.read')}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<!-- PRINCIPLES TEASER -->
+<section class="principles-section">
+  <div class="principles-inner">
+    <div class="principles-text">
+      <div class="section-label">{t('principles.label')}</div>
+      <h2 class="section-heading" set:html={t('principles.heading').replace('\n', '<br>')} />
+      <p class="principles-desc" set:html={t('principles.desc').replace('\n', '<br>')} />
+      <a href={`/${lang}/articles/d0-design-principles/`} class="btn-ghost" style="margin-top:20px">{t('principles.cta')}</a>
+    </div>
+    <div class="principles-list">
+      {['01','02','03','04','05'].map(n => (
+        <div class="principle-item">
+          <span class="p-num">{n}</span>
+          <div>
+            <span class="p-title">{t(`principles.${n}`)}</span>
+            <span class="p-sub">{t(`principles.${n}.sub`)}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- THESIS -->
+<section class="thesis-section">
+  <div class="thesis-inner">
+    <blockquote class="thesis-quote" set:html={t('thesis.quote').replace('\n', '<br>')} />
+    <cite class="thesis-cite">{t('thesis.cite')}</cite>
+    <a href={`/${lang}/articles/agent-economy-thesis/`} class="btn-ghost" style="margin-top:28px">{t('thesis.cta')}</a>
+  </div>
+</section>
+
+</BaseLayout>
+
+<script>
+// Copy button
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const text = (btn as HTMLButtonElement).dataset.copy || '';
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'COPIED!';
+      setTimeout(() => { btn.textContent = 'COPY'; }, 1500);
+    });
+  });
+});
+
+// Terminal typewriter effect (subtle)
+const cursor = document.querySelector('.cursor-blink') as HTMLElement;
+if (cursor) {
+  setInterval(() => cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0', 530);
+}
+</script>
+
+<style>
+/* ── Layout ── */
+.hero-section, .stats-bar, .paths-section,
+.quickstart-strip, .articles-section,
+.principles-section, .thesis-section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Hero ── */
+.hero-section { padding-top: 72px; padding-bottom: 0; }
+.hero-inner { text-align: center; }
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  padding: 5px 14px;
+  margin-bottom: 28px;
+}
+.badge-dot {
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero-headline {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(20px, 3.5vw, 36px);
+  line-height: 1.6;
+  letter-spacing: 1px;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.hero-headline strong { color: var(--accent); }
+
+.hero-sub {
+  font-size: 15px;
+  color: var(--text2);
+  line-height: 1.8;
+  max-width: 560px;
+  margin: 0 auto 32px;
+}
+.break-desktop { display: none; }
+@media (min-width: 600px) { .break-desktop { display: block; } }
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #131320;
+  background: var(--accent);
+  padding: 12px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+}
+.btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+.btn-ghost {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--border2);
+  padding: 12px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent2); }
+
+/* Terminal */
+.terminal {
+  max-width: 640px;
+  margin: 0 auto 80px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border2);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(172,170,255,0.1);
+  text-align: left;
+}
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #1e1e30;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot.red { background: #ff5f57; }
+.dot.yellow { background: #febc2e; }
+.dot.green { background: #28c840; }
+.terminal-title {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text2);
+  font-family: 'Space Mono', monospace;
+  margin-left: -46px;
+}
+.terminal-body {
+  background: #0d0d1a;
+  padding: 20px 24px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.t-line { display: flex; align-items: center; gap: 10px; min-height: 20px; }
+.t-gap { height: 8px; }
+.t-prompt { color: var(--accent); font-weight: 700; }
+.t-cmd { color: var(--text); }
+.t-out { color: var(--text2); padding-left: 20px; }
+.t-hl { color: var(--accent); font-weight: 700; }
+.t-gold { color: var(--gold); }
+.t-green { color: #4ade80; }
+.t-success { color: #4ade80; padding-left: 20px; }
+.t-cursor { padding-top: 4px; }
+.cursor-blink { color: var(--accent); transition: opacity 0.1s; }
+
+/* ── Stats Bar ── */
+.stats-bar {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  margin: 0 auto;
+}
+.stats-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 28px 0;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 0 40px;
+}
+.stat-num {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 18px;
+  color: var(--accent);
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--text2);
+  white-space: nowrap;
+}
+.stat-divider {
+  width: 1px;
+  height: 36px;
+  background: var(--border);
+}
+@media (max-width: 600px) {
+  .stats-inner { flex-wrap: wrap; gap: 24px; }
+  .stat-divider { display: none; }
+  .stat { padding: 0 20px; }
+}
+
+/* ── Section Labels ── */
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.section-heading {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(14px, 2vw, 20px);
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 32px;
+}
+
+/* ── Three Paths ── */
+.paths-section { padding-top: 80px; padding-bottom: 0; }
+.paths-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.path-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.path-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.path-card-gold:hover { border-color: var(--gold); }
+.path-card-purple:hover { border-color: #9f7aea; }
+.path-icon { font-size: 28px; }
+.path-tier {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+}
+.path-card-gold .path-tier { color: var(--gold); }
+.path-card-purple .path-tier { color: #9f7aea; }
+.path-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.path-desc { font-size: 13px; color: var(--text2); line-height: 1.7; flex: 1; }
+.path-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+.path-arrow { margin-left: auto; color: var(--accent); font-size: 14px; }
+
+@media (max-width: 720px) {
+  .paths-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Quick Start Strip ── */
+.quickstart-strip {
+  padding-top: 80px;
+  padding-bottom: 0;
+}
+.qs-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 48px;
+}
+.qs-heading {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(14px, 2vw, 20px);
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.qs-desc { font-size: 13px; color: var(--text2); line-height: 1.8; }
+
+.code-block {
+  background: #0d0d1a;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 20px 24px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+}
+.code-comment { color: var(--muted); }
+.code-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 24px;
+  gap: 8px;
+}
+.code-line code { color: var(--text); flex: 1; }
+.copyable { margin-bottom: 8px; }
+.copy-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  padding: 3px 7px;
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.copy-btn:hover { background: rgba(172,170,255,0.1); }
+.code-output {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: rgba(172,170,255,0.05);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+}
+.out-text { font-size: 11px; color: var(--text2); }
+.out-text strong { color: var(--accent); }
+
+@media (max-width: 720px) {
+  .qs-inner { grid-template-columns: 1fr; padding: 28px 20px; }
+}
+
+/* ── Articles Grid ── */
+.articles-section { padding-top: 80px; }
+.articles-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.link-all {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  text-decoration: none;
+}
+.link-all:hover { color: var(--accent2); }
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.article-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.article-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.article-cat {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent);
+}
+.article-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.5;
+  flex: 1;
+}
+.article-desc { font-size: 11px; color: var(--text2); line-height: 1.6; }
+.article-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+.article-read { color: var(--accent); }
+
+@media (max-width: 720px) {
+  .articles-grid { grid-template-columns: 1fr; }
+}
+@media (min-width: 480px) and (max-width: 720px) {
+  .articles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Principles ── */
+.principles-section { padding-top: 80px; }
+.principles-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.principles-desc { font-size: 13px; color: var(--text2); line-height: 1.8; }
+.principles-list { display: flex; flex-direction: column; gap: 2px; }
+.principle-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: border-color 0.15s;
+}
+.principle-item:hover { border-color: var(--border2); }
+.p-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  width: 24px;
+  flex-shrink: 0;
+}
+.p-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  display: block;
+}
+.p-sub {
+  font-size: 11px;
+  color: var(--text2);
+  display: block;
+  margin-top: 2px;
+}
+
+@media (max-width: 720px) {
+  .principles-inner { grid-template-columns: 1fr; }
+}
+
+/* ── Thesis ── */
+.thesis-section { padding-top: 80px; padding-bottom: 0; }
+.thesis-inner {
+  text-align: center;
+  padding: 64px 40px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.thesis-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(172,170,255,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.thesis-quote {
+  font-size: clamp(15px, 2.2vw, 20px);
+  color: var(--text);
+  line-height: 1.8;
+  font-style: italic;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+}
+.thesis-cite {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 20px;
+  letter-spacing: 1px;
+  font-style: normal;
+}
+</style>

@@ -1,0 +1,324 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { languages, type Lang, useTranslations } from '../../../i18n';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+
+const steps = [
+  {
+    num: '01',
+    title: 'Install D0 CLI',
+    code: 'npm install -g @donutlabs-ai/d0-cli',
+    output: '+ @donutlabs-ai/d0-cli@latest\nadded 42 packages in 3.2s',
+    note: lang === 'zh' ? '需要 Node.js 18+。安装后终端输入 d0 即可验证。' : 'Requires Node.js 18+. After install, type d0 in terminal to verify.',
+  },
+  {
+    num: '02',
+    title: 'Authenticate',
+    code: 'd0 login',
+    output: '✓ Opening browser for authentication...\n✓ Authenticated as @you\n✓ Turnkey wallet initialized — ready to trade',
+    note: lang === 'zh' ? 'D0 使用 Turnkey 云端密钥托管。私钥由 Turnkey 安全硬件生成和保管，D0 本身不接触私钥。' : 'D0 uses Turnkey cloud key custody. Private keys are generated and secured by Turnkey hardware — D0 never touches them.',
+  },
+  {
+    num: '03',
+    title: lang === 'zh' ? '查询行情' : 'Query Market Data',
+    code: 'd0 price ETH',
+    output: 'ETH/USDC  $3,247.50  +2.3% 24h  Vol $18.2B',
+    note: lang === 'zh' ? '所有读取操作无需任何额外配置。价格、K线、订单簿、持仓、资金费率等数据开箱即用。' : 'All read operations work with zero config. Prices, candlesticks, order book, positions, funding rates — all available out of the box.',
+  },
+  {
+    num: '04',
+    title: lang === 'zh' ? '执行第一笔交易' : 'Execute Your First Trade',
+    code: 'd0 hl:limit buy ETH 0.1 3200',
+    output: '✓ Limit order placed\n  Side: BUY | Size: 0.1 ETH | Price: $3,200.00\n  Status: OPEN | Order ID: 0x7a3f...',
+    note: lang === 'zh' ? '这是一笔 Hyperliquid 上的限价买单。0.1 ETH，价格 $3,200。D0 自动完成签名和广播。' : 'A limit buy order on Hyperliquid. 0.1 ETH at $3,200. D0 handles signing and broadcasting automatically.',
+  },
+];
+---
+<BaseLayout title={t('quickstart.title')} description={t('quickstart.subtitle')} lang={lang}>
+
+<section class="qs-page">
+  <a href={`/${lang}/learn/`} class="back-link">{t('quickstart.back')}</a>
+  <div class="section-label">QUICK START</div>
+  <h1 class="qs-h1">{t('quickstart.title')}</h1>
+  <p class="qs-sub">{t('quickstart.subtitle')}</p>
+
+  <div class="steps">
+    {steps.map(step => (
+      <div class="step">
+        <div class="step-num">{step.num}</div>
+        <div class="step-body">
+          <h2 class="step-title">{step.title}</h2>
+          <div class="step-terminal">
+            <div class="st-bar">
+              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            </div>
+            <div class="st-body">
+              <div class="st-line"><span class="st-prompt">$</span> <code>{step.code}</code></div>
+              <pre class="st-output">{step.output}</pre>
+            </div>
+          </div>
+          <p class="step-note">{step.note}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+</BaseLayout>
+<style>
+.breadcrumb {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 24px 24px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+.breadcrumb a { color: var(--accent); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent2); }
+
+.qs-header {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+}
+.qs-badge {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: #131320;
+  background: var(--accent);
+  padding: 4px 12px;
+  border-radius: 3px;
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+}
+.qs-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(20px, 3vw, 32px);
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.qs-subtitle { font-size: 16px; color: var(--text2); line-height: 1.6; margin-bottom: 20px; }
+.qs-meta-row { display: flex; gap: 20px; flex-wrap: wrap; }
+.qs-meta-item {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--text2);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  border-radius: 4px;
+}
+
+/* Progress bar */
+.progress-bar {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 0 24px 48px;
+}
+.progress-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  overflow-x: auto;
+}
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  flex: 1;
+  min-width: 80px;
+}
+.ps-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: #131320;
+  background: var(--accent);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ps-title { font-size: 11px; font-weight: 700; color: var(--text); text-align: center; }
+.ps-time { font-size: 10px; color: var(--muted); font-family: 'Space Mono', monospace; }
+.ps-line {
+  position: absolute;
+  top: 14px;
+  left: calc(50% + 14px);
+  right: calc(-50% + 14px);
+  height: 1px;
+  background: var(--border2);
+}
+
+/* Steps */
+.steps-container {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+.step-section { scroll-margin-top: 80px; }
+.step-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.step-num-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #131320;
+  background: var(--accent);
+  padding: 4px 10px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.step-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.step-time {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+}
+.step-desc { font-size: 14px; color: var(--text2); line-height: 1.8; margin-bottom: 20px; }
+
+/* Code blocks */
+.code-blocks { display: flex; flex-direction: column; gap: 12px; }
+.code-block-wrap { display: flex; flex-direction: column; gap: 4px; }
+.code-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+.code-box {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.code-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #0d0d1a;
+  padding: 16px 20px;
+}
+.code-pre {
+  flex: 1;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0;
+  line-height: 1.6;
+}
+.copy-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  padding: 4px 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: all 0.15s;
+}
+.copy-btn:hover { background: rgba(172,170,255,0.1); }
+.code-output {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 12px 20px;
+}
+.output-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.output-pre {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--text2);
+  white-space: pre-wrap;
+  margin: 0;
+  line-height: 1.7;
+}
+
+/* Next steps */
+.next-section {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 64px 24px 80px;
+}
+.next-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+.next-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.next-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.next-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.next-icon { font-size: 24px; }
+.next-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent);
+}
+.next-name { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.4; }
+.next-desc { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+@media (max-width: 600px) {
+  .next-grid { grid-template-columns: 1fr; }
+  .progress-inner { gap: 0; }
+  .ps-line { display: none; }
+}
+</style>

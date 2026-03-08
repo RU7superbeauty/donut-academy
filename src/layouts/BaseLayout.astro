@@ -1,25 +1,51 @@
 ---
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import { type Lang, defaultLang, useTranslations } from '../i18n';
+
 interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  lang?: Lang;
 }
 const {
   title = 'Donut Academy',
-  description = 'AI-Native Crypto Trading Infrastructure — Learn D0, build autonomous trading agents.',
-  ogImage = '/logo.png'
+  description = 'AI-Native Crypto Trading Infrastructure',
+  ogImage = '/logo.png',
+  lang = defaultLang,
 } = Astro.props;
 
+const t = useTranslations(lang);
 const currentPath = Astro.url.pathname;
+
 const navItems = [
-  { href: '/learn/', label: 'LEARN' },
-  { href: '/playbook/', label: 'PLAYBOOK' },
-  { href: '/research/', label: 'RESEARCH' },
-  { href: '/updates/', label: 'UPDATES' },
+  { href: `/${lang}/learn/`, label: t('nav.learn') },
+  { href: `/${lang}/playbook/`, label: t('nav.playbook') },
+  { href: `/${lang}/research/`, label: t('nav.research') },
+  { href: `/${lang}/updates/`, label: t('nav.updates') },
+];
+
+const footerLearn = [
+  { href: `/${lang}/learn/`, label: 'Overview' },
+  { href: `/${lang}/learn/quickstart/`, label: 'Quick Start' },
+];
+const footerPlaybook = [
+  { href: `/${lang}/playbook/`, label: t('nav.playbook') },
+  { href: `/${lang}/playbook/funding-rate-arb/`, label: 'Funding Rate Arb' },
+  { href: `/${lang}/playbook/whale-monitor/`, label: 'Whale Monitor' },
+  { href: `/${lang}/playbook/mm-detection/`, label: 'MM Detection' },
+];
+const footerResearch = [
+  { href: `/${lang}/research/`, label: t('nav.research') },
+  { href: `/${lang}/articles/dr-001-intent-parsing/`, label: 'DR-001' },
+  { href: `/${lang}/articles/dr-002-cross-protocol-semantics/`, label: 'DR-002' },
+  { href: `/${lang}/articles/dr-003-risk-failure-modes/`, label: 'DR-003' },
+  { href: `/${lang}/articles/dr-004-multi-agent-game-theory/`, label: 'DR-004' },
+  { href: `/${lang}/articles/dr-005-mm-pattern-detection/`, label: 'DR-005' },
 ];
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,10 +62,9 @@ const navItems = [
 </head>
 <body>
 
-<!-- Top Nav -->
 <header class="topbar">
   <div class="topbar-inner">
-    <a href="/" class="logo">
+    <a href={`/${lang}/`} class="logo">
       <img src="/logo.png" alt="Donut" class="logo-img" />
       <span class="logo-text">DONUT <em>ACADEMY</em></span>
     </a>
@@ -53,40 +78,40 @@ const navItems = [
           {item.label}
         </a>
       ))}
+      <LanguageSwitcher lang={lang} currentPath={currentPath} />
     </nav>
 
     <div class="nav-cta">
       <a href="https://github.com/DonutLabs-ai/d0-cli" target="_blank" rel="noopener" class="btn-cta">
-        GET D0 <span class="cta-arrow">→</span>
+        {t('nav.get_d0')} <span class="cta-arrow">→</span>
       </a>
     </div>
 
-    <!-- Mobile hamburger -->
     <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </div>
 
-  <!-- Mobile menu -->
   <div class="mobile-menu" id="mobileMenu">
     {navItems.map(item => (
       <a href={item.href} class="mobile-nav-link">{item.label}</a>
     ))}
-    <a href="https://github.com/DonutLabs-ai/d0-cli" target="_blank" class="mobile-nav-link cta">GET D0 →</a>
+    <div class="mobile-nav-link" style="display:flex;gap:8px;padding:12px 24px">
+      <LanguageSwitcher lang={lang} currentPath={currentPath} />
+    </div>
+    <a href="https://github.com/DonutLabs-ai/d0-cli" target="_blank" class="mobile-nav-link cta">{t('nav.get_d0')} →</a>
   </div>
 </header>
 
-<!-- Page Content -->
 <main>
   <slot />
 </main>
 
-<!-- Footer -->
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="/" class="footer-logo">DONUT <span>ACADEMY</span></a>
-      <p class="footer-tagline">AI-Native Crypto Trading Infrastructure.<br>Less GUI. More Agent.</p>
+      <a href={`/${lang}/`} class="footer-logo">DONUT <span>ACADEMY</span></a>
+      <p class="footer-tagline">{t('footer.tagline')}</p>
       <div class="footer-socials">
         <a href="https://github.com/DonutLabs-ai" target="_blank" aria-label="GitHub">
           <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
@@ -99,47 +124,32 @@ const navItems = [
 
     <div class="footer-cols">
       <div class="footer-col">
-        <h4>LEARN</h4>
-        <a href="/learn/">Overview</a>
-        <a href="/learn/quickstart/">Quick Start</a>
-        <a href="/learn/tier-1/">Tier 1 — Intro</a>
-        <a href="/learn/tier-2/">Tier 2 — Advanced</a>
-        <a href="/learn/tier-3/">Tier 3 — Frontier</a>
+        <h4>{t('nav.learn')}</h4>
+        {footerLearn.map(l => <a href={l.href}>{l.label}</a>)}
       </div>
       <div class="footer-col">
-        <h4>PLAYBOOK</h4>
-        <a href="/playbook/">All Workflows</a>
-        <a href="/playbook/funding-rate-arb/">Funding Rate Arb</a>
-        <a href="/playbook/whale-monitor/">Whale Monitor</a>
-        <a href="/playbook/mm-detection/">MM Detection</a>
+        <h4>{t('nav.playbook')}</h4>
+        {footerPlaybook.map(l => <a href={l.href}>{l.label}</a>)}
       </div>
       <div class="footer-col">
-        <h4>RESEARCH</h4>
-        <a href="/research/">All Papers</a>
-        <a href="/articles/dr-001-intent-parsing/">DR-001 Intent Parsing</a>
-        <a href="/articles/dr-002-cross-protocol-semantics/">DR-002 Cross-Protocol</a>
-        <a href="/articles/dr-003-risk-failure-modes/">DR-003 Risk Failure</a>
-        <a href="/articles/dr-004-multi-agent-game-theory/">DR-004 Game Theory</a>
-        <a href="/articles/dr-005-mm-pattern-detection/">DR-005 MM Detection</a>
+        <h4>{t('nav.research')}</h4>
+        {footerResearch.map(l => <a href={l.href}>{l.label}</a>)}
       </div>
       <div class="footer-col">
         <h4>D0 CLI</h4>
         <a href="https://github.com/DonutLabs-ai/d0-cli" target="_blank">Install D0</a>
-        <a href="/updates/">Changelog</a>
-        <a href="/articles/agentic-trading-stack/">Architecture</a>
-        <a href="/articles/d0-design-principles/">Design Principles</a>
+        <a href={`/${lang}/updates/`}>{t('nav.updates')}</a>
       </div>
     </div>
   </div>
 
   <div class="footer-bottom">
-    <span>© 2026 DonutLabs. All rights reserved.</span>
+    <span>{t('footer.rights')}</span>
     <span class="footer-disclaimer">NFA / DYOR / For educational purposes only.</span>
   </div>
 </footer>
 
 <script>
-  // Mobile menu toggle
   const btn = document.getElementById('hamburgerBtn');
   const menu = document.getElementById('mobileMenu');
   btn?.addEventListener('click', () => {
@@ -153,208 +163,4 @@ const navItems = [
 
 <style is:global>
   @import '../styles/global.css';
-
-  /* ─── Topbar ─── */
-  .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 200;
-    background: rgba(13,13,22,0.92);
-    border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-  .topbar-inner {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    padding: 0 24px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    gap: 32px;
-  }
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    flex-shrink: 0;
-  }
-  .logo-img {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
-    border-radius: 6px;
-  }
-  .logo-text {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    color: var(--accent);
-    white-space: nowrap;
-  }
-  .logo-text em {
-    color: var(--text);
-    font-style: normal;
-  }
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    flex: 1;
-  }
-  .nav-link {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    color: var(--text2);
-    text-decoration: none;
-    padding: 7px 12px;
-    border-radius: 4px;
-    transition: color 0.15s, background 0.15s;
-  }
-  .nav-link:hover { color: var(--text); background: rgba(172,170,255,0.07); }
-  .nav-link.active { color: var(--accent); }
-  .nav-cta { flex-shrink: 0; }
-  .btn-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: #131320;
-    background: var(--accent);
-    padding: 8px 16px;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: background 0.15s, transform 0.1s;
-  }
-  .btn-cta:hover { background: var(--accent2); transform: translateY(-1px); }
-  .cta-arrow { font-size: 13px; }
-
-  /* Hamburger */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    margin-left: auto;
-  }
-  .hamburger span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: var(--text2);
-    border-radius: 2px;
-    transition: all 0.2s;
-  }
-  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
-  .mobile-menu {
-    display: none;
-    flex-direction: column;
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    padding: 8px 0;
-  }
-  .mobile-menu.open { display: flex; }
-  .mobile-nav-link {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    color: var(--text2);
-    text-decoration: none;
-    padding: 12px 24px;
-    border-bottom: 1px solid var(--border);
-  }
-  .mobile-nav-link.cta { color: var(--accent); }
-
-  @media (max-width: 680px) {
-    .nav-links, .nav-cta { display: none; }
-    .hamburger { display: flex; }
-  }
-
-  /* ─── Footer ─── */
-  .footer {
-    margin-top: 96px;
-    border-top: 1px solid var(--border);
-    background: var(--surface);
-  }
-  .footer-inner {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    padding: 56px 24px 48px;
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 48px;
-  }
-  .footer-brand { display: flex; flex-direction: column; gap: 12px; }
-  .footer-logo {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--accent);
-    text-decoration: none;
-  }
-  .footer-logo span { color: var(--text); }
-  .footer-tagline {
-    font-size: 12px;
-    color: var(--text2);
-    line-height: 1.7;
-  }
-  .footer-socials { display: flex; gap: 12px; margin-top: 4px; }
-  .footer-socials a { color: var(--text2); transition: color 0.15s; }
-  .footer-socials a:hover { color: var(--accent); }
-
-  .footer-cols {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-  }
-  .footer-col { display: flex; flex-direction: column; gap: 8px; }
-  .footer-col h4 {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--accent);
-    margin-bottom: 4px;
-  }
-  .footer-col a {
-    font-size: 12px;
-    color: var(--text2);
-    text-decoration: none;
-    transition: color 0.15s;
-    line-height: 1.4;
-  }
-  .footer-col a:hover { color: var(--text); }
-
-  .footer-bottom {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    padding: 16px 24px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 11px;
-    color: var(--muted);
-    font-family: 'Space Mono', monospace;
-  }
-
-  @media (max-width: 860px) {
-    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
-    .footer-cols { grid-template-columns: repeat(2, 1fr); }
-    .footer-bottom { flex-direction: column; gap: 6px; text-align: center; }
-  }
-  @media (max-width: 480px) {
-    .footer-cols { grid-template-columns: 1fr 1fr; }
-  }
 </style>

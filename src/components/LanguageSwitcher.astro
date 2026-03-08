@@ -1,0 +1,41 @@
+---
+import { languages, type Lang, getLocalizedPath } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  currentPath: string;
+}
+
+const { lang, currentPath } = Astro.props;
+---
+
+<div class="lang-switcher">
+  {Object.entries(languages).map(([code, label]) => (
+    <a
+      href={getLocalizedPath(currentPath, code as Lang)}
+      class={`lang-btn ${code === lang ? 'active' : ''}`}
+    >
+      {label}
+    </a>
+  ))}
+</div>
+
+<style>
+.lang-switcher {
+  display: flex;
+  gap: 2px;
+  margin-left: 12px;
+}
+.lang-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  padding: 4px 8px;
+  color: var(--text2);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  letter-spacing: 0.5px;
+  transition: all 0.15s;
+}
+.lang-btn:hover { color: var(--accent); border-color: var(--accent); }
+.lang-btn.active { color: var(--accent); border-color: var(--accent); background: rgba(172,170,255,0.08); }
+</style>

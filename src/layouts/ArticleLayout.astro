@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { type Lang, defaultLang } from '../i18n';
 
 interface Props {
   frontmatter: {
@@ -14,9 +15,10 @@ interface Props {
   };
   headings: { depth: number; slug: string; text: string }[];
   readingTime: number;
+  lang?: Lang;
 }
 
-const { frontmatter, headings, readingTime } = Astro.props;
+const { frontmatter, headings, readingTime, lang = defaultLang } = Astro.props;
 
 const categoryColor: Record<string, string> = {
   'AI FRONTIER': '#ACAAFF',
@@ -36,11 +38,12 @@ const tocHeadings = headings.filter(h => h.depth <= 3);
 <BaseLayout
   title={frontmatter.title}
   description={frontmatter.description}
+  lang={lang}
 >
 
 <!-- Breadcrumb -->
 <nav class="breadcrumb">
-  <a href="/research/">RESEARCH</a>
+  <a href={`/${lang}/research/`}>RESEARCH</a>
   <span>›</span>
   <span class="bc-cat" style={`color: ${accentColor}`}>{frontmatter.category}</span>
 </nav>
@@ -108,13 +111,13 @@ const tocHeadings = headings.filter(h => h.depth <= 3);
 <!-- Prev / Next nav -->
 <nav class="article-nav">
   {prevArticle ? (
-    <a href={`/articles/${prevArticle.id}/`} class="nav-article nav-prev">
+    <a href={`/${lang}/articles/${prevArticle.id}/`} class="nav-article nav-prev">
       <span class="nav-dir">← PREVIOUS</span>
       <span class="nav-title">{prevArticle.data.title}</span>
     </a>
   ) : <div></div>}
   {nextArticle ? (
-    <a href={`/articles/${nextArticle.id}/`} class="nav-article nav-next">
+    <a href={`/${lang}/articles/${nextArticle.id}/`} class="nav-article nav-next">
       <span class="nav-dir">NEXT →</span>
       <span class="nav-title">{nextArticle.data.title}</span>
     </a>
