@@ -118,11 +118,11 @@ const featured = articles
     <div class="qs-code">
       <div class="code-block">
         <div class="code-line"><span class="code-comment"># 1. Install</span></div>
-        <div class="code-line copyable"><code>npm install -g @donutlabs-ai/d0-cli</code><button class="copy-btn" data-copy="npm install -g @donutlabs-ai/d0-cli">COPY</button></div>
+        <div class="code-line copyable"><code>npm install -g @donutlabs-ai/d0-cli</code><button class="copy-btn" data-copy="npm install -g @donutlabs-ai/d0-cli" data-copy-label={t('ui.copy')} data-copied-label={t('ui.copied')}>{t('ui.copy')}</button></div>
         <div class="code-line"><span class="code-comment"># 2. Authenticate</span></div>
-        <div class="code-line copyable"><code>d0 login</code><button class="copy-btn" data-copy="d0 login">COPY</button></div>
+        <div class="code-line copyable"><code>d0 login</code><button class="copy-btn" data-copy="d0 login" data-copy-label={t('ui.copy')} data-copied-label={t('ui.copied')}>{t('ui.copy')}</button></div>
         <div class="code-line"><span class="code-comment"># 3. Your first query</span></div>
-        <div class="code-line copyable"><code>d0 price ETH</code><button class="copy-btn" data-copy="d0 price ETH">COPY</button></div>
+        <div class="code-line copyable"><code>d0 price ETH</code><button class="copy-btn" data-copy="d0 price ETH" data-copy-label={t('ui.copy')} data-copied-label={t('ui.copied')}>{t('ui.copy')}</button></div>
         <div class="code-output"><span class="out-text">ETH/USDC  <strong>$3,247.50</strong>  +2.3% 24h</span></div>
       </div>
     </div>
@@ -193,8 +193,10 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const text = (btn as HTMLButtonElement).dataset.copy || '';
     navigator.clipboard.writeText(text).then(() => {
-      btn.textContent = 'COPIED!';
-      setTimeout(() => { btn.textContent = 'COPY'; }, 1500);
+      const copiedLabel = (btn as HTMLButtonElement).dataset.copiedLabel || 'COPIED!';
+      const copyLabel = (btn as HTMLButtonElement).dataset.copyLabel || 'COPY';
+      btn.textContent = copiedLabel;
+      setTimeout(() => { btn.textContent = copyLabel; }, 1500);
     });
   });
 });

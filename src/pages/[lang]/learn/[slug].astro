@@ -49,7 +49,7 @@ const next = idx < sorted.length - 1 ? sorted[idx + 1] : null;
 
   {headings.length > 0 && (
     <div class="toc">
-      <div class="toc-title">Table of Contents</div>
+      <div class="toc-title">{t('ui.toc')}</div>
       <ol>
         {headings.filter((h: any) => h.depth <= 3).map((h: any) => (
           <li style={h.depth === 3 ? 'margin-left:16px' : ''}>

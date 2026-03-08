@@ -1,7 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { type Lang, defaultLang } from '../i18n';
+import { type Lang, defaultLang, useTranslations } from '../i18n';
 
 interface Props {
   frontmatter: {
@@ -19,6 +19,7 @@ interface Props {
 }
 
 const { frontmatter, headings, readingTime, lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
 
 const categoryColor: Record<string, string> = {
   'AI FRONTIER': '#ACAAFF',
@@ -57,7 +58,7 @@ const tocHeadings = headings.filter(h => h.depth <= 3);
     <span class="meta-sep">·</span>
     <span class="meta-date">{frontmatter.date}</span>
     <span class="meta-sep">·</span>
-    <span class="meta-read">⏱ {readingTime} min read</span>
+    <span class="meta-read">⏱ {readingTime} {t('ui.min_read')}</span>
   </div>
 
   <h1 class="article-title">{frontmatter.title}</h1>

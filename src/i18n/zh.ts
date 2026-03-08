@@ -9,6 +9,14 @@ export default {
   // ── Footer ──
   'footer.tagline': 'AI 原生加密交易基础设施',
   'footer.rights': '© 2026 Donut Labs. DYOR / NFA.',
+  'footer.learn_overview': '概览',
+  'footer.learn_quickstart': '快速开始',
+
+  // ── UI ──
+  'ui.copy': '复制',
+  'ui.copied': '已复制',
+  'ui.toc': '目录',
+  'ui.min_read': '分钟阅读',
 
   // ── Hero ──
   'hero.badge': 'D0 CLI · 内测中 · Hyperliquid + Polymarket',

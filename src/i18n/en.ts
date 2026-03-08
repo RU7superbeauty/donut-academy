@@ -9,6 +9,14 @@ export default {
   // ── Footer ──
   'footer.tagline': 'AI-Native Crypto Trading Infrastructure',
   'footer.rights': '© 2026 Donut Labs. DYOR / NFA.',
+  'footer.learn_overview': 'Overview',
+  'footer.learn_quickstart': 'Quick Start',
+
+  // ── UI ──
+  'ui.copy': 'COPY',
+  'ui.copied': 'COPIED!',
+  'ui.toc': 'Table of Contents',
+  'ui.min_read': 'min read',
 
   // ── Hero ──
   'hero.badge': 'D0 CLI · Private Beta · Hyperliquid + Polymarket',
