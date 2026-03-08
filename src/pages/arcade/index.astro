@@ -1,0 +1,484 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Arcade — Donut Academy"
+  description="Play pixel games while you learn crypto trading. Catch Coins, Breakout, Flappy Donut, Pixel Puzzle."
+>
+
+<section class="arcade-section">
+  <div class="arcade-inner">
+    <div class="section-label" data-i18n="arcade.label">ARCADE</div>
+    <h1 class="section-heading" data-i18n="arcade.title">Pixel Arcade</h1>
+    <p class="arcade-sub" data-i18n="arcade.desc">Take a break from trading — play some retro games built into the Academy.</p>
+
+    <div class="game-tabs">
+      <div class="game-tab active" data-game="catch" data-i18n="arcade.catchCoins">CATCH COINS</div>
+      <div class="game-tab" data-game="breakout" data-i18n="arcade.breakout">BREAKOUT</div>
+      <div class="game-tab" data-game="flappy" data-i18n="arcade.flappyDonut">FLAPPY DONUT</div>
+      <div class="game-tab" data-game="puzzle" data-i18n="arcade.pixelPuzzle">PIXEL PUZZLE</div>
+    </div>
+
+    <div class="game-area">
+      <canvas id="gameCanvas"></canvas>
+      <div class="game-score" id="gameScore"></div>
+      <div class="game-hint" id="gameHint"></div>
+      <div class="game-overlay" id="gameOverlay">
+        <button class="start-btn" id="startBtn">START</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .arcade-section {
+    padding: 80px 24px 120px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .arcade-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-heading {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(20px, 3vw, 28px);
+    color: var(--text);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .arcade-sub {
+    color: var(--text2);
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 32px;
+    max-width: 500px;
+  }
+  /* Game tabs */
+  .game-tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 2px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .game-tab {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .game-tab:hover { color: var(--accent); background: var(--surface); }
+  .game-tab.active { background: var(--surface); color: var(--accent); border-color: var(--accent); box-shadow: 0 -2px 8px rgba(172,170,255,0.1); }
+
+  /* Game canvas */
+  .game-area {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    position: relative;
+    width: 100%;
+    height: 460px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(172,170,255,0.06), inset 0 0 60px rgba(0,0,0,0.3);
+  }
+  .game-area canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+  }
+  .game-score {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px;
+    color: var(--gold);
+    z-index: 5;
+    text-shadow: 0 0 8px rgba(232,184,78,0.4);
+  }
+  .game-hint {
+    position: absolute;
+    bottom: 12px;
+    left: 18px;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    z-index: 5;
+  }
+  .game-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    background: rgba(10,10,20,0.75);
+    backdrop-filter: blur(4px);
+    z-index: 6;
+  }
+  .game-overlay.hidden { display: none; }
+  .game-overlay .start-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    color: var(--bg);
+    background: var(--accent);
+    border: none;
+    padding: 14px 32px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.15s;
+    box-shadow: 0 0 16px rgba(172,170,255,0.3);
+  }
+  .game-overlay .start-btn:hover { background: var(--gold); box-shadow: 0 0 16px rgba(232,184,78,0.4); }
+  .game-overlay .game-over-text {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 18px;
+    color: var(--red);
+    text-shadow: 0 0 12px rgba(248,113,113,0.4);
+  }
+  .game-overlay .final-score {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    color: var(--gold);
+    text-shadow: 0 0 8px rgba(232,184,78,0.3);
+  }
+
+  @media (max-width: 640px) {
+    .arcade-section { padding: 60px 16px 80px; }
+    .game-area { height: 340px; }
+    .game-tab { padding: 8px 12px; font-size: 9px; }
+  }
+</style>
+
+<script is:inline>
+// ============================
+// GAME ENGINE (migrated from index.html)
+// ============================
+(function() {
+  const canvas = document.getElementById('gameCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const overlay = document.getElementById('gameOverlay');
+  const startBtn = document.getElementById('startBtn');
+  const scoreEl = document.getElementById('gameScore');
+  const hintEl = document.getElementById('gameHint');
+
+  let W, H, PX;
+  let currentGame = 'catch';
+  let gameLoop = null;
+  let running = false;
+
+  // Starfield background
+  let stars = [];
+  function initStars() {
+    stars = [];
+    for (let i = 0; i < 60; i++) stars.push({ x: Math.random()*W, y: Math.random()*H, s: Math.random()*1.5+0.5, sp: Math.random()*0.3+0.1 });
+  }
+  function drawStars() {
+    stars.forEach(s => {
+      ctx.fillStyle = `rgba(172,170,255,${s.s/2.5})`;
+      ctx.fillRect(s.x, s.y, s.s, s.s);
+      s.y += s.sp;
+      if (s.y > H) { s.y = 0; s.x = Math.random()*W; }
+    });
+  }
+
+  function resize() {
+    const r = window.devicePixelRatio || 1;
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = rect.width;
+    H = rect.height;
+    canvas.width = W * r;
+    canvas.height = H * r;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(r, 0, 0, r, 0, 0);
+    PX = Math.max(2, Math.floor(W / 120));
+    initStars();
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  // Tab switching
+  document.querySelectorAll('.game-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.game-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentGame = tab.dataset.game;
+      stopGame();
+      overlay.classList.remove('hidden');
+      overlay.innerHTML = '<button class="start-btn" id="startBtn">START</button>';
+      document.getElementById('startBtn').addEventListener('click', startGame);
+      scoreEl.textContent = '';
+      hintEl.textContent = '';
+    });
+  });
+
+  function stopGame() { running = false; if (gameLoop) { cancelAnimationFrame(gameLoop); gameLoop = null; } }
+
+  function gameOver(score) {
+    stopGame();
+    overlay.classList.remove('hidden');
+    overlay.innerHTML = `<div class="game-over-text">GAME OVER</div><div class="final-score">SCORE: ${score}</div><button class="start-btn" id="startBtn">RETRY</button>`;
+    document.getElementById('startBtn').addEventListener('click', startGame);
+  }
+
+  function startGame() {
+    overlay.classList.add('hidden');
+    running = true;
+    resize();
+    if (currentGame === 'catch') catchInit();
+    else if (currentGame === 'breakout') brkInit();
+    else if (currentGame === 'flappy') flapInit();
+    else if (currentGame === 'puzzle') puzzInit();
+    function loop() {
+      if (!running) return;
+      ctx.fillStyle = '#0a0a18';
+      ctx.fillRect(0, 0, W, H);
+      drawStars();
+      if (currentGame === 'catch') { catchUpdate(); catchDraw(); }
+      else if (currentGame === 'breakout') { brkUpdate(); brkDraw(); }
+      else if (currentGame === 'flappy') { flapUpdate(); flapDraw(); }
+      else if (currentGame === 'puzzle') { puzzDraw(); }
+      gameLoop = requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  startBtn.addEventListener('click', startGame);
+
+  // Pointer / touch
+  let pointerX = 0;
+  function pMove(e) {
+    const rect = canvas.getBoundingClientRect();
+    const p = e.touches ? e.touches[0] : e;
+    pointerX = p.clientX - rect.left;
+    if (currentGame === 'catch') catchInput(pointerX);
+    else if (currentGame === 'breakout') brkInput(pointerX);
+  }
+  canvas.addEventListener('mousemove', pMove);
+  canvas.addEventListener('touchmove', e => { e.preventDefault(); pMove(e); }, { passive: false });
+  canvas.addEventListener('click', () => {
+    if (currentGame === 'flappy' && running) flapJump();
+  });
+  canvas.addEventListener('touchstart', e => {
+    if (currentGame === 'flappy' && running) { e.preventDefault(); flapJump(); }
+    if (currentGame === 'puzzle' && running) {
+      const rect = canvas.getBoundingClientRect();
+      const t = e.touches[0];
+      const x = t.clientX - rect.left;
+      const y = t.clientY - rect.top;
+      puzzClick(x, y);
+    }
+  }, { passive: false });
+  canvas.addEventListener('click', e => {
+    if (currentGame === 'puzzle' && running) {
+      const rect = canvas.getBoundingClientRect();
+      puzzClick(e.clientX - rect.left, e.clientY - rect.top);
+    }
+  });
+
+  // ─── CATCH COINS ───
+  let catcher, coins, catchScore, catchSpeed;
+  function catchInit() {
+    catchScore = 0; catchSpeed = 2;
+    catcher = { x: W/2, w: PX*8, h: PX*3 };
+    coins = [];
+    hintEl.textContent = 'MOVE TO CATCH';
+    for (let i = 0; i < 4; i++) coins.push({ x: Math.random()*(W-PX*3), y: -Math.random()*H, s: PX*3 });
+  }
+  function catchInput(x) { catcher.x = x; }
+  function catchUpdate() {
+    coins.forEach(c => {
+      c.y += catchSpeed;
+      if (c.y > H) { c.y = -PX*3; c.x = Math.random()*(W-c.s); }
+      if (c.y+c.s > H-catcher.h && Math.abs(c.x+c.s/2 - catcher.x) < catcher.w/2+c.s/2) {
+        catchScore += 10;
+        catchSpeed = 2 + catchScore/50;
+        c.y = -PX*3; c.x = Math.random()*(W-c.s);
+      }
+    });
+    scoreEl.textContent = 'SCORE: ' + catchScore;
+  }
+  function catchDraw() {
+    ctx.fillStyle = '#acaaff';
+    ctx.fillRect(catcher.x - catcher.w/2, H - catcher.h, catcher.w, catcher.h);
+    ctx.fillStyle = '#e8b84e';
+    coins.forEach(c => ctx.fillRect(c.x, c.y, c.s, c.s));
+  }
+
+  // ─── BREAKOUT ───
+  let paddle, ball, bricks, brkScore;
+  function brkInit() {
+    brkScore = 0;
+    paddle = { x: W/2, w: PX*10, h: PX*2 };
+    ball = { x: W/2, y: H-PX*5, dx: 3, dy: -3, r: PX*1.5 };
+    bricks = [];
+    const cols = Math.floor(W / (PX*6+4));
+    const rows = 5;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      bricks.push({ x: c*(PX*6+4)+PX*2, y: r*(PX*3+3)+PX*6, w: PX*6, h: PX*3, alive: true });
+    }
+    hintEl.textContent = 'MOVE TO CONTROL PADDLE';
+  }
+  function brkInput(x) { paddle.x = x; }
+  function brkUpdate() {
+    ball.x += ball.dx; ball.y += ball.dy;
+    if (ball.x < ball.r || ball.x > W-ball.r) ball.dx *= -1;
+    if (ball.y < ball.r) ball.dy *= -1;
+    if (ball.y > H) gameOver(brkScore);
+    if (ball.y+ball.r > H-paddle.h && Math.abs(ball.x-paddle.x) < paddle.w/2) {
+      ball.dy = -Math.abs(ball.dy);
+      ball.dx = (ball.x - paddle.x) / (paddle.w/2) * 5;
+    }
+    bricks.forEach(b => {
+      if (b.alive && ball.x > b.x && ball.x < b.x+b.w && ball.y > b.y && ball.y < b.y+b.h) {
+        b.alive = false; ball.dy *= -1; brkScore += 10;
+      }
+    });
+    scoreEl.textContent = 'SCORE: ' + brkScore;
+    if (bricks.every(b => !b.alive)) gameOver(brkScore);
+  }
+  function brkDraw() {
+    ctx.fillStyle = '#acaaff';
+    ctx.fillRect(paddle.x-paddle.w/2, H-paddle.h, paddle.w, paddle.h);
+    ctx.fillStyle = '#e8b84e';
+    ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI*2); ctx.fill();
+    bricks.forEach(b => { if (b.alive) { ctx.fillStyle = '#acaaff'; ctx.fillRect(b.x, b.y, b.w, b.h); } });
+  }
+
+  // ─── FLAPPY DONUT ───
+  let bird, pipes, flapScore, flapGrav, flapGap;
+  function flapInit() {
+    flapScore = 0; flapGrav = 0.4; flapGap = PX*18;
+    bird = { x: W*0.25, y: H/2, vy: 0, s: PX*3 };
+    pipes = [];
+    for (let i = 0; i < 3; i++) pipes.push({ x: W + i*W*0.45, top: Math.random()*(H-flapGap-PX*10)+PX*5, passed: false });
+    hintEl.textContent = 'CLICK / TAP TO FLAP';
+  }
+  function flapJump() { bird.vy = -7; }
+  function flapUpdate() {
+    bird.vy += flapGrav; bird.y += bird.vy;
+    if (bird.y > H || bird.y < 0) gameOver(flapScore);
+    pipes.forEach(p => {
+      p.x -= 3;
+      if (p.x + PX*5 < 0) { p.x = W; p.top = Math.random()*(H-flapGap-PX*10)+PX*5; p.passed = false; }
+      if (!p.passed && p.x + PX*5 < bird.x) { flapScore++; p.passed = true; }
+      if (bird.x+bird.s > p.x && bird.x < p.x+PX*5) {
+        if (bird.y < p.top || bird.y+bird.s > p.top+flapGap) gameOver(flapScore);
+      }
+    });
+    scoreEl.textContent = 'SCORE: ' + flapScore;
+  }
+  function flapDraw() {
+    ctx.fillStyle = '#e8b84e';
+    ctx.fillRect(bird.x, bird.y, bird.s, bird.s);
+    ctx.fillStyle = '#acaaff';
+    pipes.forEach(p => {
+      ctx.fillRect(p.x, 0, PX*5, p.top);
+      ctx.fillRect(p.x, p.top+flapGap, PX*5, H-p.top-flapGap);
+    });
+  }
+
+  // ─── PIXEL PUZZLE ───
+  let puzzGrid, puzzSize, puzzEmpty, puzzMoves;
+  function puzzInit() {
+    puzzSize = 4; puzzMoves = 0;
+    puzzGrid = [];
+    for (let i = 0; i < puzzSize*puzzSize-1; i++) puzzGrid.push(i+1);
+    puzzGrid.push(0);
+    puzzEmpty = puzzSize*puzzSize-1;
+    // shuffle
+    for (let i = 0; i < 200; i++) {
+      const moves = puzzGetMoves();
+      const m = moves[Math.floor(Math.random()*moves.length)];
+      puzzSwap(m);
+    }
+    puzzMoves = 0;
+    hintEl.textContent = 'CLICK TILES TO SOLVE';
+  }
+  function puzzGetMoves() {
+    const r = Math.floor(puzzEmpty/puzzSize), c = puzzEmpty%puzzSize;
+    const m = [];
+    if (r > 0) m.push(puzzEmpty-puzzSize);
+    if (r < puzzSize-1) m.push(puzzEmpty+puzzSize);
+    if (c > 0) m.push(puzzEmpty-1);
+    if (c < puzzSize-1) m.push(puzzEmpty+1);
+    return m;
+  }
+  function puzzSwap(idx) {
+    puzzGrid[puzzEmpty] = puzzGrid[idx];
+    puzzGrid[idx] = 0;
+    puzzEmpty = idx;
+  }
+  function puzzClick(mx, my) {
+    const tileW = W / puzzSize;
+    const tileH = H / puzzSize;
+    const c = Math.floor(mx / tileW);
+    const r = Math.floor(my / tileH);
+    const idx = r * puzzSize + c;
+    if (puzzGetMoves().includes(idx)) {
+      puzzSwap(idx);
+      puzzMoves++;
+      scoreEl.textContent = 'MOVES: ' + puzzMoves;
+      // check win
+      let won = true;
+      for (let i = 0; i < puzzSize*puzzSize-1; i++) if (puzzGrid[i] !== i+1) won = false;
+      if (won) gameOver(puzzMoves);
+    }
+  }
+  function puzzDraw() {
+    const tileW = W / puzzSize;
+    const tileH = H / puzzSize;
+    puzzGrid.forEach((v, i) => {
+      if (v === 0) return;
+      const r = Math.floor(i/puzzSize), c = i%puzzSize;
+      ctx.fillStyle = '#1a1a2e';
+      ctx.fillRect(c*tileW+1, r*tileH+1, tileW-2, tileH-2);
+      ctx.fillStyle = '#acaaff';
+      ctx.font = `${PX*3}px 'Press Start 2P', monospace`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(v, c*tileW+tileW/2, r*tileH+tileH/2);
+    });
+  }
+
+  // Tab click
+  document.querySelectorAll('.game-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.game-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentGame = tab.dataset.game;
+      stopGame();
+      overlay.classList.remove('hidden');
+      overlay.innerHTML = '<button class="start-btn" id="startBtn">START</button>';
+      document.getElementById('startBtn').addEventListener('click', startGame);
+      scoreEl.textContent = '';
+      hintEl.textContent = '';
+    });
+  });
+})();
+</script>
+
+</BaseLayout>
