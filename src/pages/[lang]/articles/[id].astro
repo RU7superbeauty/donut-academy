@@ -1,0 +1,27 @@
+---
+import { getCollection, render } from 'astro:content';
+import ArticleLayout from '../../../layouts/ArticleLayout.astro';
+import { languages, type Lang } from '../../../i18n';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  const paths = [];
+  for (const langCode of Object.keys(languages)) {
+    for (const article of articles) {
+      paths.push({
+        params: { lang: langCode, id: article.id },
+        props: { article, lang: langCode },
+      });
+    }
+  }
+  return paths;
+}
+
+const { article, lang } = Astro.props as { article: any; lang: Lang };
+const { Content, headings } = await render(article);
+const wordCount = (article.body ?? '').split(/\s+/).filter(Boolean).length;
+const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+---
+<ArticleLayout frontmatter={article.data} headings={headings} readingTime={readingTime} lang={lang}>
+  <Content />
+</ArticleLayout>

@@ -1,0 +1,822 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { languages, type Lang, useTranslations } from '../../i18n';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+---
+<BaseLayout title="Donut Academy" description={t('hero.subtitle')} lang={lang}>
+
+<!-- Hero + Game Zone -->
+<div class="hero">
+  <div class="game-tabs">
+    <div class="game-tab active" data-game="catch">CATCH COINS</div>
+    <div class="game-tab" data-game="breakout">BREAKOUT</div>
+    <div class="game-tab" data-game="flappy">FLAPPY DONUT</div>
+    <div class="game-tab" data-game="puzzle">PIXEL PUZZLE</div>
+  </div>
+  <div class="game-area">
+    <canvas id="gameCanvas"></canvas>
+    <div class="game-score" id="gameScore"></div>
+    <div class="game-hint" id="gameHint"></div>
+    <div class="game-overlay" id="gameOverlay">
+      <button class="start-btn" id="startBtn">START</button>
+    </div>
+  </div>
+  <div style="margin-top:20px;text-align:center">
+    <h1>DONUT <span>ACADEMY</span></h1>
+    <p class="subtitle">{t('hero.subtitle')}</p>
+    <p class="tagline">{t('hero.tagline')}</p>
+    <div class="hero-pills">
+      <span class="hero-pill hl">{t('hero.pill.agents')}</span>
+      <span class="hero-pill">{t('hero.pill.custody')}</span>
+      <span class="hero-pill">{t('hero.pill.exchange')}</span>
+      <span class="hero-pill hl">{t('hero.pill.config')}</span>
+      <span class="hero-pill">{t('hero.pill.open')}</span>
+    </div>
+  </div>
+</div>
+
+<!-- S1: Vision -->
+<div class="section" id="vision">
+  <div class="section-header">
+    <span class="section-num">{t('s1.num')}</span>
+    <span class="section-title">{t('s1.title')}</span>
+    <span class="section-sub">{t('s1.sub')}</span>
+  </div>
+
+  <div class="thesis-box">
+    <p set:html={t('s1.thesis1')} />
+    <p style="margin-top:8px;font-size:13px;color:var(--text2)" set:html={t('s1.thesis2')} />
+    <div class="formula">{t('s1.formula')}</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card accent-purple">
+      <div class="card-title">{t('s1.why.title')}</div>
+      <ul>
+        <li>{t('s1.why.1')}</li>
+        <li>{t('s1.why.2')}</li>
+        <li>{t('s1.why.3')}</li>
+        <li>{t('s1.why.4')}</li>
+      </ul>
+    </div>
+    <div class="card accent-gold">
+      <div class="card-title">{t('s1.diff.title')}</div>
+      <ul>
+        <li><strong style="color:var(--gold)">{t('s1.diff.1.label')}</strong> — {t('s1.diff.1.text')}</li>
+        <li><strong style="color:var(--gold)">{t('s1.diff.2.label')}</strong> — {t('s1.diff.2.text')}</li>
+        <li><strong style="color:var(--gold)">{t('s1.diff.3.label')}</strong> — {t('s1.diff.3.text')}</li>
+        <li><strong style="color:var(--gold)">{t('s1.diff.4.label')}</strong> — {t('s1.diff.4.text')}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="more-links">
+    <a class="more-link" href={`/${lang}/articles/agent-economy-thesis/`}>{t('s1.read')}</a>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- S2: Architecture -->
+<div class="section" id="architecture">
+  <div class="section-header">
+    <span class="section-num">{t('s2.num')}</span>
+    <span class="section-title">{t('s2.title')}</span>
+    <span class="section-sub">{t('s2.sub')}</span>
+  </div>
+
+  <p class="section-desc" set:html={t('s2.desc')} />
+
+  <div class="arch-flow">
+    <div class="arch-node">
+      <div class="arch-name">{t('s2.intent.name')}</div>
+      <div class="arch-desc" set:html={t('s2.intent.desc')} />
+    </div>
+    <span class="arch-arrow">-></span>
+    <div class="arch-node hl">
+      <div class="arch-name">{t('s2.parse.name')}</div>
+      <div class="arch-desc" set:html={t('s2.parse.desc')} />
+    </div>
+    <span class="arch-arrow">-></span>
+    <div class="arch-node">
+      <div class="arch-name">{t('s2.strategy.name')}</div>
+      <div class="arch-desc" set:html={t('s2.strategy.desc')} />
+    </div>
+    <span class="arch-arrow">-></span>
+    <div class="arch-node hl">
+      <div class="arch-name">{t('s2.cli.name')}</div>
+      <div class="arch-desc" set:html={t('s2.cli.desc')} />
+    </div>
+    <span class="arch-arrow">-></span>
+    <div class="arch-node">
+      <div class="arch-name">{t('s2.chain.name')}</div>
+      <div class="arch-desc" set:html={t('s2.chain.desc')} />
+    </div>
+  </div>
+
+  <div class="grid-3" style="margin-top:20px">
+    <div class="card">
+      <div class="card-label">{t('s2.read.label')}</div>
+      <div class="card-title" style="font-size:16px">{t('s2.read.title')}</div>
+      <p set:html={t('s2.read.text')} />
+      <div style="margin-top:10px">
+        <span class="tag tag-green">{t('s2.read.tag')}</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">{t('s2.write.label')}</div>
+      <div class="card-title" style="font-size:16px">{t('s2.write.title')}</div>
+      <p>{t('s2.write.text')}</p>
+      <div style="margin-top:10px">
+        <span class="tag tag-accent">{t('s2.write.tag')}</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">{t('s2.auto.label')}</div>
+      <div class="card-title" style="font-size:16px">{t('s2.auto.title')}</div>
+      <p>{t('s2.auto.text')}</p>
+      <div style="margin-top:10px">
+        <span class="tag tag-gold">{t('s2.auto.tag')}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="more-links">
+    <a class="more-link" href={`/${lang}/articles/agentic-trading-stack/`}>{t('s2.read_link')}</a>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- S3: Methodology -->
+<div class="section" id="methodology">
+  <div class="section-header">
+    <span class="section-num">{t('s3.num')}</span>
+    <span class="section-title">{t('s3.title')}</span>
+    <span class="section-sub">{t('s3.sub')}</span>
+  </div>
+
+  <p class="section-desc" set:html={t('s3.desc')} />
+
+  <div class="principle-list">
+    {['p1','p2','p3','p4','p5'].map((p, i) => (
+      <div class="principle-row">
+        <span class="principle-num">{String(i+1).padStart(2,'0')}</span>
+        <div class="principle-body">
+          <h4>{t(`s3.${p}.title`)}</h4>
+          <p>{t(`s3.${p}.text`)}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="more-links">
+    <a class="more-link" href={`/${lang}/articles/d0-design-principles/`}>{t('s3.read')}</a>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- S4: AI Frontier -->
+<div class="section" id="frontier">
+  <div class="section-header">
+    <span class="section-num">{t('s4.num')}</span>
+    <span class="section-title">{t('s4.title')}</span>
+    <span class="section-sub">{t('s4.sub')}</span>
+  </div>
+
+  <p class="section-desc">{t('s4.desc')}</p>
+
+  <div class="insight-box">
+    <p set:html={t('s4.quote')} />
+    <div class="insight-src">{t('s4.quote_src')}</div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:2px;margin-top:20px">
+    {[
+      { key: 'p1', tags: ['MULTI-AGENT', 'AUTONOMOUS', 'SETTLEMENT'] },
+      { key: 'p2', tags: ['NLP', 'ROUTING', 'RISK MGMT'] },
+      { key: 'p3', tags: ['EMBEDDED RISK', 'PRE-EXECUTION', 'MS LATENCY'] },
+      { key: 'p4', tags: ['ON-CHAIN PROOF', 'OPEN SOURCE', 'TRUSTLESS'] },
+    ].map(({ key, tags }) => (
+      <div class="card accent-purple">
+        <div class="card-title">{t(`s4.${key}.title`)}</div>
+        <div class="card-label">{t(`s4.${key}.sub`)}</div>
+        <p set:html={t(`s4.${key}.text`)} />
+        <div class="research-topics">
+          {tags.map(tag => <span class="tag tag-accent">{tag}</span>)}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="more-links">
+    <a class="more-link" href={`/${lang}/articles/agent-to-agent-economy/`}>{t('s4.p1.read')}</a>
+    <a class="more-link" href={`/${lang}/articles/intent-centric-execution/`}>{t('s4.p2.read')}</a>
+    <a class="more-link" href={`/${lang}/articles/realtime-risk-first-class/`}>{t('s4.p3.read')}</a>
+    <a class="more-link" href={`/${lang}/articles/verifiable-transparency/`}>{t('s4.p4.read')}</a>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- S5: Donut Research -->
+<div class="section" id="research">
+  <div class="section-header">
+    <span class="section-num">{t('s5.num')}</span>
+    <span class="section-title">{t('s5.title')}</span>
+    <span class="section-sub">{t('s5.sub')}</span>
+  </div>
+
+  <p class="section-desc">{t('s5.desc')}</p>
+
+  <div style="display:flex;flex-direction:column;gap:2px">
+    {[
+      { id: 'dr001', status: 'active', color: 'accent', tags: ['intent_parsing', 'safety', 'confirmation_ux'] },
+      { id: 'dr002', status: 'active', color: 'accent', tags: ['abstraction', 'multi_protocol', 'semantic_design'] },
+      { id: 'dr003', status: 'exploring', color: 'gold', tags: ['risk_control', 'black_swan', 'failsafe'] },
+      { id: 'dr004', status: 'exploring', color: 'gold', tags: ['game_theory', 'alpha_decay', 'multi_agent'] },
+      { id: 'dr005', status: 'exploring', color: 'gold', tags: ['onchain_analytics', 'pattern_recognition', 'mm_detection'] },
+    ].map(({ id, status, color, tags }) => (
+      <div class="research-card" style={`border-left:3px solid var(--${color})`}>
+        <div class="research-meta">
+          <span class={`tag tag-${color}`}>{t(`s5.${status}`)}</span>
+          <span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted)">{id.replace('dr', 'DR-').toUpperCase()}</span>
+        </div>
+        <h3>{t(`s5.${id}.title`)}</h3>
+        <p>{t(`s5.${id}.text`)}</p>
+        <div class="research-topics">
+          {tags.map(tag => <span class="tag">{t(`tag.${tag}`)}</span>)}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="more-links">
+    <a class="more-link" href={`/${lang}/articles/dr-001-intent-parsing/`}>{t('s5.dr001.read')}</a>
+    <a class="more-link" href={`/${lang}/articles/dr-002-cross-protocol-semantics/`}>{t('s5.dr002.read')}</a>
+    <a class="more-link" href={`/${lang}/articles/dr-003-risk-failure-modes/`}>{t('s5.dr003.read')}</a>
+    <a class="more-link" href={`/${lang}/articles/dr-004-multi-agent-game-theory/`}>{t('s5.dr004.read')}</a>
+    <a class="more-link" href={`/${lang}/articles/dr-005-mm-pattern-detection/`}>{t('s5.dr005.read')}</a>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- S6: Curriculum -->
+<div class="section" id="curriculum">
+  <div class="section-header">
+    <span class="section-num">{t('s6.num')}</span>
+    <span class="section-title">{t('s6.title')}</span>
+    <span class="section-sub">{t('s6.sub')}</span>
+  </div>
+
+  <p class="section-desc">{t('s6.desc')}</p>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    {[
+      { tier: 1, color: 'green', badgeColor: 'green' },
+      { tier: 2, color: 'gold', badgeColor: 'gold' },
+      { tier: 3, color: 'purple', badgeColor: 'accent' },
+    ].map(({ tier, color, badgeColor }) => (
+      <div class={`card accent-${color}`}>
+        <div class="tier-header">
+          <span class="tier-badge" style={`color:var(--${badgeColor})`}>TIER {tier}</span>
+          <div class="tier-info">
+            <div class="tier-name">{t(`s6.tier${tier}.name`)}</div>
+            <div class="tier-freq">{t(`s6.tier${tier}.freq`)}</div>
+          </div>
+          <span class={`tag tag-${color === 'purple' ? 'accent' : color}`}>{t(`s6.tier${tier}.tag`)}</span>
+        </div>
+        <table class="compare-table" style="margin:0">
+          <thead><tr><th>{t('s6.th.topic')}</th><th>{t('s6.th.desc')}</th><th>{t('s6.th.integration')}</th></tr></thead>
+          <tbody>
+            {[1,2,3,4].map(r => (
+              <tr>
+                <td>{t(`s6.t${tier}.r${r}.topic`)}</td>
+                <td>{t(`s6.t${tier}.r${r}.desc`)}</td>
+                <td>{t(`s6.t${tier}.r${r}.int`)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ))}
+  </div>
+
+  <div class="more-links">
+    <a class="more-link" href={`/${lang}/articles/quant-framework-crypto/`}>{t('s6.quant.read')}</a>
+    <a class="more-link" href={`/${lang}/articles/building-agentic-pipeline/`}>{t('s6.pipeline.read')}</a>
+  </div>
+</div>
+
+</BaseLayout>
+<script>
+// Smooth scroll for nav
+document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href')!);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Reveal animation on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('reveal');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.card, .principle-row, .research-card, .arch-node').forEach((el, i) => {
+  (el as HTMLElement).style.animationDelay = `calc(${i % 8} * 40ms)`;
+  observer.observe(el);
+});
+
+// ============================
+// GAME ENGINE
+// ============================
+(function() {
+  const canvas = document.getElementById('gameCanvas') as HTMLCanvasElement;
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d')!;
+  const overlay = document.getElementById('gameOverlay')!;
+  const startBtn = document.getElementById('startBtn')!;
+  const scoreEl = document.getElementById('gameScore')!;
+  const hintEl = document.getElementById('gameHint')!;
+
+  let W: number, H: number, PX: number;
+  let currentGame = 'catch';
+  let gameLoop: number | null = null;
+  let running = false;
+
+  // Starfield background
+  let stars: {x:number,y:number,s:number,a:number,speed:number}[] = [];
+  function initStars() {
+    stars = [];
+    for (let i = 0; i < 60; i++) {
+      stars.push({ x: Math.random() * W, y: Math.random() * H, s: Math.random() * 1.5 + 0.5, a: Math.random() * 0.4 + 0.1, speed: Math.random() * 0.3 + 0.1 });
+    }
+  }
+  function drawBg() {
+    const g = ctx.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, '#0d0d1a');
+    g.addColorStop(0.5, '#131320');
+    g.addColorStop(1, '#0d0d1a');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(42,42,78,0.3)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += PX * 8) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+    for (let y = 0; y < H; y += PX * 8) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+    stars.forEach(s => {
+      s.y += s.speed;
+      if (s.y > H) { s.y = 0; s.x = Math.random() * W; }
+      ctx.fillStyle = `rgba(172,170,255,${s.a})`;
+      ctx.fillRect(s.x, s.y, s.s, s.s);
+    });
+  }
+
+  // Particles
+  let particles: any[] = [];
+  function spawnParticles(x: number, y: number, color: string, count: number) {
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x, y, vx: (Math.random() - 0.5) * 4, vy: (Math.random() - 0.5) * 4,
+        life: 30 + Math.random() * 20, maxLife: 50, color, size: PX
+      });
+    }
+  }
+  function updateParticles() {
+    particles = particles.filter(p => {
+      p.x += p.vx; p.y += p.vy; p.life--;
+      return p.life > 0;
+    });
+  }
+  function drawParticles() {
+    particles.forEach(p => {
+      const a = p.life / p.maxLife;
+      ctx.globalAlpha = a;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, p.size, p.size);
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  function resize() {
+    const rect = canvas.parentElement!.getBoundingClientRect();
+    W = canvas.width = rect.width;
+    H = canvas.height = rect.height;
+    PX = Math.max(3, Math.floor(W / 160));
+    initStars();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function drawDonut(cx: number, cy: number, r: number, px: number) {
+    const R1 = r, R2 = r * 0.4;
+    const pal = ['#6b69bb','#8886dd','#ACAAFF','#c8c7ff','#b8b5ff','#9997ff'];
+    ctx.shadowColor = '#ACAAFF';
+    ctx.shadowBlur = r * 0.6;
+    for (let dy = -R1; dy <= R1; dy += px) {
+      for (let dx = -R1; dx <= R1; dx += px) {
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < R1 && d > R2) {
+          const a = (Math.atan2(dy, dx) + Math.PI) / (2*Math.PI);
+          ctx.fillStyle = pal[Math.floor(a * pal.length) % pal.length];
+          ctx.fillRect(cx + dx, cy + dy, px, px);
+        }
+      }
+    }
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    for (let dy = -R1; dy <= 0; dy += px) {
+      for (let dx = -R1; dx <= R1; dx += px) {
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < R1 * 0.9 && d > R2 * 1.1) ctx.fillRect(cx + dx, cy + dy, px, px);
+      }
+    }
+  }
+
+  function drawCoin(cx: number, cy: number, r: number) {
+    ctx.shadowColor = '#e8b84e';
+    ctx.shadowBlur = r * 0.8;
+    ctx.fillStyle = '#e8b84e';
+    for (let dy = -r; dy <= r; dy += PX) {
+      for (let dx = -r; dx <= r; dx += PX) {
+        if (dx*dx + dy*dy < r*r) ctx.fillRect(cx+dx, cy+dy, PX, PX);
+      }
+    }
+    ctx.fillStyle = 'rgba(255,230,150,0.3)';
+    for (let dy = -r; dy <= 0; dy += PX) {
+      for (let dx = -r; dx <= r; dx += PX) {
+        if (dx*dx + dy*dy < r*r*0.8) ctx.fillRect(cx+dx, cy+dy, PX, PX);
+      }
+    }
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#131320';
+    ctx.font = `bold ${r}px 'Press Start 2P'`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('$', cx, cy + 1);
+  }
+
+  // ======= GAME 1: CATCH COINS =======
+  let catchState: any = {};
+  function catchInit() {
+    catchState = { donutX: W/2, donutR: 36, coins: [] as any[], score: 0, missed: 0, spawnTimer: 0 };
+    particles = [];
+    hintEl.textContent = 'MOVE MOUSE / TOUCH TO CATCH COINS';
+  }
+  function catchUpdate() {
+    const s = catchState;
+    s.spawnTimer++;
+    if (s.spawnTimer > 25) {
+      s.spawnTimer = 0;
+      s.coins.push({ x: Math.random() * (W - 60) + 30, y: -15, r: 14, speed: 2.5 + Math.random() * 2, wobble: Math.random() * Math.PI * 2 });
+    }
+    s.coins.forEach((c: any) => { c.y += c.speed; c.wobble += 0.05; c.x += Math.sin(c.wobble) * 0.5; });
+    s.coins = s.coins.filter((c: any) => {
+      if (Math.abs(c.x - s.donutX) < s.donutR + c.r && Math.abs(c.y - (H - 50)) < s.donutR) {
+        s.score++;
+        spawnParticles(c.x, c.y, '#e8b84e', 8);
+        return false;
+      }
+      if (c.y > H + 10) { s.missed++; spawnParticles(c.x, H - 5, '#f87171', 4); return false; }
+      return true;
+    });
+    updateParticles();
+    if (s.missed >= 5) { endGame(s.score); return; }
+    scoreEl.textContent = 'SCORE: ' + s.score + '  MISS: ' + s.missed + '/5';
+  }
+  function catchDraw() {
+    const s = catchState;
+    drawBg();
+    ctx.strokeStyle = 'rgba(172,170,255,0.15)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0, H - 10); ctx.lineTo(W, H - 10); ctx.stroke();
+    s.coins.forEach((c: any) => drawCoin(c.x, c.y, c.r));
+    drawDonut(s.donutX, H - 50, s.donutR, PX);
+    drawParticles();
+  }
+  function catchInput(x: number) { catchState.donutX = x; }
+
+  // ======= GAME 2: BREAKOUT =======
+  let brkState: any = {};
+  function brkInit() {
+    const cols = 8, rows = 5;
+    const bw = Math.floor((W - 20) / cols), bh = 24;
+    const words = ['AI','AGENT','D0','TRADE','DONUT','SKILL','CHAIN','DeFi',
+                   'CLI','HEDGE','RISK','ALPHA','BOT','API','NFT','SWAP',
+                   'FUND','SWAP','CEX','DEX','GAS','DAO','HODL','MOON',
+                   'BULL','BEAR','LONG','SHORT','DCA','APY','TVL','PUMP',
+                   'REKT','SATS','GWEI','FORK','NODE','POOL','FARM','YIELD'];
+    const blocks: any[] = [];
+    const rowColors = ['#ACAAFF','#9997ff','#e8b84e','#069742','#f87171'];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        blocks.push({ x: 10 + c * bw, y: 40 + r * (bh + 3), w: bw - 3, h: bh,
+          alive: true, word: words[(r * cols + c) % words.length],
+          color: rowColors[r] });
+      }
+    }
+    const padW = 100;
+    brkState = {
+      ball: { x: W/2, y: H - 60, dx: 3.5, dy: -3.5, r: 8 },
+      pad: { x: W/2 - padW/2, w: padW, h: 12 },
+      blocks, score: 0
+    };
+    particles = [];
+    hintEl.textContent = 'MOVE MOUSE / TOUCH TO CONTROL PADDLE';
+  }
+  function brkUpdate() {
+    const s = brkState, b = s.ball;
+    b.x += b.dx; b.y += b.dy;
+    if (b.x < b.r || b.x > W - b.r) b.dx *= -1;
+    if (b.y < b.r) b.dy *= -1;
+    if (b.y > H - 30 && b.y < H - 18 && b.x > s.pad.x && b.x < s.pad.x + s.pad.w) {
+      b.dy = -Math.abs(b.dy);
+      b.dx += (b.x - (s.pad.x + s.pad.w/2)) * 0.1;
+    }
+    s.blocks.forEach((bl: any) => {
+      if (!bl.alive) return;
+      if (b.x > bl.x && b.x < bl.x + bl.w && b.y > bl.y && b.y < bl.y + bl.h) {
+        bl.alive = false; b.dy *= -1; s.score += 10;
+        spawnParticles(bl.x + bl.w/2, bl.y + bl.h/2, bl.color, 6);
+      }
+    });
+    updateParticles();
+    if (b.y > H + 10) { endGame(s.score); return; }
+    if (s.blocks.every((bl: any) => !bl.alive)) { endGame(s.score); return; }
+    scoreEl.textContent = 'SCORE: ' + s.score;
+  }
+  function brkDraw() {
+    const s = brkState;
+    drawBg();
+    s.blocks.forEach((bl: any) => {
+      if (!bl.alive) return;
+      ctx.shadowColor = bl.color;
+      ctx.shadowBlur = 4;
+      ctx.fillStyle = bl.color;
+      ctx.fillRect(bl.x, bl.y, bl.w, bl.h);
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = 'rgba(255,255,255,0.12)';
+      ctx.fillRect(bl.x + 1, bl.y + 1, bl.w - 2, bl.h / 3);
+      ctx.fillStyle = '#131320';
+      ctx.font = "bold 9px 'Space Mono'";
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(bl.word, bl.x + bl.w/2, bl.y + bl.h/2);
+    });
+    drawDonut(s.ball.x, s.ball.y, s.ball.r, PX);
+    ctx.shadowColor = '#ACAAFF';
+    ctx.shadowBlur = 8;
+    ctx.fillStyle = '#ACAAFF';
+    ctx.fillRect(s.pad.x, H - 26, s.pad.w, s.pad.h);
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    ctx.fillRect(s.pad.x + 2, H - 25, s.pad.w - 4, 3);
+    ctx.shadowBlur = 0;
+    drawParticles();
+  }
+  function brkInput(x: number) { brkState.pad.x = Math.max(0, Math.min(W - brkState.pad.w, x - brkState.pad.w/2)); }
+
+  // ======= GAME 3: FLAPPY DONUT =======
+  let flpState: any = {};
+  function flpInit() {
+    flpState = { y: H/2, vy: 0, x: 100, r: 18, pipes: [] as any[], score: 0, frame: 0, gap: 140 };
+    particles = [];
+    hintEl.textContent = 'CLICK / TAP TO FLY';
+  }
+  function flpUpdate() {
+    const s = flpState;
+    s.vy += 0.32;
+    s.y += s.vy;
+    s.frame++;
+    if (s.frame % 85 === 0) {
+      const gapY = 70 + Math.random() * (H - 200);
+      s.pipes.push({ x: W, gapY, passed: false });
+    }
+    s.pipes.forEach((p: any) => { p.x -= 2.5; });
+    s.pipes = s.pipes.filter((p: any) => p.x > -50);
+    let dead = false;
+    s.pipes.forEach((p: any) => {
+      if (dead) return;
+      if (s.x + s.r > p.x && s.x - s.r < p.x + 36) {
+        if (s.y - s.r < p.gapY || s.y + s.r > p.gapY + s.gap) {
+          dead = true;
+        }
+      }
+      if (!p.passed && p.x + 36 < s.x) { p.passed = true; s.score++; spawnParticles(s.x, s.y, '#ACAAFF', 4); }
+    });
+    if (dead || s.y > H || s.y < 0) { endGame(s.score); return; }
+    if (s.frame % 3 === 0) spawnParticles(s.x - s.r, s.y, 'rgba(172,170,255,0.5)', 1);
+    updateParticles();
+    scoreEl.textContent = 'SCORE: ' + s.score;
+  }
+  function flpDraw() {
+    const s = flpState;
+    drawBg();
+    s.pipes.forEach((p: any) => {
+      const grd1 = ctx.createLinearGradient(p.x, 0, p.x + 36, 0);
+      grd1.addColorStop(0, '#2a2a5e'); grd1.addColorStop(0.5, '#3a3a6e'); grd1.addColorStop(1, '#2a2a5e');
+      ctx.fillStyle = grd1;
+      ctx.fillRect(p.x, 0, 36, p.gapY);
+      ctx.fillRect(p.x, p.gapY + s.gap, 36, H - p.gapY - s.gap);
+      ctx.shadowColor = '#ACAAFF';
+      ctx.shadowBlur = 6;
+      ctx.fillStyle = '#4a4a7e';
+      ctx.fillRect(p.x - 4, p.gapY - 10, 44, 10);
+      ctx.fillRect(p.x - 4, p.gapY + s.gap, 44, 10);
+      ctx.shadowBlur = 0;
+    });
+    drawParticles();
+    drawDonut(s.x, s.y, s.r, PX);
+  }
+  function flpTap() { if (running) flpState.vy = -5.5; }
+
+  // ======= GAME 4: PIXEL PUZZLE =======
+  let pzlState: any = {};
+  function pzlInit() {
+    const cols = 4, rows = 4;
+    const maxTW = Math.floor((W - 60) / cols);
+    const maxTH = Math.floor((H - 60) / rows);
+    const tSize = Math.min(maxTW, maxTH);
+    const tw = tSize, th = tSize;
+    const ox = Math.floor((W - cols * tw) / 2);
+    const oy = Math.floor((H - rows * th) / 2);
+    const tiles: any[] = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const idx = r * cols + c;
+        if (idx === cols * rows - 1) continue;
+        tiles.push({ idx, cx: c, cy: r, tx: c, ty: r });
+      }
+    }
+    for (let i = 0; i < 200; i++) {
+      const emptyX = getEmptyPos(tiles, cols, rows);
+      const neighbors = tiles.filter(t =>
+        (Math.abs(t.cx - emptyX.x) + Math.abs(t.cy - emptyX.y)) === 1);
+      if (neighbors.length) {
+        const pick = neighbors[Math.floor(Math.random() * neighbors.length)];
+        pick.cx = emptyX.x; pick.cy = emptyX.y;
+      }
+    }
+    pzlState = { tiles, cols, rows, tw, th, moves: 0, solved: false, ox, oy };
+    particles = [];
+    hintEl.textContent = 'CLICK TILES ADJACENT TO EMPTY SPACE TO SLIDE';
+    scoreEl.textContent = 'MOVES: 0';
+  }
+  function getEmptyPos(tiles: any[], cols: number, rows: number) {
+    const occupied = new Set(tiles.map(t => t.cx + ',' + t.cy));
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
+        if (!occupied.has(c + ',' + r)) return {x: c, y: r};
+    return {x: cols-1, y: rows-1};
+  }
+  function pzlDraw() {
+    const s = pzlState;
+    drawBg();
+    const pal = ['#ACAAFF','#9997ff','#7b79cc','#b8b5ff','#e8b84e','#c8c7ff','#069742','#6b6b9a',
+                 '#ACAAFF','#9997ff','#7b79cc','#b8b5ff','#e8b84e','#c8c7ff','#069742'];
+    const labels = ['D','0','N','U','T','$','A','C','A','D','E','M','Y','!','@'];
+    ctx.strokeStyle = 'rgba(172,170,255,0.1)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(s.ox - 2, s.oy - 2, s.cols * s.tw + 4, s.rows * s.th + 4);
+    s.tiles.forEach((t: any) => {
+      const x = s.ox + t.cx * s.tw, y = s.oy + t.cy * s.th;
+      const correct = (t.cx === t.tx && t.cy === t.ty);
+      ctx.fillStyle = correct ? '#1a3a1a' : '#1a1a2e';
+      ctx.fillRect(x + 1, y + 1, s.tw - 2, s.th - 2);
+      ctx.shadowColor = pal[t.idx % pal.length];
+      ctx.shadowBlur = correct ? 6 : 2;
+      ctx.fillStyle = pal[t.idx % pal.length];
+      ctx.fillRect(x + 3, y + 3, s.tw - 6, s.th - 6);
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = 'rgba(255,255,255,0.1)';
+      ctx.fillRect(x + 4, y + 4, s.tw - 8, (s.th - 6) / 3);
+      ctx.fillStyle = '#131320';
+      ctx.font = `bold ${Math.min(s.tw, s.th) * 0.35}px 'Press Start 2P'`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(labels[t.idx] || '', x + s.tw/2, y + s.th/2);
+    });
+    drawParticles();
+    if (s.solved) {
+      ctx.fillStyle = 'rgba(10,10,20,0.6)';
+      ctx.fillRect(0, 0, W, H);
+      ctx.shadowColor = '#ACAAFF';
+      ctx.shadowBlur = 20;
+      ctx.fillStyle = '#ACAAFF';
+      ctx.font = "bold 22px 'Press Start 2P'";
+      ctx.textAlign = 'center';
+      ctx.fillText('SOLVED!', W/2, H/2);
+      ctx.shadowBlur = 0;
+    }
+  }
+  function pzlClick(mx: number, my: number) {
+    const s = pzlState;
+    if (s.solved) return;
+    const gc = Math.floor((mx - s.ox) / s.tw), gr = Math.floor((my - s.oy) / s.th);
+    const empty = getEmptyPos(s.tiles, s.cols, s.rows);
+    const tile = s.tiles.find((t: any) => t.cx === gc && t.cy === gr);
+    if (!tile) return;
+    if (Math.abs(gc - empty.x) + Math.abs(gr - empty.y) === 1) {
+      tile.cx = empty.x; tile.cy = empty.y;
+      s.moves++;
+      spawnParticles(s.ox + empty.x * s.tw + s.tw/2, s.oy + empty.y * s.th + s.th/2, '#ACAAFF', 3);
+      scoreEl.textContent = 'MOVES: ' + s.moves;
+      if (s.tiles.every((t: any) => t.cx === t.tx && t.cy === t.ty)) s.solved = true;
+    }
+  }
+
+  // ======= GAME CONTROLLER =======
+  function endGame(score: number) {
+    running = false;
+    if (gameLoop) cancelAnimationFrame(gameLoop);
+    overlay.classList.remove('hidden');
+    overlay.innerHTML = `<div class="game-over-text">GAME OVER</div><div class="final-score">SCORE: ${score}</div><button class="start-btn">RETRY</button>`;
+    overlay.querySelector('.start-btn')!.addEventListener('click', startGame);
+  }
+
+  function startGame() {
+    running = true;
+    overlay.classList.add('hidden');
+    overlay.innerHTML = '<button class="start-btn" id="startBtn">START</button>';
+    resize();
+    if (currentGame === 'catch') catchInit();
+    else if (currentGame === 'breakout') brkInit();
+    else if (currentGame === 'flappy') flpInit();
+    else if (currentGame === 'puzzle') { pzlInit(); pzlDraw(); return; }
+
+    function loop() {
+      if (!running) return;
+      if (currentGame === 'catch') { catchUpdate(); catchDraw(); }
+      else if (currentGame === 'breakout') { brkUpdate(); brkDraw(); }
+      else if (currentGame === 'flappy') { flpUpdate(); flpDraw(); }
+      if (running) gameLoop = requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  // Tabs
+  document.querySelectorAll('.game-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      running = false;
+      if (gameLoop) cancelAnimationFrame(gameLoop);
+      document.querySelectorAll('.game-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentGame = (tab as HTMLElement).dataset.game!;
+      overlay.classList.remove('hidden');
+      overlay.innerHTML = '<button class="start-btn" id="startBtn">START</button>';
+      overlay.querySelector('.start-btn')!.addEventListener('click', startGame);
+      ctx.clearRect(0, 0, W, H);
+      scoreEl.textContent = '';
+      hintEl.textContent = '';
+    });
+  });
+
+  // Start button
+  startBtn.addEventListener('click', startGame);
+
+  // Input: mouse
+  const area = canvas.parentElement!;
+  function getPos(e: MouseEvent) {
+    const r = canvas.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
+  }
+  area.addEventListener('mousemove', e => {
+    const p = getPos(e);
+    if (currentGame === 'catch') catchInput(p.x);
+    else if (currentGame === 'breakout') brkInput(p.x);
+  });
+  area.addEventListener('click', e => {
+    const p = getPos(e);
+    if (currentGame === 'flappy') flpTap();
+    else if (currentGame === 'puzzle' && running) { pzlClick(p.x, p.y); pzlDraw(); }
+  });
+
+  // Input: touch
+  area.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const t = e.touches[0], r = canvas.getBoundingClientRect();
+    const x = t.clientX - r.left;
+    if (currentGame === 'catch') catchInput(x);
+    else if (currentGame === 'breakout') brkInput(x);
+  }, {passive: false});
+  area.addEventListener('touchstart', e => {
+    if (currentGame === 'flappy') flpTap();
+    else if (currentGame === 'puzzle' && running) {
+      const t = e.touches[0], r = canvas.getBoundingClientRect();
+      pzlClick(t.clientX - r.left, t.clientY - r.top);
+      pzlDraw();
+    }
+  });
+})();
+</script>

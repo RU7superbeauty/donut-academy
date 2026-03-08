@@ -1,12 +1,19 @@
 ---
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import { type Lang, defaultLang } from '../i18n';
+import { useTranslations } from '../i18n';
+
 interface Props {
   title?: string;
   description?: string;
+  lang?: Lang;
 }
-const { title = 'Donut Academy', description = 'AI-Native Crypto Trading Infrastructure' } = Astro.props;
+const { title = 'Donut Academy', description = 'AI-Native Crypto Trading Infrastructure', lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const currentPath = Astro.url.pathname;
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,10 +25,11 @@ const { title = 'Donut Academy', description = 'AI-Native Crypto Trading Infrast
 <body>
   <nav class="topbar">
     <div class="topbar-inner">
-      <a href="/" class="logo">DONUT <span>ACADEMY</span></a>
+      <a href={`/${lang}/`} class="logo">DONUT <span>ACADEMY</span></a>
       <div class="nav-links">
-        <a href="/">HOME / 首页</a>
-        <a href="/articles/">ARTICLES / 文章</a>
+        <a href={`/${lang}/`}>{t('nav.home')}</a>
+        <a href={`/${lang}/articles/`}>{t('nav.articles')}</a>
+        <LanguageSwitcher lang={lang} currentPath={currentPath} />
       </div>
     </div>
   </nav>
@@ -29,8 +37,8 @@ const { title = 'Donut Academy', description = 'AI-Native Crypto Trading Infrast
     <slot />
     <div class="footer">
       <p style="font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:2px;color:var(--text2);margin-bottom:4px">DONUT ACADEMY</p>
-      <p>AI-Native Crypto Trading Infrastructure</p>
-      <p style="margin-top:8px;font-family:'Space Mono',monospace">POWERED BY D0 / DYOR / NFA</p>
+      <p>{t('footer.tagline')}</p>
+      <p style="margin-top:8px;font-family:'Space Mono',monospace">{t('footer.powered')}</p>
     </div>
   </div>
 </body>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { type Lang, defaultLang } from '../i18n';
 
 interface Props {
   frontmatter: {
@@ -14,9 +15,10 @@ interface Props {
   };
   headings: { depth: number; slug: string; text: string }[];
   readingTime: number;
+  lang?: Lang;
 }
 
-const { frontmatter, headings, readingTime } = Astro.props;
+const { frontmatter, headings, readingTime, lang = defaultLang } = Astro.props;
 
 const categoryClass = {
   'AI FRONTIER': 'tag-accent',
@@ -32,8 +34,8 @@ const nextArticle = currentIndex > 0 ? sortedArticles[currentIndex - 1] : null;
 
 const tocHeadings = headings.filter(h => h.depth <= 3);
 ---
-<BaseLayout title={`${frontmatter.title} — Donut Academy`} description={frontmatter.description}>
-  <a href="/articles/" class="back-link">&lt;- ALL ARTICLES</a>
+<BaseLayout title={`${frontmatter.title} — Donut Academy`} description={frontmatter.description} lang={lang}>
+  <a href={`/${lang}/articles/`} class="back-link">&lt;- ALL ARTICLES</a>
 
   <div class="article-header">
     <div class="article-meta" style="margin-bottom: 16px;">
@@ -70,10 +72,10 @@ const tocHeadings = headings.filter(h => h.depth <= 3);
 
   <div class="article-nav">
     {prevArticle ? (
-      <a href={`/articles/${prevArticle.id}/`}>&lt;- {prevArticle.data.title}</a>
+      <a href={`/${lang}/articles/${prevArticle.id}/`}>&lt;- {prevArticle.data.title}</a>
     ) : <span></span>}
     {nextArticle ? (
-      <a href={`/articles/${nextArticle.id}/`}>{nextArticle.data.title} -&gt;</a>
+      <a href={`/${lang}/articles/${nextArticle.id}/`}>{nextArticle.data.title} -&gt;</a>
     ) : <span></span>}
   </div>
 </BaseLayout>

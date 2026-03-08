@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { languages, type Lang, useTranslations } from '../../../i18n';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+
+const articles = await getCollection('articles');
+const sortedArticles = articles.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const categories = [
+  { key: 'ALL', filter: 'ALL', label: t('articles.filter.all') },
+  { key: 'AI FRONTIER', filter: 'AI FRONTIER', label: t('articles.filter.frontier') },
+  { key: 'D0 METHOD', filter: 'D0 METHOD', label: t('articles.filter.method') },
+  { key: 'RESEARCH', filter: 'RESEARCH', label: t('articles.filter.research') },
+];
+
+function getCategoryClass(cat: string) {
+  switch(cat) {
+    case 'AI FRONTIER': return 'tag-accent';
+    case 'D0 METHOD': return 'tag-gold';
+    case 'RESEARCH': return 'tag-green';
+    default: return '';
+  }
+}
+
+function getCategoryLabel(cat: string): string {
+  const found = categories.find(c => c.key === cat);
+  return found ? found.label : cat;
+}
+
+function estimateReadingTime(body: string): number {
+  const words = body.split(/\s+/).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+---
+<BaseLayout title={t('articles.title')} description={t('articles.desc')} lang={lang}>
+
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">{t('articles.section.num')}</span>
+    <span class="section-title">{t('articles.section.title')}</span>
+    <span class="section-sub">{t('articles.section.sub')}</span>
+  </div>
+
+  <div class="category-filters">
+    {categories.map(cat => (
+      <button
+        class={`category-filter ${cat.key === 'ALL' ? 'active' : ''}`}
+        data-category={cat.key}
+      >
+        {cat.label}
+      </button>
+    ))}
+  </div>
+
+  <div class="article-grid">
+    {sortedArticles.map(article => (
+      <a href={`/${lang}/articles/${article.id}/`} class="article-card" data-category={article.data.category}>
+        <div class="article-card-meta">
+          <span class={`tag ${getCategoryClass(article.data.category)}`}>{getCategoryLabel(article.data.category)}</span>
+          <span class="date">{article.data.date}</span>
+          <span class="reading-time">{estimateReadingTime(article.body ?? '')} {t('articles.min_read')}</span>
+        </div>
+        <h3>{article.data.title}</h3>
+        <p>{article.data.description}</p>
+      </a>
+    ))}
+  </div>
+</div>
+
+</BaseLayout>
+
+<script>
+document.querySelectorAll('.category-filter').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.category-filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.getAttribute('data-category');
+    document.querySelectorAll('.article-card').forEach(card => {
+      const el = card as HTMLElement;
+      if (cat === 'ALL' || el.getAttribute('data-category') === cat) {
+        el.style.display = 'block';
+      } else {
+        el.style.display = 'none';
+      }
+    });
+  });
+});
+</script>
