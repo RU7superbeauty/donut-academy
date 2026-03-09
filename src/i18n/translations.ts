@@ -35,6 +35,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.telegram': 'Telegram',
     'footer.donutDocs': 'Donut Docs',
     'footer.d0cliDocs': 'D0 CLI Docs',
+    'footer.hilBeta': 'Donut HIL Beta',
     'footer.copyright': '© 2026 DonutLabs. All rights reserved.',
     'footer.disclaimer': 'NFA / DYOR / For educational purposes only.',
 
@@ -226,6 +227,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.telegram': 'Telegram',
     'footer.donutDocs': 'Donut 文档',
     'footer.d0cliDocs': 'D0 CLI 文档',
+    'footer.hilBeta': 'Donut HIL Beta',
     'footer.copyright': '© 2026 DonutLabs. 保留所有权利。',
     'footer.disclaimer': 'NFA / DYOR / 仅供教育目的。',
 
@@ -417,6 +419,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.telegram': 'Telegram',
     'footer.donutDocs': 'Donut 文件',
     'footer.d0cliDocs': 'D0 CLI 文件',
+    'footer.hilBeta': 'Donut HIL Beta',
     'footer.copyright': '© 2026 DonutLabs. 保留所有權利。',
     'footer.disclaimer': 'NFA / DYOR / 僅供教育目的。',
 
@@ -608,6 +611,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.telegram': 'Telegram',
     'footer.donutDocs': 'Donut 문서',
     'footer.d0cliDocs': 'D0 CLI 문서',
+    'footer.hilBeta': 'Donut HIL Beta',
     'footer.copyright': '© 2026 DonutLabs. All rights reserved.',
     'footer.disclaimer': 'NFA / DYOR / 교육 목적으로만 제공됩니다.',
 
@@ -799,6 +803,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.telegram': 'Telegram',
     'footer.donutDocs': 'Donut ドキュメント',
     'footer.d0cliDocs': 'D0 CLI ドキュメント',
+    'footer.hilBeta': 'Donut HIL Beta',
     'footer.copyright': '© 2026 DonutLabs. All rights reserved.',
     'footer.disclaimer': 'NFA / DYOR / 教育目的のみ。',
 

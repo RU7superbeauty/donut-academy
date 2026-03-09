@@ -89,6 +89,13 @@ const navItems = [
       <a href={item.href} class="mobile-nav-link" data-i18n={item.i18n}>{item.label}</a>
     ))}
     <a href="https://github.com/DonutLabs-ai/d0-cli" target="_blank" class="mobile-nav-link cta" data-i18n="nav.getD0">GET D0 →</a>
+    <div class="mobile-lang-switcher">
+      <button class="mobile-lang-option" data-lang="en">EN</button>
+      <button class="mobile-lang-option" data-lang="zh-CN">简中</button>
+      <button class="mobile-lang-option" data-lang="zh-TW">繁中</button>
+      <button class="mobile-lang-option" data-lang="ko">한국</button>
+      <button class="mobile-lang-option" data-lang="ja">日本</button>
+    </div>
   </div>
 </header>
 
@@ -130,6 +137,15 @@ const navItems = [
         <a href="/playbook/mm-detection/" data-i18n="footer.mmDetection">MM Detection</a>
       </div>
       <div class="footer-col">
+        <h4 data-i18n="footer.research">RESEARCH</h4>
+        <a href="/research/" data-i18n="footer.allPapers">All Papers</a>
+        <a href="/articles/dr-001-intent-parsing/">DR-001 Intent Parsing</a>
+        <a href="/articles/dr-002-cross-protocol-semantics/">DR-002 Cross-Protocol</a>
+        <a href="/articles/dr-003-risk-failure-modes/">DR-003 Risk Failure</a>
+        <a href="/articles/dr-004-multi-agent-game-theory/">DR-004 Game Theory</a>
+        <a href="/articles/dr-005-mm-pattern-detection/">DR-005 MM Detection</a>
+      </div>
+      <div class="footer-col">
         <h4 data-i18n="footer.d0cli">D0 CLI</h4>
         <a href="https://github.com/DonutLabs-ai/d0-cli" target="_blank" data-i18n="footer.installD0">Install D0</a>
         <a href="/updates/" data-i18n="footer.changelog">Changelog</a>
@@ -138,10 +154,11 @@ const navItems = [
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer.community">COMMUNITY</h4>
-        <a href="https://discord.gg/donutlabs" target="_blank" data-i18n="footer.discord">Discord</a>
-        <a href="https://t.me/donutlabs" target="_blank" data-i18n="footer.telegram">Telegram</a>
-        <a href="https://docs.donut.so" target="_blank" data-i18n="footer.donutDocs">Donut Docs</a>
-        <a href="https://docs.d0.trading" target="_blank" data-i18n="footer.d0cliDocs">D0 CLI Docs</a>
+        <a href="https://discord.com/invite/donut-ai" target="_blank" data-i18n="footer.discord">Discord</a>
+        <a href="https://t.me/DonutAIOfficial" target="_blank" data-i18n="footer.telegram">Telegram</a>
+        <a href="https://beta.donutbrowser.ai" target="_blank" data-i18n="footer.hilBeta">Donut HIL Beta</a>
+        <a href="https://docs.donutbrowser.ai" target="_blank" data-i18n="footer.donutDocs">Donut Docs</a>
+        <a href="https://docs-d0.donutbrowser.ai" target="_blank" data-i18n="footer.d0cliDocs">D0 CLI Docs</a>
       </div>
     </div>
   </div>
@@ -207,8 +224,11 @@ const navItems = [
       // Update lang label
       const label = document.getElementById('langLabel');
       if (label) label.textContent = LANG_LABELS[lang] || 'EN';
-      // Update active state in dropdown
+      // Update active state in dropdown + mobile
       document.querySelectorAll('.lang-option').forEach(opt => {
+        opt.classList.toggle('active', (opt as HTMLElement).dataset.lang === lang);
+      });
+      document.querySelectorAll('.mobile-lang-option').forEach(opt => {
         opt.classList.toggle('active', (opt as HTMLElement).dataset.lang === lang);
       });
       document.documentElement.lang = lang === 'zh-CN' ? 'zh-CN' : lang === 'zh-TW' ? 'zh-TW' : lang;
@@ -230,6 +250,18 @@ const navItems = [
         const lang = (opt as HTMLElement).dataset.lang || 'en';
         applyLang(lang);
         langDropdown?.classList.remove('open');
+      });
+    });
+
+    // Mobile language switcher
+    document.querySelectorAll('.mobile-lang-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const lang = (opt as HTMLElement).dataset.lang || 'en';
+        applyLang(lang);
+        // Update mobile active states
+        document.querySelectorAll('.mobile-lang-option').forEach(o => {
+          o.classList.toggle('active', (o as HTMLElement).dataset.lang === lang);
+        });
       });
     });
 
@@ -422,6 +454,32 @@ const navItems = [
     border-bottom: 1px solid var(--border);
   }
   .mobile-nav-link.cta { color: var(--accent); }
+  .mobile-lang-switcher {
+    display: flex;
+    gap: 6px;
+    padding: 12px 0 0;
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .mobile-lang-option {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text2);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .mobile-lang-option:hover,
+  .mobile-lang-option.active {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(172,170,255,0.08);
+  }
 
   @media (max-width: 680px) {
     .nav-links, .nav-cta, .lang-switcher { display: none; }
@@ -462,7 +520,7 @@ const navItems = [
 
   .footer-cols {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 24px;
   }
   .footer-col { display: flex; flex-direction: column; gap: 8px; }
