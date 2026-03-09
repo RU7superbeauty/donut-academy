@@ -7,7 +7,7 @@ interface Props {
 const {
   title = 'Donut Academy',
   description = 'AI-Native Crypto Trading Infrastructure — Learn D0, build autonomous trading agents.',
-  ogImage = '/logo.png'
+  ogImage = '/img/logo-color.png'
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
@@ -31,7 +31,7 @@ const navItems = [
   <meta property="og:image" content={ogImage}>
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="/logo.png" type="image/png">
+  <link rel="icon" href="/img/logo-color.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 </head>
@@ -41,7 +41,7 @@ const navItems = [
 <header class="topbar">
   <div class="topbar-inner">
     <a href="/" class="logo">
-      <img src="/logo.png" alt="Donut" class="logo-img" />
+      <img src="/img/logo-color.png" alt="Donut" class="logo-img" />
       <span class="logo-text">DONUT <em>ACADEMY</em></span>
     </a>
 
@@ -329,6 +329,7 @@ const navItems = [
     flex: 1;
   }
   .nav-link {
+    font-family: 'Space Mono', monospace;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.8px;
@@ -445,6 +446,7 @@ const navItems = [
   }
   .mobile-menu.open { display: flex; }
   .mobile-nav-link {
+    font-family: 'Space Mono', monospace;
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.8px;
