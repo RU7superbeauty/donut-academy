@@ -207,9 +207,9 @@ export const translations: Record<Lang, Record<string, string>> = {
     'research.desc': 'Deep research at the AI × Crypto intersection. From intent parsing to game-theoretic equilibria, each paper uses D0 as the experimental platform.',
 
     // Updates page
-    'updates.label': 'CHANGELOG',
-    'updates.title': 'Updates',
-    'updates.desc': 'Version history and release notes for D0 CLI and Donut Academy.',
+    'updates.label': "WHAT'S NEW",
+    'updates.title': 'Product Updates',
+    'updates.desc': 'D0 product updates, new features, and release notes.',
 
     // Arcade page
     'arcade.label': 'ARCADE',
@@ -434,9 +434,9 @@ export const translations: Record<Lang, Record<string, string>> = {
     'research.desc': 'AI × Crypto 交叉领域的深度研究。从意图解析到博弈均衡，每篇都以 D0 为实验平台。',
 
     // Updates page
-    'updates.label': '更新日志',
-    'updates.title': '更新',
-    'updates.desc': 'D0 CLI 和 Donut Academy 的版本历史与更新记录。',
+    'updates.label': '最新动态',
+    'updates.title': '产品更新',
+    'updates.desc': 'D0 产品更新、新功能与版本发布记录。',
 
     // Arcade page
     'arcade.label': '游戏厅',
@@ -655,9 +655,9 @@ export const translations: Record<Lang, Record<string, string>> = {
     'research.desc': 'AI × Crypto 交叉領域的深度研究。從意圖解析到博弈均衡，每篇都以 D0 為實驗平台。',
 
     // Updates page
-    'updates.label': '更新日誌',
-    'updates.title': '更新',
-    'updates.desc': 'D0 CLI 和 Donut Academy 的版本歷史與更新紀錄。',
+    'updates.label': '最新動態',
+    'updates.title': '產品更新',
+    'updates.desc': 'D0 產品更新、新功能與版本發佈記錄。',
 
     // Arcade page
     'arcade.label': '遊戲廳',
@@ -876,9 +876,9 @@ export const translations: Record<Lang, Record<string, string>> = {
     'research.desc': 'AI × Crypto 교차 분야의 심층 연구. 의도 파싱부터 게임이론적 균형까지, 모든 논문이 D0를 실험 플랫폼으로 사용합니다.',
 
     // Updates page
-    'updates.label': '변경 기록',
-    'updates.title': '업데이트',
-    'updates.desc': 'D0 CLI와 Donut Academy의 버전 히스토리 및 릴리스 노트.',
+    'updates.label': '최신 소식',
+    'updates.title': '제품 업데이트',
+    'updates.desc': 'D0 제품 업데이트, 새 기능 및 릴리스 노트.',
 
     // Arcade page
     'arcade.label': '아케이드',
@@ -1097,9 +1097,9 @@ export const translations: Record<Lang, Record<string, string>> = {
     'research.desc': 'AI × Crypto分野の深層研究。意図解析からゲーム理論的均衡まで、すべての論文がD0を実験プラットフォームとして使用。',
 
     // Updates page
-    'updates.label': '変更履歴',
-    'updates.title': '更新情報',
-    'updates.desc': 'D0 CLIとDonut Academyのバージョン履歴とリリースノート。',
+    'updates.label': '最新情報',
+    'updates.title': '製品アップデート',
+    'updates.desc': 'D0製品アップデート、新機能、リリースノート。',
 
     // Arcade page
     'arcade.label': 'アーケード',
