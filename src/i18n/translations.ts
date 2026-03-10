@@ -40,16 +40,16 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.disclaimer': 'NFA / DYOR / For educational purposes only.',
 
     // Homepage — Hero
-    'home.badge': 'D0 CLI · Private Beta · Hyperliquid + Polymarket',
-    'home.headline': 'The AI Agent\nTrading Infrastructure.',
-    'home.sub': 'D0 is a crypto trading CLI built natively for AI Agents — not a GUI with an API bolted on, but an execution layer designed for agents from line one.',
+    'home.badge': 'D0 Agent · Private Beta · Telegram · HyperLiquid + Polymarket',
+    'home.headline': 'Your Personal\nTrading Agent.',
+    'home.sub': 'D0 is your personal trading agent — transform trading intent into safe, fast, and auditable on-chain actions via Telegram conversation. 169+ tools, one message away.',
     'home.ctaQuickstart': 'QUICK START →',
     'home.ctaCurriculum': 'BROWSE CURRICULUM',
 
     // Homepage — Stats
     'home.statsTools': 'Tools Available',
-    'home.statsExchanges': 'Exchanges Integrated',
-    'home.statsResearch': 'Active Research Topics',
+    'home.statsIntegrations': 'Integration Layers',
+    'home.statsDSEA': 'Agentic Engine',
     'home.statsTrade': 'To First Trade',
 
     // Homepage — Three Paths
@@ -86,9 +86,9 @@ export const translations: Record<Lang, Record<string, string>> = {
     // Homepage — Principles
     'home.principlesLabel': 'D0 METHODOLOGY',
     'home.principlesHeading': '5 Principles.\nOne Architecture.',
-    'home.principlesDesc': 'CLI-as-API. Login-Once. Turnkey Security. Exchange Abstraction. Composable Skills.\nEvery principle points to the same goal: making AI Agents first-class citizens in trading.',
+    'home.principlesDesc': 'Conversational Interface. Login-Once. Turnkey Secured. Exchange Abstraction. Composable Skills.\nEvery principle points to the same goal: making AI Agents first-class citizens in trading.',
     'home.principlesCta': 'READ THE PRINCIPLES →',
-    'home.p01sub': 'Command line as interface',
+    'home.p01sub': 'Natural language as interface',
     'home.p02sub': 'One auth covers everything',
     'home.p03sub': 'Cloud key custody',
     'home.p04sub': 'Unified multi-exchange semantics',
@@ -98,6 +98,41 @@ export const translations: Record<Lang, Record<string, string>> = {
     'home.thesis': '"The primary actors in on-chain trading will shift from humans to AI Agents.\nWhoever owns the Agent execution layer owns the gateway to on-chain flow."',
     'home.thesisCite': '— D0 THESIS / 2026',
     'home.thesisCta': 'READ THE FULL THESIS →',
+
+    // Homepage — DSEA
+    'home.dseaLabel': 'THE AGENTIC LOOP',
+    'home.dseaHeading': 'DSEA Engine',
+    'home.dseaDesc': 'The heart of D0 is the DSEA loop — Discovery, Strategy, Execution, Attribution. Replacing fragmented manual steps with a structured, verifiable agent pipeline.',
+    'home.dseaD': 'Sensory layer — continuously scans whale movements, liquidity shifts, social narratives, macro signals',
+    'home.dseaS': 'Boundary layer — you define the rules: assets, exposure, risk limits. The agent executes within your law',
+    'home.dseaE': 'Execution layer — routes orders for the best outcome across integrated venues, minimizing slippage',
+    'home.dseaA': 'Attribution layer — what was done, why, what it cost, what happened after. Every step auditable',
+
+    // Homepage — Integrations
+    'home.intLabel': 'FULL-SPECTRUM STACK',
+    'home.intHeading': 'Key Integrations',
+    'home.intDesc': '169+ tools covering the complete trading stack — from market data to execution, from on-chain to macro.',
+
+    // Homepage — Competitive
+    'home.compLabel': 'WHY D0',
+    'home.compHeading': 'Not Another Bot.\nA Trading Agent.',
+    'home.compDesc': 'Existing Telegram bots are transaction tools — they help you click "Buy" faster.\nD0 is a trading agent — it understands your intent, analyzes context, and executes the full workflow.',
+
+    // Homepage — Security
+    'home.secLabel': 'DEFENSE IN DEPTH',
+    'home.secHeading': 'Security Architecture',
+    'home.secTurnkeyTitle': 'Turnkey HSM Key Custody',
+    'home.secTurnkeyDesc': 'Private keys are generated and stored inside Hardware Security Modules (HSMs) — never exposed to the application layer. All signing requests are validated through Turnkey\'s API.',
+    'home.secHitlTitle': 'Human-in-the-Loop',
+    'home.secHitlDesc': 'All trades require explicit user confirmation. No silent execution.',
+    'home.secIntentTitle': 'Intent Verification',
+    'home.secIntentDesc': 'AI\'s interpreted intent is displayed back in structured format before execution.',
+    'home.secLimitTitle': 'Position Limits',
+    'home.secLimitDesc': 'Configurable maximum position size and leverage caps, preventing runaway exposure.',
+    'home.secSlipTitle': 'Slippage Protection',
+    'home.secSlipDesc': 'Market orders include configurable slippage tolerance. Orders exceeding threshold are rejected.',
+    'home.secIsoTitle': 'Session Isolation',
+    'home.secIsoDesc': 'Each user session is sandboxed. No cross-user data leakage.',
 
     // Learn page
     'learn.label': 'CURRICULUM',
@@ -232,16 +267,16 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.disclaimer': 'NFA / DYOR / 仅供教育目的。',
 
     // Homepage — Hero
-    'home.badge': 'D0 CLI · 内测中 · Hyperliquid + Polymarket',
-    'home.headline': 'AI Agent\n交易基础设施。',
-    'home.sub': 'D0 是专为 AI Agent 设计的加密交易 CLI。不是给人点击按钮的 GUI，而是从第一行代码开始就为 Agent 而生的执行层。',
+    'home.badge': 'D0 Agent · 内测中 · Telegram · HyperLiquid + Polymarket',
+    'home.headline': '你的个人\n交易 Agent。',
+    'home.sub': 'D0 是你的个人交易 Agent —— 通过 Telegram 对话，将交易意图转化为安全、快速、可审计的链上执行。169+ 工具，一句话搞定。',
     'home.ctaQuickstart': '快速开始 →',
     'home.ctaCurriculum': '浏览课程',
 
     // Homepage — Stats
     'home.statsTools': '可用工具',
-    'home.statsExchanges': '已集成交易所',
-    'home.statsResearch': '活跃研究方向',
+    'home.statsIntegrations': '集成层级',
+    'home.statsDSEA': 'Agent 引擎',
     'home.statsTrade': '完成首笔交易',
 
     // Homepage — Three Paths
@@ -278,9 +313,9 @@ export const translations: Record<Lang, Record<string, string>> = {
     // Homepage — Principles
     'home.principlesLabel': 'D0 方法论',
     'home.principlesHeading': '5 条原则。\n一套架构。',
-    'home.principlesDesc': 'CLI-as-API。Login-Once。Turnkey 安全。交易所抽象。可组合 Skills。\n每一条原则都指向同一个目标：让 AI Agent 成为交易的一等公民。',
+    'home.principlesDesc': '对话式接口。Login-Once。Turnkey 安全。交易所抽象。可组合 Skills。\n每一条原则都指向同一个目标：让 AI Agent 成为交易的一等公民。',
     'home.principlesCta': '阅读设计原则 →',
-    'home.p01sub': '命令行即接口',
+    'home.p01sub': '自然语言即接口',
     'home.p02sub': '一次认证全覆盖',
     'home.p03sub': '云端密钥托管',
     'home.p04sub': '统一多交易所语义',
@@ -290,6 +325,41 @@ export const translations: Record<Lang, Record<string, string>> = {
     'home.thesis': '"链上交易的主体将从人类转移到 AI Agent。\n谁拥有 Agent 的执行层，谁就拥有链上流量的入口。"',
     'home.thesisCite': '— D0 THESIS / 2026',
     'home.thesisCta': '阅读完整论文 →',
+
+    // Homepage — DSEA
+    'home.dseaLabel': 'AGENT 循环',
+    'home.dseaHeading': 'DSEA 引擎',
+    'home.dseaDesc': 'D0 的核心是 DSEA 循环 —— Discovery, Strategy, Execution, Attribution。将碎片化的手动操作替换为结构化、可验证的 Agent 执行流程。',
+    'home.dseaD': '感知层 — 持续扫描鲸鱼动向、流动性变化、社交叙事、宏观信号',
+    'home.dseaS': '边界层 — 你定义规则：资产、敞口、风控，Agent 在你的法则内执行',
+    'home.dseaE': '执行层 — 跨集成场所路由最优成交，最小化滑点和失败交易',
+    'home.dseaA': '归因层 — 做了什么、为什么、花了多少、结果如何，每一步可审计',
+
+    // Homepage — Integrations
+    'home.intLabel': '全栈覆盖',
+    'home.intHeading': '关键集成',
+    'home.intDesc': '169+ 工具覆盖完整交易栈 —— 从行情到执行、从链上到宏观。',
+
+    // Homepage — Competitive
+    'home.compLabel': '为什么选 D0',
+    'home.compHeading': '不是又一个 Bot。\n而是交易 Agent。',
+    'home.compDesc': '现有 Telegram Bot 是交易工具 —— 帮你更快点击 "Buy"。\nD0 是交易 Agent —— 理解你的意图、分析上下文、执行完整工作流。',
+
+    // Homepage — Security
+    'home.secLabel': '纵深防御',
+    'home.secHeading': '安全架构',
+    'home.secTurnkeyTitle': 'Turnkey HSM 密钥托管',
+    'home.secTurnkeyDesc': '私钥在硬件安全模块 (HSM) 内生成和存储，永不暴露给应用层。所有签名请求经过 Turnkey API 验证后在安全飞地内完成。',
+    'home.secHitlTitle': '人在回路',
+    'home.secHitlDesc': '所有交易需明确用户确认，无静默执行。',
+    'home.secIntentTitle': '意图验证',
+    'home.secIntentDesc': 'AI 解析的意图以结构化格式回显确认。',
+    'home.secLimitTitle': '仓位限制',
+    'home.secLimitDesc': '可配置的最大仓位和杠杆上限，防止过度敞口。',
+    'home.secSlipTitle': '滑点保护',
+    'home.secSlipDesc': '市价单包含滑点容忍度，超限自动拒绝。',
+    'home.secIsoTitle': '会话隔离',
+    'home.secIsoDesc': '用户间完全隔离，无跨会话数据泄露。',
 
     // Learn page
     'learn.label': '课程体系',
@@ -424,16 +494,16 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.disclaimer': 'NFA / DYOR / 僅供教育目的。',
 
     // Homepage — Hero
-    'home.badge': 'D0 CLI · 內測中 · Hyperliquid + Polymarket',
-    'home.headline': 'AI Agent\n交易基礎設施。',
-    'home.sub': 'D0 是專為 AI Agent 設計的加密交易 CLI。不是給人點擊按鈕的 GUI，而是從第一行程式碼開始就為 Agent 而生的執行層。',
+    'home.badge': 'D0 Agent · 內測中 · Telegram · HyperLiquid + Polymarket',
+    'home.headline': '你的個人\n交易 Agent。',
+    'home.sub': 'D0 是你的個人交易 Agent —— 透過 Telegram 對話，將交易意圖轉化為安全、快速、可審計的鏈上執行。169+ 工具，一句話搞定。',
     'home.ctaQuickstart': '快速開始 →',
     'home.ctaCurriculum': '瀏覽課程',
 
     // Homepage — Stats
     'home.statsTools': '可用工具',
-    'home.statsExchanges': '已整合交易所',
-    'home.statsResearch': '活躍研究方向',
+    'home.statsIntegrations': '整合層級',
+    'home.statsDSEA': 'Agent 引擎',
     'home.statsTrade': '完成首筆交易',
 
     // Homepage — Three Paths
@@ -470,9 +540,9 @@ export const translations: Record<Lang, Record<string, string>> = {
     // Homepage — Principles
     'home.principlesLabel': 'D0 方法論',
     'home.principlesHeading': '5 條原則。\n一套架構。',
-    'home.principlesDesc': 'CLI-as-API。Login-Once。Turnkey 安全。交易所抽象。可組合 Skills。\n每一條原則都指向同一個目標：讓 AI Agent 成為交易的一等公民。',
+    'home.principlesDesc': '對話式介面。Login-Once。Turnkey 安全。交易所抽象。可組合 Skills。\n每一條原則都指向同一個目標：讓 AI Agent 成為交易的一等公民。',
     'home.principlesCta': '閱讀設計原則 →',
-    'home.p01sub': '命令列即介面',
+    'home.p01sub': '自然語言即介面',
     'home.p02sub': '一次認證全覆蓋',
     'home.p03sub': '雲端金鑰託管',
     'home.p04sub': '統一多交易所語義',
@@ -482,6 +552,35 @@ export const translations: Record<Lang, Record<string, string>> = {
     'home.thesis': '"鏈上交易的主體將從人類轉移到 AI Agent。\n誰擁有 Agent 的執行層，誰就擁有鏈上流量的入口。"',
     'home.thesisCite': '— D0 THESIS / 2026',
     'home.thesisCta': '閱讀完整論文 →',
+
+    // Homepage — DSEA
+    'home.dseaLabel': 'AGENT 循環',
+    'home.dseaHeading': 'DSEA 引擎',
+    'home.dseaDesc': 'D0 的核心是 DSEA 循環 —— Discovery, Strategy, Execution, Attribution。將碎片化的手動操作替換為結構化、可驗證的 Agent 執行流程。',
+    'home.dseaD': '感知層 — 持續掃描鯨魚動向、流動性變化、社交敘事、宏觀信號',
+    'home.dseaS': '邊界層 — 你定義規則：資產、曝險、風控，Agent 在你的法則內執行',
+    'home.dseaE': '執行層 — 跨整合場所路由最優成交，最小化滑點和失敗交易',
+    'home.dseaA': '歸因層 — 做了什麼、為什麼、花了多少、結果如何，每一步可審計',
+    'home.intLabel': '全棧覆蓋',
+    'home.intHeading': '關鍵整合',
+    'home.intDesc': '169+ 工具覆蓋完整交易棧 —— 從行情到執行、從鏈上到宏觀。',
+    'home.compLabel': '為什麼選 D0',
+    'home.compHeading': '不是又一個 Bot。\n而是交易 Agent。',
+    'home.compDesc': '現有 Telegram Bot 是交易工具 —— 幫你更快點擊 "Buy"。\nD0 是交易 Agent —— 理解你的意圖、分析上下文、執行完整工作流。',
+    'home.secLabel': '縱深防禦',
+    'home.secHeading': '安全架構',
+    'home.secTurnkeyTitle': 'Turnkey HSM 金鑰託管',
+    'home.secTurnkeyDesc': '私鑰在硬體安全模組 (HSM) 內生成和儲存，永不暴露給應用層。所有簽名請求經過 Turnkey API 驗證後在安全飛地內完成。',
+    'home.secHitlTitle': '人在迴路',
+    'home.secHitlDesc': '所有交易需明確用戶確認，無靜默執行。',
+    'home.secIntentTitle': '意圖驗證',
+    'home.secIntentDesc': 'AI 解析的意圖以結構化格式回顯確認。',
+    'home.secLimitTitle': '倉位限制',
+    'home.secLimitDesc': '可配置的最大倉位和槓桿上限，防止過度曝險。',
+    'home.secSlipTitle': '滑點保護',
+    'home.secSlipDesc': '市價單包含滑點容忍度，超限自動拒絕。',
+    'home.secIsoTitle': '會話隔離',
+    'home.secIsoDesc': '用戶間完全隔離，無跨會話資料洩露。',
 
     // Learn page
     'learn.label': '課程體系',
@@ -616,16 +715,16 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.disclaimer': 'NFA / DYOR / 교육 목적으로만 제공됩니다.',
 
     // Homepage — Hero
-    'home.badge': 'D0 CLI · 비공개 베타 · Hyperliquid + Polymarket',
-    'home.headline': 'AI Agent\n트레이딩 인프라.',
-    'home.sub': 'D0는 AI Agent를 위해 설계된 암호화폐 트레이딩 CLI입니다. GUI에 API를 덧붙인 것이 아니라, 첫 줄부터 Agent를 위해 만든 실행 레이어입니다.',
+    'home.badge': 'D0 Agent · 비공개 베타 · Telegram · HyperLiquid + Polymarket',
+    'home.headline': '당신의 개인\n트레이딩 Agent.',
+    'home.sub': 'D0는 당신의 개인 트레이딩 Agent입니다 — Telegram 대화를 통해 트레이딩 의도를 안전하고 빠르며 감사 가능한 온체인 실행으로 전환합니다. 169+ 도구, 한 마디면 충분.',
     'home.ctaQuickstart': '빠른 시작 →',
     'home.ctaCurriculum': '커리큘럼 보기',
 
     // Homepage — Stats
     'home.statsTools': '사용 가능한 도구',
-    'home.statsExchanges': '연동된 거래소',
-    'home.statsResearch': '활발한 연구 주제',
+    'home.statsIntegrations': '통합 레이어',
+    'home.statsDSEA': 'Agent 엔진',
     'home.statsTrade': '첫 거래까지',
 
     // Homepage — Three Paths
@@ -662,9 +761,9 @@ export const translations: Record<Lang, Record<string, string>> = {
     // Homepage — Principles
     'home.principlesLabel': 'D0 방법론',
     'home.principlesHeading': '5가지 원칙.\n하나의 아키텍처.',
-    'home.principlesDesc': 'CLI-as-API. Login-Once. Turnkey 보안. 거래소 추상화. 조합형 Skills.\n모든 원칙이 같은 목표를 향합니다: AI Agent를 트레이딩의 일등 시민으로.',
+    'home.principlesDesc': '대화형 인터페이스. Login-Once. Turnkey 보안. 거래소 추상화. 조합형 Skills.\n모든 원칙이 같은 목표를 향합니다: AI Agent를 트레이딩의 일등 시민으로.',
     'home.principlesCta': '설계 원칙 읽기 →',
-    'home.p01sub': '커맨드라인이 곧 인터페이스',
+    'home.p01sub': '자연어가 곧 인터페이스',
     'home.p02sub': '한 번 인증으로 전체 커버',
     'home.p03sub': '클라우드 키 보관',
     'home.p04sub': '통합 멀티 거래소 시맨틱',
@@ -674,6 +773,35 @@ export const translations: Record<Lang, Record<string, string>> = {
     'home.thesis': '"온체인 트레이딩의 주체는 인간에서 AI Agent로 이동할 것입니다.\nAgent 실행 레이어를 가진 자가 온체인 트래픽의 관문을 갖게 됩니다."',
     'home.thesisCite': '— D0 THESIS / 2026',
     'home.thesisCta': '전체 논문 읽기 →',
+
+    // Homepage — DSEA
+    'home.dseaLabel': 'AGENT 루프',
+    'home.dseaHeading': 'DSEA 엔진',
+    'home.dseaDesc': 'D0의 핵심은 DSEA 루프 — Discovery, Strategy, Execution, Attribution. 파편화된 수동 작업을 구조화되고 검증 가능한 Agent 파이프라인으로 대체합니다.',
+    'home.dseaD': '감지 레이어 — 고래 움직임, 유동성 변화, 소셜 내러티브, 매크로 신호를 지속 스캔',
+    'home.dseaS': '경계 레이어 — 규칙을 정의: 자산, 익스포저, 리스크 한도. Agent가 규칙 내에서 실행',
+    'home.dseaE': '실행 레이어 — 통합 거래소에서 최적 체결 라우팅, 슬리피지 최소화',
+    'home.dseaA': '귀속 레이어 — 무엇을, 왜, 얼마나, 결과는 어떤지. 모든 단계 감사 가능',
+    'home.intLabel': '풀스택 커버리지',
+    'home.intHeading': '핵심 통합',
+    'home.intDesc': '169+ 도구가 전체 트레이딩 스택을 커버합니다 — 시세부터 실행, 온체인부터 매크로까지.',
+    'home.compLabel': '왜 D0인가',
+    'home.compHeading': '또 다른 봇이 아닙니다.\n트레이딩 Agent입니다.',
+    'home.compDesc': '기존 Telegram 봇은 트랜잭션 도구입니다 — "Buy" 클릭을 빠르게 해줍니다.\nD0는 트레이딩 Agent — 의도를 이해하고, 맥락을 분석하며, 전체 워크플로를 실행합니다.',
+    'home.secLabel': '심층 방어',
+    'home.secHeading': '보안 아키텍처',
+    'home.secTurnkeyTitle': 'Turnkey HSM 키 보관',
+    'home.secTurnkeyDesc': '개인키는 하드웨어 보안 모듈(HSM) 내부에서 생성·저장되며, 애플리케이션 레이어에 노출되지 않습니다.',
+    'home.secHitlTitle': '휴먼인더루프',
+    'home.secHitlDesc': '모든 거래는 명시적 사용자 확인이 필요합니다. 무단 실행 없음.',
+    'home.secIntentTitle': '의도 검증',
+    'home.secIntentDesc': 'AI가 해석한 의도를 구조화된 형식으로 실행 전 표시합니다.',
+    'home.secLimitTitle': '포지션 제한',
+    'home.secLimitDesc': '구성 가능한 최대 포지션 크기 및 레버리지 상한.',
+    'home.secSlipTitle': '슬리피지 보호',
+    'home.secSlipDesc': '시장가 주문에 슬리피지 허용 범위 포함. 초과 시 자동 거부.',
+    'home.secIsoTitle': '세션 격리',
+    'home.secIsoDesc': '사용자 간 완전 격리. 교차 세션 데이터 유출 없음.',
 
     // Learn page
     'learn.label': '커리큘럼',
@@ -808,16 +936,16 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.disclaimer': 'NFA / DYOR / 教育目的のみ。',
 
     // Homepage — Hero
-    'home.badge': 'D0 CLI · プライベートベータ · Hyperliquid + Polymarket',
-    'home.headline': 'AI Agent\nトレーディング基盤。',
-    'home.sub': 'D0はAI Agent向けに設計された暗号資産トレーディングCLIです。GUIにAPIを後付けしたものではなく、最初の一行からAgentのために作られた実行レイヤーです。',
+    'home.badge': 'D0 Agent · プライベートベータ · Telegram · HyperLiquid + Polymarket',
+    'home.headline': 'あなたの個人\nトレーディングAgent。',
+    'home.sub': 'D0はあなたの個人トレーディングAgent — Telegramの会話でトレーディング意図を安全・高速・監査可能なオンチェーン実行に変換。169+ツール、一言で完了。',
     'home.ctaQuickstart': 'クイックスタート →',
     'home.ctaCurriculum': 'カリキュラムを見る',
 
     // Homepage — Stats
     'home.statsTools': '利用可能なツール',
-    'home.statsExchanges': '連携済み取引所',
-    'home.statsResearch': '活発な研究テーマ',
+    'home.statsIntegrations': '統合レイヤー',
+    'home.statsDSEA': 'Agentエンジン',
     'home.statsTrade': '初回トレードまで',
 
     // Homepage — Three Paths
@@ -854,9 +982,9 @@ export const translations: Record<Lang, Record<string, string>> = {
     // Homepage — Principles
     'home.principlesLabel': 'D0 メソドロジー',
     'home.principlesHeading': '5つの原則。\n1つのアーキテクチャ。',
-    'home.principlesDesc': 'CLI-as-API。Login-Once。Turnkeyセキュリティ。取引所抽象化。コンポーザブルSkills。\nすべての原則が同じ目標を指します：AI Agentをトレーディングの第一級市民に。',
+    'home.principlesDesc': '会話型インターフェース。Login-Once。Turnkeyセキュリティ。取引所抽象化。コンポーザブルSkills。\nすべての原則が同じ目標を指します：AI Agentをトレーディングの第一級市民に。',
     'home.principlesCta': '設計原則を読む →',
-    'home.p01sub': 'コマンドラインがインターフェース',
+    'home.p01sub': '自然言語がインターフェース',
     'home.p02sub': '一度の認証で全カバー',
     'home.p03sub': 'クラウドキー保管',
     'home.p04sub': '統一マルチ取引所セマンティクス',
@@ -866,6 +994,35 @@ export const translations: Record<Lang, Record<string, string>> = {
     'home.thesis': '"オンチェイントレーディングの主体は人間からAI Agentへ移行する。\nAgentの実行レイヤーを持つ者が、オンチェインフローのゲートウェイを持つ。"',
     'home.thesisCite': '— D0 THESIS / 2026',
     'home.thesisCta': '完全な論文を読む →',
+
+    // Homepage — DSEA
+    'home.dseaLabel': 'AGENTループ',
+    'home.dseaHeading': 'DSEAエンジン',
+    'home.dseaDesc': 'D0の中核はDSEAループ — Discovery, Strategy, Execution, Attribution。断片化した手動操作を構造化された検証可能なAgentパイプラインに置き換えます。',
+    'home.dseaD': '感知レイヤー — クジラの動き、流動性の変化、ソーシャルナラティブ、マクロシグナルを継続スキャン',
+    'home.dseaS': '境界レイヤー — ルールを定義：資産、エクスポージャー、リスク上限。Agentがルール内で実行',
+    'home.dseaE': '実行レイヤー — 統合取引所で最適な約定をルーティング、スリッページ最小化',
+    'home.dseaA': '帰属レイヤー — 何を、なぜ、いくらで、結果はどうだったか。すべてのステップが監査可能',
+    'home.intLabel': 'フルスタックカバレッジ',
+    'home.intHeading': '主要統合',
+    'home.intDesc': '169+ツールが完全なトレーディングスタックをカバー — 相場から実行、オンチェーンからマクロまで。',
+    'home.compLabel': 'なぜD0か',
+    'home.compHeading': 'ただのボットではない。\nトレーディングAgent。',
+    'home.compDesc': '既存のTelegramボットはトランザクションツール — "Buy"クリックを速くするだけ。\nD0はトレーディングAgent — 意図を理解し、コンテキストを分析し、完全なワークフローを実行。',
+    'home.secLabel': '多層防御',
+    'home.secHeading': 'セキュリティアーキテクチャ',
+    'home.secTurnkeyTitle': 'Turnkey HSMキー保管',
+    'home.secTurnkeyDesc': '秘密鍵はハードウェアセキュリティモジュール(HSM)内部で生成・保管。アプリケーション層には決して公開されません。',
+    'home.secHitlTitle': 'ヒューマンインザループ',
+    'home.secHitlDesc': 'すべての取引に明示的なユーザー確認が必要。サイレント実行なし。',
+    'home.secIntentTitle': '意図検証',
+    'home.secIntentDesc': 'AIが解析した意図を構造化形式で実行前に表示確認。',
+    'home.secLimitTitle': 'ポジション制限',
+    'home.secLimitDesc': '設定可能な最大ポジションサイズとレバレッジ上限。',
+    'home.secSlipTitle': 'スリッページ保護',
+    'home.secSlipDesc': '成行注文にスリッページ許容範囲を含む。超過時は自動拒否。',
+    'home.secIsoTitle': 'セッション分離',
+    'home.secIsoDesc': 'ユーザー間完全分離。クロスセッションのデータ漏洩なし。',
 
     // Learn page
     'learn.label': 'カリキュラム',

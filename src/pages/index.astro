@@ -19,15 +19,15 @@ const featured = articles
   <div class="hero-inner">
     <div class="hero-badge">
       <span class="badge-dot"></span>
-      <span data-i18n="home.badge">D0 CLI · Private Beta · Hyperliquid + Polymarket</span>
+      <span data-i18n="home.badge">D0 Agent · Private Beta · Telegram · HyperLiquid + Polymarket</span>
     </div>
 
     <h1 class="hero-headline" data-i18n="home.headline">
-      The AI Agent<br>Trading Infrastructure.
+      Your Personal<br>Trading Agent.
     </h1>
     <p class="hero-sub" data-i18n="home.sub">
-      D0 是专为 AI Agent 设计的加密交易 CLI。不是给人点击按钮的 GUI，<br class="break-desktop">
-      而是从第一行代码开始就为 Agent 而生的执行层。
+      D0 是你的个人交易 Agent —— 通过 Telegram 对话，将交易意图转化为<br class="break-desktop">
+      安全、快速、可审计的链上执行。169+ 工具，一句话搞定。
     </p>
 
     <div class="hero-actions">
@@ -35,28 +35,27 @@ const featured = articles
       <a href="/learn/" class="btn-ghost" data-i18n="home.ctaCurriculum">BROWSE CURRICULUM</a>
     </div>
 
-    <!-- Terminal Demo -->
+    <!-- Terminal Demo — Telegram Conversation Style -->
     <div class="terminal">
       <div class="terminal-bar">
         <span class="dot red"></span>
         <span class="dot yellow"></span>
         <span class="dot green"></span>
-        <span class="terminal-title">d0 — zsh</span>
+        <span class="terminal-title">D0 Agent — Telegram</span>
       </div>
       <div class="terminal-body" id="terminalBody">
-        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">d0 login</span></div>
-        <div class="t-line t-out">✓ Authenticated as @you · Turnkey wallet ready</div>
-        <div class="t-line t-gap"></div>
-        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">d0 price ETH</span></div>
+        <div class="t-line"><span class="t-prompt">You</span> <span class="t-cmd">What's the price of ETH?</span></div>
         <div class="t-line t-out">ETH/USDC  <span class="t-hl">$3,247.50</span>  +2.3% 24h  Vol $18.2B</div>
         <div class="t-line t-gap"></div>
-        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">d0 ta BTC</span></div>
+        <div class="t-line"><span class="t-prompt">You</span> <span class="t-cmd">Give me a TA on BTC</span></div>
         <div class="t-line t-out">RSI(14) <span class="t-gold">34.2</span> · MACD <span class="t-green">bullish cross</span> · Signal: <span class="t-hl">LONG</span></div>
         <div class="t-line t-gap"></div>
-        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">d0 hl:limit buy ETH 0.1 3200</span></div>
+        <div class="t-line"><span class="t-prompt">You</span> <span class="t-cmd">Buy 0.1 ETH on HyperLiquid, limit 3200</span></div>
+        <div class="t-line t-out">🔒 Confirm: <span class="t-hl">BUY 0.1 ETH</span> @ limit $3,200 on HyperLiquid</div>
+        <div class="t-line"><span class="t-prompt">You</span> <span class="t-cmd">Yes</span></div>
         <div class="t-line t-out t-success">✓ Order placed · Filled @ $3,200.40 · Position open</div>
         <div class="t-line t-gap"></div>
-        <div class="t-line t-cursor"><span class="t-prompt">$</span> <span class="cursor-blink">▊</span></div>
+        <div class="t-line t-cursor"><span class="t-prompt">You</span> <span class="cursor-blink">▊</span></div>
       </div>
     </div>
   </div>
@@ -73,13 +72,13 @@ const featured = articles
     </div>
     <div class="stat-divider"></div>
     <div class="stat">
-      <span class="stat-num">3</span>
-      <span class="stat-label" data-i18n="home.statsExchanges">Exchanges Integrated</span>
+      <span class="stat-num">9</span>
+      <span class="stat-label" data-i18n="home.statsIntegrations">Integration Layers</span>
     </div>
     <div class="stat-divider"></div>
     <div class="stat">
-      <span class="stat-num">5</span>
-      <span class="stat-label" data-i18n="home.statsResearch">Active Research Topics</span>
+      <span class="stat-num">DSEA</span>
+      <span class="stat-label" data-i18n="home.statsDSEA">Agentic Engine</span>
     </div>
     <div class="stat-divider"></div>
     <div class="stat">
@@ -178,6 +177,205 @@ const featured = articles
 </section>
 
 <!-- ══════════════════════════════════════════
+     DSEA ENGINE
+══════════════════════════════════════════ -->
+<section class="dsea-section">
+  <div class="dsea-inner">
+    <div class="dsea-text">
+      <div class="section-label" data-i18n="home.dseaLabel">THE AGENTIC LOOP</div>
+      <h2 class="section-heading" data-i18n="home.dseaHeading">DSEA Engine</h2>
+      <p class="dsea-desc" data-i18n="home.dseaDesc">
+        D0 的核心是 DSEA 循环 —— Discovery, Strategy, Execution, Attribution。
+        将碎片化的手动操作替换为结构化、可验证的 Agent 执行流程。
+      </p>
+    </div>
+    <div class="dsea-grid">
+      {[
+        { letter: 'D', title: 'Discovery', desc: '感知层 — 持续扫描鲸鱼动向、流动性变化、社交叙事、宏观信号', i18nDesc: 'home.dseaD' },
+        { letter: 'S', title: 'Strategy', desc: '边界层 — 你定义规则：资产、敞口、风控，Agent 在你的法则内执行', i18nDesc: 'home.dseaS' },
+        { letter: 'E', title: 'Execution', desc: '执行层 — 跨集成场所路由最优成交，最小化滑点和失败交易', i18nDesc: 'home.dseaE' },
+        { letter: 'A', title: 'Attribution', desc: '归因层 — 做了什么、为什么、花了多少、结果如何，每一步可审计', i18nDesc: 'home.dseaA' },
+      ].map(step => (
+        <div class="dsea-card">
+          <div class="dsea-letter">{step.letter}</div>
+          <div>
+            <span class="dsea-title">{step.title}</span>
+            <span class="dsea-card-desc" data-i18n={step.i18nDesc}>{step.desc}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     KEY INTEGRATIONS
+══════════════════════════════════════════ -->
+<section class="integrations-section">
+  <div class="section-label" data-i18n="home.intLabel">FULL-SPECTRUM STACK</div>
+  <h2 class="section-heading" data-i18n="home.intHeading">Key Integrations</h2>
+  <p class="int-desc" data-i18n="home.intDesc">
+    169+ 工具覆盖完整交易栈 —— 从行情到执行、从链上到宏观。
+  </p>
+
+  <div class="int-grid">
+    {[
+      { icon: '📈', layer: 'Perpetuals DEX', name: 'HyperLiquid', desc: '229+ 资产，最高 50x 杠杆，全订单生命周期管理' },
+      { icon: '🎯', layer: 'Prediction Markets', name: 'Polymarket', desc: 'Polygon 上的预测市场，实时赔率与流动性' },
+      { icon: '💹', layer: 'Price & Market Data', name: 'CoinGecko · Binance · DexScreener', desc: '实时现货/合约定价、24h 成交量、深度数据' },
+      { icon: '📊', layer: 'Technical Analysis', name: 'Built-in TA Engine', desc: 'RSI-14, MACD, MA(20/60), 布林带, 支撑/阻力' },
+      { icon: '🔥', layer: 'Derivatives Intel', name: 'Binance Futures · CoinAnk', desc: '持仓量、资金费率、多空比、大户持仓' },
+      { icon: '🐋', layer: 'Whale Tracking', name: 'Whale Alert · Arkham', desc: '大额转账警报、钱包标签、资金流向分析' },
+      { icon: '🌍', layer: 'Macro & Sentiment', name: 'Yahoo Finance · Alternative.me', desc: 'VIX, DXY, US10Y, 恐惧贪婪指数, 宏观新闻' },
+      { icon: '🏗️', layer: 'Fundamentals', name: 'RootData · DeFiLlama', desc: '项目融资、团队背景、TVL 追踪' },
+      { icon: '🔐', layer: 'Key Custody', name: 'Turnkey HSM', desc: '硬件安全模块，私钥永不离开安全飞地' },
+    ].map(item => (
+      <div class="int-card">
+        <div class="int-icon">{item.icon}</div>
+        <div class="int-layer">{item.layer}</div>
+        <div class="int-name">{item.name}</div>
+        <div class="int-card-desc">{item.desc}</div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     COMPETITIVE LANDSCAPE
+══════════════════════════════════════════ -->
+<section class="compete-section">
+  <div class="compete-inner">
+    <div class="section-label" data-i18n="home.compLabel">WHY D0</div>
+    <h2 class="section-heading" data-i18n="home.compHeading">Not Another Bot.<br>A Trading Agent.</h2>
+    <p class="compete-desc" data-i18n="home.compDesc">
+      现有 Telegram Bot 是交易工具 —— 帮你更快点击 "Buy"。<br>
+      D0 是交易 Agent —— 理解你的意图、分析上下文、执行完整工作流。
+    </p>
+
+    <div class="compete-table-wrap">
+      <table class="compete-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="th-d0">D0</th>
+            <th>Banana Gun</th>
+            <th>Maestro</th>
+            <th>BONKbot</th>
+            <th>GMGN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-label">Core Model</td>
+            <td class="td-d0">Agentic AI</td>
+            <td>Sniper</td>
+            <td>Sniper</td>
+            <td>Swap Bot</td>
+            <td>Analytics</td>
+          </tr>
+          <tr>
+            <td class="row-label">Interface</td>
+            <td class="td-d0">Natural Language</td>
+            <td>Button Menu</td>
+            <td>Button Menu</td>
+            <td>Button Menu</td>
+            <td>Web + TG</td>
+          </tr>
+          <tr>
+            <td class="row-label">Perps (HyperLiquid)</td>
+            <td class="td-d0 td-yes">✓</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+          </tr>
+          <tr>
+            <td class="row-label">Prediction Markets</td>
+            <td class="td-d0 td-yes">✓</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+          </tr>
+          <tr>
+            <td class="row-label">Built-in TA</td>
+            <td class="td-d0 td-yes">✓</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+            <td class="td-partial">Basic</td>
+          </tr>
+          <tr>
+            <td class="row-label">Macro Intelligence</td>
+            <td class="td-d0 td-yes">✓</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+          </tr>
+          <tr>
+            <td class="row-label">DSEA Loop</td>
+            <td class="td-d0 td-yes">✓</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+            <td class="td-no">✗</td>
+          </tr>
+          <tr>
+            <td class="row-label">Human-in-the-Loop</td>
+            <td class="td-d0 td-yes">✓</td>
+            <td class="td-no">N/A</td>
+            <td class="td-no">N/A</td>
+            <td class="td-no">N/A</td>
+            <td class="td-no">N/A</td>
+          </tr>
+          <tr>
+            <td class="row-label">Key Custody</td>
+            <td class="td-d0">Turnkey HSM</td>
+            <td>Embedded</td>
+            <td>Self-custodial</td>
+            <td>Self-custodial</td>
+            <td>Wallet Connect</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECURITY
+══════════════════════════════════════════ -->
+<section class="security-section">
+  <div class="section-label" data-i18n="home.secLabel">DEFENSE IN DEPTH</div>
+  <h2 class="section-heading" data-i18n="home.secHeading">Security Architecture</h2>
+
+  <div class="security-grid">
+    <div class="sec-card sec-card-main">
+      <div class="sec-icon">🔐</div>
+      <h3 class="sec-title" data-i18n="home.secTurnkeyTitle">Turnkey HSM Key Custody</h3>
+      <p class="sec-desc" data-i18n="home.secTurnkeyDesc">
+        私钥在硬件安全模块 (HSM) 内生成和存储，永不暴露给应用层。
+        所有签名请求经过 Turnkey API 验证后在安全飞地内完成。
+      </p>
+    </div>
+    {[
+      { icon: '👤', title: 'Human-in-the-Loop', desc: '所有交易需明确用户确认，无静默执行', i18nTitle: 'home.secHitlTitle', i18nDesc: 'home.secHitlDesc' },
+      { icon: '🔍', title: 'Intent Verification', desc: 'AI 解析的意图以结构化格式回显确认', i18nTitle: 'home.secIntentTitle', i18nDesc: 'home.secIntentDesc' },
+      { icon: '📏', title: 'Position Limits', desc: '可配置的最大仓位和杠杆上限，防止过度敞口', i18nTitle: 'home.secLimitTitle', i18nDesc: 'home.secLimitDesc' },
+      { icon: '⚡', title: 'Slippage Protection', desc: '市价单包含滑点容忍度，超限自动拒绝', i18nTitle: 'home.secSlipTitle', i18nDesc: 'home.secSlipDesc' },
+      { icon: '🔒', title: 'Session Isolation', desc: '用户间完全隔离，无跨会话数据泄露', i18nTitle: 'home.secIsoTitle', i18nDesc: 'home.secIsoDesc' },
+    ].map(item => (
+      <div class="sec-card">
+        <div class="sec-icon">{item.icon}</div>
+        <h3 class="sec-title" data-i18n={item.i18nTitle}>{item.title}</h3>
+        <p class="sec-desc" data-i18n={item.i18nDesc}>{item.desc}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
      FEATURED ARTICLES
 ══════════════════════════════════════════ -->
 <section class="articles-section">
@@ -213,7 +411,7 @@ const featured = articles
       <div class="section-label" data-i18n="home.principlesLabel">D0 METHODOLOGY</div>
       <h2 class="section-heading" data-i18n="home.principlesHeading">5 Principles.<br>One Architecture.</h2>
       <p class="principles-desc" data-i18n="home.principlesDesc">
-        CLI-as-API. Login-Once. Turnkey Security. Exchange Abstraction. Composable Skills.<br>
+        Conversational Interface. Login-Once. Turnkey Secured. Exchange Abstraction. Composable Skills.<br>
         每一条原则都指向同一个目标：让 AI Agent 成为交易的一等公民。
       </p>
       <a href="/articles/d0-design-principles/" class="btn-ghost" style="margin-top:20px" data-i18n="home.principlesCta">
@@ -222,7 +420,7 @@ const featured = articles
     </div>
     <div class="principles-list">
       {[
-        { num: '01', title: 'CLI-as-API', sub: '命令行即接口', i18nSub: 'home.p01sub' },
+        { num: '01', title: 'Conversational Interface', sub: '自然语言即接口', i18nSub: 'home.p01sub' },
         { num: '02', title: 'Login-Once', sub: '一次认证全覆盖', i18nSub: 'home.p02sub' },
         { num: '03', title: 'Turnkey Secured', sub: '云端密钥托管', i18nSub: 'home.p03sub' },
         { num: '04', title: 'Exchange Abstraction', sub: '统一多交易所语义', i18nSub: 'home.p04sub' },
@@ -721,6 +919,176 @@ if (cursor) {
 
 @media (max-width: 720px) {
   .principles-inner { grid-template-columns: 1fr; }
+}
+
+/* ── DSEA Engine ── */
+.dsea-section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 80px 24px 0;
+}
+.dsea-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.dsea-desc { font-size: 13px; color: var(--text2); line-height: 1.8; margin-top: 12px; }
+.dsea-grid { display: flex; flex-direction: column; gap: 2px; }
+.dsea-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: border-color 0.15s;
+}
+.dsea-card:hover { border-color: var(--accent); }
+.dsea-letter {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px;
+  color: var(--accent);
+  width: 28px;
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+.dsea-title { font-size: 13px; font-weight: 700; color: var(--text); display: block; }
+.dsea-card-desc { font-size: 11px; color: var(--text2); line-height: 1.6; display: block; margin-top: 4px; }
+
+@media (max-width: 720px) {
+  .dsea-inner { grid-template-columns: 1fr; }
+}
+
+/* ── Integrations ── */
+.integrations-section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 80px 24px 0;
+}
+.int-desc { font-size: 13px; color: var(--text2); line-height: 1.8; margin-bottom: 32px; margin-top: -16px; }
+.int-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.int-card {
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.int-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.int-icon { font-size: 22px; margin-bottom: 8px; }
+.int-layer {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.int-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.int-card-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
+
+@media (max-width: 720px) {
+  .int-grid { grid-template-columns: 1fr; }
+}
+@media (min-width: 480px) and (max-width: 720px) {
+  .int-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Competitive ── */
+.compete-section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 80px 24px 0;
+}
+.compete-inner { text-align: center; }
+.compete-desc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.8;
+  margin-bottom: 32px;
+  margin-top: -16px;
+}
+.compete-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.compete-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  text-align: center;
+}
+.compete-table th, .compete-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.compete-table th {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text2);
+  background: var(--surface);
+}
+.th-d0 { color: var(--accent) !important; }
+.td-d0 { color: var(--accent); font-weight: 700; }
+.td-yes { color: #4ade80; }
+.td-no { color: var(--muted); }
+.td-partial { color: var(--gold); }
+.row-label {
+  text-align: left;
+  font-weight: 700;
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+}
+
+/* ── Security ── */
+.security-section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 80px 24px 0;
+}
+.security-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.sec-card {
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.15s;
+}
+.sec-card:hover { border-color: var(--border2); }
+.sec-card-main {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background: var(--surface);
+  border-color: var(--border2);
+}
+.sec-icon { font-size: 24px; flex-shrink: 0; margin-bottom: 8px; }
+.sec-card-main .sec-icon { font-size: 32px; margin-bottom: 0; }
+.sec-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.sec-desc { font-size: 11px; color: var(--text2); line-height: 1.6; }
+
+@media (max-width: 720px) {
+  .security-grid { grid-template-columns: 1fr; }
+  .sec-card-main { flex-direction: column; }
+}
+@media (min-width: 480px) and (max-width: 720px) {
+  .security-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ── Thesis ── */
