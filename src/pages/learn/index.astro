@@ -20,7 +20,7 @@ const tiers = [
 </section>
 
 <!-- Quick Start CTA -->
-<section class="qs-cta-section">
+<section class="qs-cta-section scroll-reveal">
   <a href="/learn/quickstart/" class="qs-cta-card">
     <div class="qs-badge" data-i18n="learn.startHere">START HERE</div>
     <h2 class="qs-title" data-i18n="learn.qsTitle">⚡ Quick Start — 30 Minutes to First Trade</h2>
@@ -30,7 +30,7 @@ const tiers = [
 </section>
 
 <!-- Tiers with real course links -->
-<section class="tiers-section">
+<section class="tiers-section scroll-reveal-stagger">
   {tiers.map(t => {
     const tierCourses = sorted.filter(c => c.data.tier === t.tier);
     return (

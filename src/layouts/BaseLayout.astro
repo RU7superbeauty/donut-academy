@@ -169,6 +169,11 @@ const navItems = [
   </div>
 </footer>
 
+<!-- Floating Mascot -->
+<div class="floating-mascot" id="floatingMascot" title="Quick Start →">
+  <img src="/img/logo-color.png" alt="Donut" class="mascot-img" />
+</div>
+
 <script>
   // Mobile menu toggle
   const btn = document.getElementById('hamburgerBtn');
@@ -176,6 +181,26 @@ const navItems = [
   btn?.addEventListener('click', () => {
     menu?.classList.toggle('open');
     btn.classList.toggle('open');
+  });
+
+  // Scroll-reveal via IntersectionObserver
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.scroll-reveal, .scroll-reveal-stagger').forEach(el => {
+    revealObserver.observe(el);
+  });
+
+  // Floating mascot click → quickstart
+  const mascot = document.getElementById('floatingMascot');
+  mascot?.addEventListener('click', () => {
+    window.location.href = '/learn/quickstart/';
   });
 
   // ─── i18n System ───
@@ -284,10 +309,11 @@ const navItems = [
     position: sticky;
     top: 0;
     z-index: 200;
-    background: rgba(13,13,22,0.92);
+    background: rgba(13,13,22,0.85);
     border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px) saturate(1.2);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    box-shadow: 0 1px 0 rgba(172,170,255,0.08);
   }
   .topbar-inner {
     max-width: var(--max-w);
