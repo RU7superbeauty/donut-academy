@@ -4,3 +4,6 @@ dist/
 .vercel/
 .env
 .DS_Store
+.vercel
+CLAUDE.md
+**/CLAUDE.md

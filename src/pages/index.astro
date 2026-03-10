@@ -26,6 +26,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="trades-inner">
     <div class="section-label" data-i18n="lp.tradesLabel">WHAT D0 TRADERS ARE DOING</div>
     <h2 class="trades-title" data-i18n="lp.tradesTitle">Real scenarios. Real PnL.</h2>
+    <p class="trades-disclaimer" data-i18n="lp.tradesDisclaimer">Simulated scenarios for illustration only. Past performance is not indicative of future results. Not financial advice.</p>
 
     <div class="marquee-wrap">
       <!-- Row 1: scrolls left -->
@@ -520,7 +521,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .trades-title {
   font-family: 'Noto Sans SC', sans-serif;
   font-size: clamp(18px, 2.5vw, 24px); font-weight: 700;
-  color: var(--text); margin-bottom: 28px;
+  color: var(--text); margin-bottom: 8px;
+}
+.trades-disclaimer {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--muted); letter-spacing: 0.3px;
+  margin-bottom: 24px; line-height: 1.5;
 }
 .marquee-wrap { overflow: hidden; width: 100vw; margin-left: calc(-50vw + 50%); }
 .marquee-row { overflow: hidden; padding: 6px 0; }
