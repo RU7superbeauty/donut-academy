@@ -18,6 +18,7 @@
   --content-w: 780px;
   --radius:    8px;
   --radius-sm: 4px;
+  --radius-lg: 12px;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -32,7 +33,7 @@ body::after {
   inset: 0;
   background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
   pointer-events: none;
-  z-index: 50;
+  z-index: 500; /* above content, below modals/toasts */
 }
 .container { max-width: var(--max-w); margin: 0 auto; padding: 0 20px; }
 

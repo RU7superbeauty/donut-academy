@@ -248,7 +248,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     'lp.mq14': 'On-chain TVL surging — I spotted it 48hrs early',
     'lp.mq15': 'CEX-DEX price gap — I arbitraged it automatically',
     'lp.mq16': 'Rotating across 3 protocols, auto-compounding',
-    'lp.mq17': 'CPI below consensus + whales flooding in — I called the pump',
+    'lp.mq17': 'CPI below consensus + whales flooding in — I positioned for the rally',
     'lp.mq18': 'RWA narrative + BlackRock filing — I called the breakout',
     'lp.mq19': 'Elon tweet hype faded, funding 0.15% — I waited for reversion',
     'lp.mq20': 'ETH going sideways — I set up a grid, 82 fills in 7 days',
@@ -310,7 +310,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     'lp.start3Desc': '12 courses from basics to Agent architecture. Every lesson uses D0 as the hands-on platform.',
     'lp.start3Cta': 'Enter Academy →',
     // CTA
-    'lp.ctaHeadline': 'Stop reading. Start making money.',
+    'lp.ctaHeadline': 'Your first trade is 30 seconds away.',
     'lp.ctaSub': 'Open Telegram. Ask D0 about the trade you\'ve been thinking about. 30 seconds — you\'ll know.',
     'lp.ctaCta': 'Talk to D0 →',
     'lp.ctaCli': 'Install CLI →',
