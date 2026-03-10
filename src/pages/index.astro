@@ -29,7 +29,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <p class="trades-disclaimer" data-i18n="lp.tradesDisclaimer">Simulated scenarios for illustration only. Past performance is not indicative of future results. Not financial advice.</p>
 
     <div class="marquee-wrap" aria-hidden="true">
-      <!-- Row 1: scrolls left -->
+      <!-- Row 1: scrolls left. Must clone exactly 1× for seamless loop -->
       <div class="marquee-row" id="marqueeRow1">
         <div class="marquee-track">
           <div class="m-card">
@@ -106,7 +106,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="m-card">
             <div class="mc-top"><span class="mc-avatar" style="--av-bg:#D946EF">GG</span><span class="mc-user">GigaGains</span><span class="mc-type long">LONG AVAX</span></div>
             <div class="mc-pnl green">+$2,900</div>
-            <div class="mc-desc" data-i18n="lp.mq14">On-chain TVL surge 48hr before pump</div>
+            <div class="mc-desc" data-i18n="lp.mq14">On-chain TVL surge 48hr before breakout</div>
           </div>
           <div class="m-card">
             <div class="mc-top"><span class="mc-avatar" style="--av-bg:#0EA5E9">RB</span><span class="mc-user">RatioBot</span><span class="mc-type arb">ARB</span></div>
@@ -121,7 +121,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="m-card">
             <div class="mc-top"><span class="mc-avatar" style="--av-bg:#F43F5E">MC</span><span class="mc-user">MacroCalls</span><span class="mc-type long">LONG BTC</span></div>
             <div class="mc-pnl green">+$5,200</div>
-            <div class="mc-desc" data-i18n="lp.mq17">CPI print below consensus + whale inflow = moon</div>
+            <div class="mc-desc" data-i18n="lp.mq17">CPI below consensus + whale inflow → positioned for rally</div>
           </div>
           <div class="m-card">
             <div class="mc-top"><span class="mc-avatar" style="--av-bg:#22D3EE">SN</span><span class="mc-user">SniperNFT</span><span class="mc-type long">LONG ONDO</span></div>
@@ -247,7 +247,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <span class="sc-type" data-i18n="lp.t8Type">SHORT SQUEEZE</span>
           <span class="sc-time">⏱ 4h scan</span>
         </div>
-        <p class="sc-story" data-i18n="lp.t8Story">D0's 4-hour scan flagged DOGE: funding rate at -0.08% (extreme negative), OI surging while price flat. Short squeeze setup confirmed. Went long with 3x. Shorts got liquidated — price pumped 22% in 6 hours.</p>
+        <p class="sc-story" data-i18n="lp.t8Story">D0's 4-hour scan flagged DOGE: funding rate at -0.08% (extreme negative), OI surging while price flat. Short squeeze setup confirmed. Went long with 3x. Shorts got liquidated — price rallied 22% in 6 hours.</p>
         <div class="sc-pnl-block green">
           <div class="sc-pnl">+$1,650</div>
           <div class="sc-pnl-sub" data-i18n="lp.t8PnlSub">caught short squeeze before it fired · 3x leveraged long</div>
