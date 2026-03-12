@@ -1,1130 +1,875 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-
-const articles = await getCollection('articles');
-const featured = articles
-  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
-  .slice(0, 6);
 ---
 <BaseLayout
-  title="Donut Academy — AI-Native Crypto Trading"
-  description="Learn D0. Build autonomous trading agents. Master the architecture of AI-native crypto trading infrastructure."
+  title="D0 — Agent Meets Money"
+  description="D0 turns any AI into a trading desk. 155 tools, real PnL. If you can chat, you can trade."
 >
 
-<!-- ══════════════════════════════════════════
-     HERO
-══════════════════════════════════════════ -->
-<section class="hero-section">
+<!-- ═══ HERO ═══ -->
+<section class="lp-hero">
+  <div class="hero-glow"></div>
   <div class="hero-inner">
-    <div class="hero-badge">
-      <span class="badge-dot"></span>
-      <span data-i18n="home.badge">D0 Agent · Private Beta · Telegram · HyperLiquid + Polymarket</span>
-    </div>
-
-    <h1 class="hero-headline" data-i18n="home.headline">
-      Your Personal<br>Trading Agent.
-    </h1>
-    <p class="hero-sub" data-i18n="home.sub">
-      D0 是你的个人交易 Agent —— 通过 Telegram 对话，将交易意图转化为<br class="break-desktop">
-      安全、快速、可审计的链上执行。169+ 工具，一句话搞定。
-    </p>
-
-    <div class="hero-actions">
-      <a href="/learn/quickstart/" class="btn-primary" data-i18n="home.ctaQuickstart">QUICK START →</a>
-      <a href="/learn/" class="btn-ghost" data-i18n="home.ctaCurriculum">BROWSE CURRICULUM</a>
-    </div>
-
-    <!-- Terminal Demo — Telegram Conversation Style -->
-    <div class="terminal">
-      <div class="terminal-bar">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
-        <span class="terminal-title">D0 Agent — Telegram</span>
-      </div>
-      <div class="terminal-body" id="terminalBody">
-        <div class="t-line"><span class="t-prompt">You</span> <span class="t-cmd">What's the price of ETH?</span></div>
-        <div class="t-line t-out">ETH/USDC  <span class="t-hl">$3,247.50</span>  +2.3% 24h  Vol $18.2B</div>
-        <div class="t-line t-gap"></div>
-        <div class="t-line"><span class="t-prompt">You</span> <span class="t-cmd">Give me a TA on BTC</span></div>
-        <div class="t-line t-out">RSI(14) <span class="t-gold">34.2</span> · MACD <span class="t-green">bullish cross</span> · Signal: <span class="t-hl">LONG</span></div>
-        <div class="t-line t-gap"></div>
-        <div class="t-line"><span class="t-prompt">You</span> <span class="t-cmd">Buy 0.1 ETH on HyperLiquid, limit 3200</span></div>
-        <div class="t-line t-out">🔒 Confirm: <span class="t-hl">BUY 0.1 ETH</span> @ limit $3,200 on HyperLiquid</div>
-        <div class="t-line"><span class="t-prompt">You</span> <span class="t-cmd">Yes</span></div>
-        <div class="t-line t-out t-success">✓ Order placed · Filled @ $3,200.40 · Position open</div>
-        <div class="t-line t-gap"></div>
-        <div class="t-line t-cursor"><span class="t-prompt">You</span> <span class="cursor-blink">▊</span></div>
-      </div>
+    <div class="hero-badge"><span class="badge-dot"></span><span data-i18n="lp.heroBadge">SUPER D0 · LIVE</span></div>
+    <h1 class="hero-headline"><span class="hero-slogan">Agent Meets Money.</span></h1>
+    <p class="hero-hook" data-i18n="lp.heroHook">If you can chat, you can trade.</p>
+    <p class="hero-sub" data-i18n="lp.heroSub">D0 is an AI trading agent you talk to. Ask a question — it fires 155 tools and gives you a trade setup. Say "execute" — it places the order. No apps. Just conversation.</p>
+    <div class="hero-ctas">
+      <a href="https://t.me/DonutD0Bot" target="_blank" class="btn-primary" data-i18n="lp.heroCta1">Talk to D0 on Telegram →</a>
+      <a href="#trades" class="btn-ghost" data-i18n="lp.heroCta2">See real trades ↓</a>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     STATS BAR
-══════════════════════════════════════════ -->
-<section class="stats-bar">
-  <div class="stats-inner">
-    <div class="stat">
-      <span class="stat-num">169+</span>
-      <span class="stat-label" data-i18n="home.statsTools">Tools Available</span>
-    </div>
-    <div class="stat-divider"></div>
-    <div class="stat">
-      <span class="stat-num">9</span>
-      <span class="stat-label" data-i18n="home.statsIntegrations">Integration Layers</span>
-    </div>
-    <div class="stat-divider"></div>
-    <div class="stat">
-      <span class="stat-num">DSEA</span>
-      <span class="stat-label" data-i18n="home.statsDSEA">Agentic Engine</span>
-    </div>
-    <div class="stat-divider"></div>
-    <div class="stat">
-      <span class="stat-num">30min</span>
-      <span class="stat-label" data-i18n="home.statsTrade">To First Trade</span>
-    </div>
-  </div>
-</section>
+<!-- ═══ PNL MARQUEE ═══ -->
+<section class="lp-trades" id="trades">
+  <div class="trades-inner">
+    <div class="section-label" data-i18n="lp.tradesLabel">WHAT D0 TRADERS ARE DOING</div>
+    <h2 class="trades-title" data-i18n="lp.tradesTitle">Real scenarios. Real PnL.</h2>
+    <p class="trades-disclaimer" data-i18n="lp.tradesDisclaimer">Simulated scenarios for illustration only. Past performance is not indicative of future results. Not financial advice.</p>
 
-<!-- ══════════════════════════════════════════
-     THREE PATHS
-══════════════════════════════════════════ -->
-<section class="paths-section">
-  <div class="section-label" data-i18n="home.pathsLabel">WHERE TO START</div>
-  <h2 class="section-heading" data-i18n="home.pathsHeading">Choose Your Path</h2>
-
-  <div class="paths-grid">
-    <a href="/learn/quickstart/" class="path-card">
-      <div class="path-icon">🚀</div>
-      <div class="path-tier" data-i18n="home.pathBeginner">BEGINNER</div>
-      <h3 class="path-title" data-i18n="home.pathQuickStart">Quick Start</h3>
-      <p class="path-desc" data-i18n="home.pathQuickStartDesc">从安装 D0 到执行第一笔交易，30 分钟上手完整流程。无需任何量化背景。</p>
-      <div class="path-meta">
-        <span data-i18n="home.pathSteps">4 steps</span>
-        <span data-i18n="home.pathTime30">30 min</span>
-        <span class="path-arrow">→</span>
-      </div>
-    </a>
-
-    <a href="/playbook/" class="path-card path-card-gold">
-      <div class="path-icon">⚡</div>
-      <div class="path-tier" data-i18n="home.pathTrader">TRADER</div>
-      <h3 class="path-title" data-i18n="home.pathPlaybook">Playbook</h3>
-      <p class="path-desc" data-i18n="home.pathPlaybookDesc">可直接执行的交易 workflow — 资金费率套利、鲸鱼监控、MM 行为识别。</p>
-      <div class="path-meta">
-        <span data-i18n="home.pathWorkflows">3 workflows</span>
-        <span data-i18n="home.pathTimeEach">20-45 min each</span>
-        <span class="path-arrow">→</span>
-      </div>
-    </a>
-
-    <a href="/research/" class="path-card path-card-purple">
-      <div class="path-icon">🔬</div>
-      <div class="path-tier" data-i18n="home.pathBuilder">BUILDER</div>
-      <h3 class="path-title" data-i18n="home.pathResearch">Research</h3>
-      <p class="path-desc" data-i18n="home.pathResearchDesc">深入 Agent 交易基础设施的底层问题 — 意图解析、风控失效、博弈均衡。</p>
-      <div class="path-meta">
-        <span data-i18n="home.pathPapers">5 papers</span>
-        <span data-i18n="home.pathTimeResearch">15-30 min each</span>
-        <span class="path-arrow">→</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     QUICK START STRIP
-══════════════════════════════════════════ -->
-<section class="quickstart-strip">
-  <div class="qs-inner">
-    <div class="qs-text">
-      <div class="section-label" data-i18n="home.qsLabel">GET STARTED IN 3 LINES</div>
-      <h2 class="qs-heading" data-i18n="home.qsHeading">One auth. Full access.</h2>
-      <p class="qs-desc" data-i18n="home.qsDesc">D0 使用 Turnkey 云端密钥托管。一次登录，所有读写操作全部开箱即用。</p>
-      <a href="/learn/quickstart/" class="btn-primary" style="margin-top:20px" data-i18n="home.qsCta">FULL QUICKSTART →</a>
-    </div>
-    <div class="qs-code">
-      <div class="code-block">
-        <div class="code-line">
-          <span class="code-comment"># 1. Install</span>
-        </div>
-        <div class="code-line copyable">
-          <code>npm install -g @donutlabs-ai/d0-cli</code>
-          <button class="copy-btn" data-copy="npm install -g @donutlabs-ai/d0-cli">COPY</button>
-        </div>
-        <div class="code-line">
-          <span class="code-comment"># 2. Authenticate</span>
-        </div>
-        <div class="code-line copyable">
-          <code>d0 login</code>
-          <button class="copy-btn" data-copy="d0 login">COPY</button>
-        </div>
-        <div class="code-line">
-          <span class="code-comment"># 3. Your first query</span>
-        </div>
-        <div class="code-line copyable">
-          <code>d0 price ETH</code>
-          <button class="copy-btn" data-copy="d0 price ETH">COPY</button>
-        </div>
-        <div class="code-output">
-          <span class="out-text">ETH/USDC  <strong>$3,247.50</strong>  +2.3% 24h</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     DSEA ENGINE
-══════════════════════════════════════════ -->
-<section class="dsea-section">
-  <div class="dsea-inner">
-    <div class="dsea-text">
-      <div class="section-label" data-i18n="home.dseaLabel">THE AGENTIC LOOP</div>
-      <h2 class="section-heading" data-i18n="home.dseaHeading">DSEA Engine</h2>
-      <p class="dsea-desc" data-i18n="home.dseaDesc">
-        D0 的核心是 DSEA 循环 —— Discovery, Strategy, Execution, Attribution。
-        将碎片化的手动操作替换为结构化、可验证的 Agent 执行流程。
-      </p>
-    </div>
-    <div class="dsea-grid">
-      {[
-        { letter: 'D', title: 'Discovery', desc: '感知层 — 持续扫描鲸鱼动向、流动性变化、社交叙事、宏观信号', i18nDesc: 'home.dseaD' },
-        { letter: 'S', title: 'Strategy', desc: '边界层 — 你定义规则：资产、敞口、风控，Agent 在你的法则内执行', i18nDesc: 'home.dseaS' },
-        { letter: 'E', title: 'Execution', desc: '执行层 — 跨集成场所路由最优成交，最小化滑点和失败交易', i18nDesc: 'home.dseaE' },
-        { letter: 'A', title: 'Attribution', desc: '归因层 — 做了什么、为什么、花了多少、结果如何，每一步可审计', i18nDesc: 'home.dseaA' },
-      ].map(step => (
-        <div class="dsea-card">
-          <div class="dsea-letter">{step.letter}</div>
-          <div>
-            <span class="dsea-title">{step.title}</span>
-            <span class="dsea-card-desc" data-i18n={step.i18nDesc}>{step.desc}</span>
+    <div class="marquee-wrap" aria-hidden="true">
+      <!-- Row 1: scrolls left. Must clone exactly 1× for seamless loop -->
+      <div class="marquee-row" id="marqueeRow1">
+        <div class="marquee-track">
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#FF6B6B">CZ</span><span class="mc-user">CryptoZen</span><span class="mc-type long">LONG BTC</span></div>
+            <div class="mc-pnl green">+$2,340</div>
+            <div class="mc-desc" data-i18n="lp.mq1">Fed day 3x leverage play, cut at +4.2%</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#4ECDC4">DW</span><span class="mc-user">DegenWhale</span><span class="mc-type arb">ARB</span></div>
+            <div class="mc-pnl green">+$340<small>/day</small></div>
+            <div class="mc-desc" data-i18n="lp.mq2">Funding rate 0.12% — delta-neutral hedge</div>
+          </div>
+          <div class="m-card featured">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#E8B84E">AP</span><span class="mc-user">AutoPilot</span><span class="mc-type auto">30D AUTO</span></div>
+            <div class="mc-pnl gold">+$4,200</div>
+            <div class="mc-desc" data-i18n="lp.mq3">23 trades · 67% WR · Sharpe 1.4</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#A78BFA">MH</span><span class="mc-user">MemeHunter</span><span class="mc-type long">LONG BONK</span></div>
+            <div class="mc-pnl green">+29%</div>
+            <div class="mc-desc" data-i18n="lp.mq4">Social spike 340% → rug check clean → snipe</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#F97316">LQ</span><span class="mc-user">LiqHunter</span><span class="mc-type short">SHORT BTC</span></div>
+            <div class="mc-pnl green">+18%</div>
+            <div class="mc-desc" data-i18n="lp.mq5">$420M longs clustered — cascade triggered</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#06B6D4">YF</span><span class="mc-user">YieldFarmer</span><span class="mc-type arb">YIELD</span></div>
+            <div class="mc-pnl gold">+$180<small>/mo</small></div>
+            <div class="mc-desc" data-i18n="lp.mq6">Drift → Kamino auto-rotation, 14.2% APY</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#EC4899">SS</span><span class="mc-user">ScalpStar</span><span class="mc-type long">LONG ETH</span></div>
+            <div class="mc-pnl green">+$870</div>
+            <div class="mc-desc" data-i18n="lp.mq7">RSI oversold bounce, 15min chart scalp</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#10B981">WM</span><span class="mc-user">WhaleMode</span><span class="mc-type long">LONG SOL</span></div>
+            <div class="mc-pnl green">+42%</div>
+            <div class="mc-desc" data-i18n="lp.mq8">Whale wallet tracking → followed accumulation</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#8B5CF6">QS</span><span class="mc-user">QuantSage</span><span class="mc-type auto">ALGO</span></div>
+            <div class="mc-pnl green">+$1,560</div>
+            <div class="mc-desc" data-i18n="lp.mq9">Bollinger squeeze breakout strategy backtest → live</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#F59E0B">PM</span><span class="mc-user">PolyMax</span><span class="mc-type arb">PREDICT</span></div>
+            <div class="mc-pnl green">+$620</div>
+            <div class="mc-desc" data-i18n="lp.mq10">Polymarket ETF approval odds 72% → bought YES</div>
           </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     KEY INTEGRATIONS
-══════════════════════════════════════════ -->
-<section class="integrations-section">
-  <div class="section-label" data-i18n="home.intLabel">FULL-SPECTRUM STACK</div>
-  <h2 class="section-heading" data-i18n="home.intHeading">Key Integrations</h2>
-  <p class="int-desc" data-i18n="home.intDesc">
-    169+ 工具覆盖完整交易栈 —— 从行情到执行、从链上到宏观。
-  </p>
-
-  <div class="int-grid">
-    {[
-      { icon: '📈', layer: 'Perpetuals DEX', name: 'HyperLiquid', desc: '229+ 资产，最高 50x 杠杆，全订单生命周期管理' },
-      { icon: '🎯', layer: 'Prediction Markets', name: 'Polymarket', desc: 'Polygon 上的预测市场，实时赔率与流动性' },
-      { icon: '💹', layer: 'Price & Market Data', name: 'CoinGecko · Binance · DexScreener', desc: '实时现货/合约定价、24h 成交量、深度数据' },
-      { icon: '📊', layer: 'Technical Analysis', name: 'Built-in TA Engine', desc: 'RSI-14, MACD, MA(20/60), 布林带, 支撑/阻力' },
-      { icon: '🔥', layer: 'Derivatives Intel', name: 'Binance Futures · CoinAnk', desc: '持仓量、资金费率、多空比、大户持仓' },
-      { icon: '🐋', layer: 'Whale Tracking', name: 'Whale Alert · Arkham', desc: '大额转账警报、钱包标签、资金流向分析' },
-      { icon: '🌍', layer: 'Macro & Sentiment', name: 'Yahoo Finance · Alternative.me', desc: 'VIX, DXY, US10Y, 恐惧贪婪指数, 宏观新闻' },
-      { icon: '🏗️', layer: 'Fundamentals', name: 'RootData · DeFiLlama', desc: '项目融资、团队背景、TVL 追踪' },
-      { icon: '🔐', layer: 'Key Custody', name: 'Turnkey HSM', desc: '硬件安全模块，私钥永不离开安全飞地' },
-    ].map(item => (
-      <div class="int-card">
-        <div class="int-icon">{item.icon}</div>
-        <div class="int-layer">{item.layer}</div>
-        <div class="int-name">{item.name}</div>
-        <div class="int-card-desc">{item.desc}</div>
       </div>
-    ))}
-  </div>
-</section>
 
-<!-- ══════════════════════════════════════════
-     COMPETITIVE LANDSCAPE
-══════════════════════════════════════════ -->
-<section class="compete-section">
-  <div class="compete-inner">
-    <div class="section-label" data-i18n="home.compLabel">WHY D0</div>
-    <h2 class="section-heading" data-i18n="home.compHeading">Not Another Bot.<br>A Trading Agent.</h2>
-    <p class="compete-desc" data-i18n="home.compDesc">
-      现有 Telegram Bot 是交易工具 —— 帮你更快点击 "Buy"。<br>
-      D0 是交易 Agent —— 理解你的意图、分析上下文、执行完整工作流。
-    </p>
-
-    <div class="compete-table-wrap">
-      <table class="compete-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th class="th-d0">D0</th>
-            <th>Banana Gun</th>
-            <th>Maestro</th>
-            <th>BONKbot</th>
-            <th>GMGN</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="row-label">Core Model</td>
-            <td class="td-d0">Agentic AI</td>
-            <td>Sniper</td>
-            <td>Sniper</td>
-            <td>Swap Bot</td>
-            <td>Analytics</td>
-          </tr>
-          <tr>
-            <td class="row-label">Interface</td>
-            <td class="td-d0">Natural Language</td>
-            <td>Button Menu</td>
-            <td>Button Menu</td>
-            <td>Button Menu</td>
-            <td>Web + TG</td>
-          </tr>
-          <tr>
-            <td class="row-label">Perps (HyperLiquid)</td>
-            <td class="td-d0 td-yes">✓</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-          </tr>
-          <tr>
-            <td class="row-label">Prediction Markets</td>
-            <td class="td-d0 td-yes">✓</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-          </tr>
-          <tr>
-            <td class="row-label">Built-in TA</td>
-            <td class="td-d0 td-yes">✓</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-            <td class="td-partial">Basic</td>
-          </tr>
-          <tr>
-            <td class="row-label">Macro Intelligence</td>
-            <td class="td-d0 td-yes">✓</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-          </tr>
-          <tr>
-            <td class="row-label">DSEA Loop</td>
-            <td class="td-d0 td-yes">✓</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-            <td class="td-no">✗</td>
-          </tr>
-          <tr>
-            <td class="row-label">Human-in-the-Loop</td>
-            <td class="td-d0 td-yes">✓</td>
-            <td class="td-no">N/A</td>
-            <td class="td-no">N/A</td>
-            <td class="td-no">N/A</td>
-            <td class="td-no">N/A</td>
-          </tr>
-          <tr>
-            <td class="row-label">Key Custody</td>
-            <td class="td-d0">Turnkey HSM</td>
-            <td>Embedded</td>
-            <td>Self-custodial</td>
-            <td>Self-custodial</td>
-            <td>Wallet Connect</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     SECURITY
-══════════════════════════════════════════ -->
-<section class="security-section">
-  <div class="section-label" data-i18n="home.secLabel">DEFENSE IN DEPTH</div>
-  <h2 class="section-heading" data-i18n="home.secHeading">Security Architecture</h2>
-
-  <div class="security-grid">
-    <div class="sec-card sec-card-main">
-      <div class="sec-icon">🔐</div>
-      <h3 class="sec-title" data-i18n="home.secTurnkeyTitle">Turnkey HSM Key Custody</h3>
-      <p class="sec-desc" data-i18n="home.secTurnkeyDesc">
-        私钥在硬件安全模块 (HSM) 内生成和存储，永不暴露给应用层。
-        所有签名请求经过 Turnkey API 验证后在安全飞地内完成。
-      </p>
-    </div>
-    {[
-      { icon: '👤', title: 'Human-in-the-Loop', desc: '所有交易需明确用户确认，无静默执行', i18nTitle: 'home.secHitlTitle', i18nDesc: 'home.secHitlDesc' },
-      { icon: '🔍', title: 'Intent Verification', desc: 'AI 解析的意图以结构化格式回显确认', i18nTitle: 'home.secIntentTitle', i18nDesc: 'home.secIntentDesc' },
-      { icon: '📏', title: 'Position Limits', desc: '可配置的最大仓位和杠杆上限，防止过度敞口', i18nTitle: 'home.secLimitTitle', i18nDesc: 'home.secLimitDesc' },
-      { icon: '⚡', title: 'Slippage Protection', desc: '市价单包含滑点容忍度，超限自动拒绝', i18nTitle: 'home.secSlipTitle', i18nDesc: 'home.secSlipDesc' },
-      { icon: '🔒', title: 'Session Isolation', desc: '用户间完全隔离，无跨会话数据泄露', i18nTitle: 'home.secIsoTitle', i18nDesc: 'home.secIsoDesc' },
-    ].map(item => (
-      <div class="sec-card">
-        <div class="sec-icon">{item.icon}</div>
-        <h3 class="sec-title" data-i18n={item.i18nTitle}>{item.title}</h3>
-        <p class="sec-desc" data-i18n={item.i18nDesc}>{item.desc}</p>
-      </div>
-    ))}
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     FEATURED ARTICLES
-══════════════════════════════════════════ -->
-<section class="articles-section">
-  <div class="articles-header">
-    <div>
-      <div class="section-label" data-i18n="home.articlesLabel">LATEST FROM DONUT RESEARCH</div>
-      <h2 class="section-heading" data-i18n="home.articlesHeading">Featured Articles</h2>
-    </div>
-    <a href="/research/" class="link-all" data-i18n="home.articlesViewAll">View all →</a>
-  </div>
-
-  <div class="articles-grid">
-    {featured.map(article => (
-      <a href={`/articles/${article.slug}/`} class="article-card">
-        <div class="article-cat">{article.data.category}</div>
-        <h3 class="article-title">{article.data.title}</h3>
-        <p class="article-desc">{article.data.description?.slice(0, 100)}…</p>
-        <div class="article-meta">
-          <span>{article.data.date}</span>
-          <span class="article-read" data-i18n="home.articlesReadTime">5 min →</span>
-        </div>
-      </a>
-    ))}
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     D0 DESIGN PRINCIPLES TEASER
-══════════════════════════════════════════ -->
-<section class="principles-section">
-  <div class="principles-inner">
-    <div class="principles-text">
-      <div class="section-label" data-i18n="home.principlesLabel">D0 METHODOLOGY</div>
-      <h2 class="section-heading" data-i18n="home.principlesHeading">5 Principles.<br>One Architecture.</h2>
-      <p class="principles-desc" data-i18n="home.principlesDesc">
-        Conversational Interface. Login-Once. Turnkey Secured. Exchange Abstraction. Composable Skills.<br>
-        每一条原则都指向同一个目标：让 AI Agent 成为交易的一等公民。
-      </p>
-      <a href="/articles/d0-design-principles/" class="btn-ghost" style="margin-top:20px" data-i18n="home.principlesCta">
-        READ THE PRINCIPLES →
-      </a>
-    </div>
-    <div class="principles-list">
-      {[
-        { num: '01', title: 'Conversational Interface', sub: '自然语言即接口', i18nSub: 'home.p01sub' },
-        { num: '02', title: 'Login-Once', sub: '一次认证全覆盖', i18nSub: 'home.p02sub' },
-        { num: '03', title: 'Turnkey Secured', sub: '云端密钥托管', i18nSub: 'home.p03sub' },
-        { num: '04', title: 'Exchange Abstraction', sub: '统一多交易所语义', i18nSub: 'home.p04sub' },
-        { num: '05', title: 'Composable Skills', sub: '可组合技能系统', i18nSub: 'home.p05sub' },
-      ].map(p => (
-        <div class="principle-item">
-          <span class="p-num">{p.num}</span>
-          <div>
-            <span class="p-title">{p.title}</span>
-            <span class="p-sub" data-i18n={p.i18nSub}>{p.sub}</span>
+      <!-- Row 2: scrolls right -->
+      <div class="marquee-row reverse" id="marqueeRow2">
+        <div class="marquee-track">
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#EF4444">BR</span><span class="mc-user">BearRekt</span><span class="mc-type short">SHORT ETH</span></div>
+            <div class="mc-pnl green">+$1,100</div>
+            <div class="mc-desc" data-i18n="lp.mq11">Funding rate spike + OI divergence → short setup</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#14B8A6">AF</span><span class="mc-user">ApeFirst</span><span class="mc-type long">LONG WIF</span></div>
+            <div class="mc-pnl green">+67%</div>
+            <div class="mc-desc" data-i18n="lp.mq12">Social volume explosion → D0 rug check passed</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#6366F1">NK</span><span class="mc-user">NightKing</span><span class="mc-type auto">30D AUTO</span></div>
+            <div class="mc-pnl gold">+$3,800</div>
+            <div class="mc-desc" data-i18n="lp.mq13">Regime-aware autopilot, 19 trades, max DD -4.1%</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#D946EF">GG</span><span class="mc-user">GigaGains</span><span class="mc-type long">LONG AVAX</span></div>
+            <div class="mc-pnl green">+$2,900</div>
+            <div class="mc-desc" data-i18n="lp.mq14">On-chain TVL surge 48hr before breakout</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#0EA5E9">RB</span><span class="mc-user">RatioBot</span><span class="mc-type arb">ARB</span></div>
+            <div class="mc-pnl green">+$460<small>/day</small></div>
+            <div class="mc-desc" data-i18n="lp.mq15">CEX vs DEX price gap arb, automated rebalance</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#84CC16">DX</span><span class="mc-user">DeFiMax</span><span class="mc-type arb">YIELD</span></div>
+            <div class="mc-pnl gold">+$520<small>/mo</small></div>
+            <div class="mc-desc" data-i18n="lp.mq16">3-protocol yield rotation, auto-compound</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#F43F5E">MC</span><span class="mc-user">MacroCalls</span><span class="mc-type long">LONG BTC</span></div>
+            <div class="mc-pnl green">+$5,200</div>
+            <div class="mc-desc" data-i18n="lp.mq17">CPI below consensus + whale inflow → positioned for rally</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#22D3EE">SN</span><span class="mc-user">SniperNFT</span><span class="mc-type long">LONG ONDO</span></div>
+            <div class="mc-pnl green">+34%</div>
+            <div class="mc-desc" data-i18n="lp.mq18">RWA narrative + Blackrock filing = breakout</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#A3E635">HL</span><span class="mc-user">HyperLad</span><span class="mc-type short">SHORT DOGE</span></div>
+            <div class="mc-pnl green">+$780</div>
+            <div class="mc-desc" data-i18n="lp.mq19">Elon tweet faded, funding rate 0.15% → mean revert</div>
+          </div>
+          <div class="m-card">
+            <div class="mc-top"><span class="mc-avatar" style="--av-bg:#FB923C">GR</span><span class="mc-user">GridRunner</span><span class="mc-type auto">GRID</span></div>
+            <div class="mc-pnl gold">+$290<small>/wk</small></div>
+            <div class="mc-desc" data-i18n="lp.mq20">Range-bound ETH grid bot, 82 fills in 7 days</div>
           </div>
         </div>
-      ))}
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     QUOTE / THESIS
-══════════════════════════════════════════ -->
-<section class="thesis-section">
-  <div class="thesis-inner">
-    <blockquote class="thesis-quote" data-i18n="home.thesis">
-      "链上交易的主体将从人类转移到 AI Agent。<br>
-      谁拥有 Agent 的执行层，谁就拥有链上流量的入口。"
-    </blockquote>
-    <cite class="thesis-cite" data-i18n="home.thesisCite">— D0 THESIS / 2026</cite>
-    <a href="/articles/agent-economy-thesis/" class="btn-ghost" style="margin-top:28px" data-i18n="home.thesisCta">
-      READ THE FULL THESIS →
-    </a>
+<!-- ═══ TRADE STORIES ═══ -->
+<section class="lp-stories scroll-reveal">
+  <div class="stories-inner">
+    <div class="section-label" data-i18n="lp.storiesLabel">DEEP DIVES</div>
+    <h2 class="stories-headline" data-i18n="lp.storiesTitle">How D0 traders actually make money</h2>
+
+    <div class="stories-grid">
+      <div class="story-card">
+        <div class="sc-header">
+          <span class="sc-type" data-i18n="lp.t1Type">FUNDING RATE ARB</span>
+          <span class="sc-time">⏱ 45s</span>
+        </div>
+        <p class="sc-story" data-i18n="lp.t1Story">BTC funding rate spiked to 0.12% — 4x normal. D0 opened a delta-neutral hedge: long spot + short perps. Collects the rate premium every 8 hours while staying market-neutral.</p>
+        <div class="sc-pnl-block green">
+          <div class="sc-pnl">+$340<span class="sc-pnl-unit">/day</span></div>
+          <div class="sc-pnl-sub" data-i18n="lp.t1PnlSub">passive income · zero directional risk</div>
+        </div>
+        <div class="sc-tools"><span>d0 fundingrate BTC</span><span>d0 perps:order</span><span>d0 swap</span></div>
+      </div>
+
+      <div class="story-card">
+        <div class="sc-header">
+          <span class="sc-type" data-i18n="lp.t2Type">FED DAY TRADE</span>
+          <span class="sc-time">⏱ 2min</span>
+        </div>
+        <p class="sc-story" data-i18n="lp.t2Story">FOMC day. D0 pre-scanned: Fear & Greed at 22, CME FedWatch showing 78% rate cut probability, whales accumulating. Positioned long BTC 3x before the announcement. Cut at +4.2% move.</p>
+        <div class="sc-pnl-block green">
+          <div class="sc-pnl">+$2,100</div>
+          <div class="sc-pnl-sub" data-i18n="lp.t2PnlSub">4.2% move captured · 3x leverage · stop-loss never hit</div>
+        </div>
+        <div class="sc-tools"><span>d0 feargreed</span><span>d0 macro</span><span>d0 whale-monitor</span><span>d0 perps:order</span></div>
+      </div>
+
+      <div class="story-card featured">
+        <div class="sc-header">
+          <span class="sc-type" data-i18n="lp.t3Type">30-DAY AUTOPILOT</span>
+          <span class="sc-time">📅 30 days</span>
+        </div>
+        <p class="sc-story" data-i18n="lp.t3Story">One trader let D0 run for a month with Guardrails active. D0 executed 23 trades autonomously — entries based on regime detection, exits based on trailing stops. 2% max loss per trade enforced.</p>
+        <div class="sc-pnl-block gold">
+          <div class="sc-pnl">+$4,200</div>
+          <div class="sc-pnl-sub" data-i18n="lp.t3PnlSub">23 trades · 67% win rate · Sharpe 1.4 · max DD -6.2%</div>
+        </div>
+        <div class="sc-tools"><span>d0 regime</span><span>d0 signal-compress</span><span>d0 perps:order</span><span>d0 guardrail</span></div>
+      </div>
+
+      <div class="story-card">
+        <div class="sc-header">
+          <span class="sc-type" data-i18n="lp.t4Type">MEME ALPHA SNIPE</span>
+          <span class="sc-time">⏱ 30s</span>
+        </div>
+        <p class="sc-story" data-i18n="lp.t4Story">D0 detected $BONK Twitter mention volume spike 340% in 2 hours. Ran rug check: LP locked 180 days, top 10 hold 12%, deployer clean. Bought at $0.024. Set TP at $0.031. Hit in 6 hours.</p>
+        <div class="sc-pnl-block green">
+          <div class="sc-pnl">+29%</div>
+          <div class="sc-pnl-sub" data-i18n="lp.t4PnlSub">$1,820 profit · social signal → safety check → execute · 6hr hold</div>
+        </div>
+        <div class="sc-tools"><span>d0 trending</span><span>d0 rugcheck</span><span>d0 swap</span><span>d0 limit</span></div>
+      </div>
+
+      <div class="story-card">
+        <div class="sc-header">
+          <span class="sc-type" data-i18n="lp.t5Type">LIQUIDATION CASCADE</span>
+          <span class="sc-time">⏱ 90s</span>
+        </div>
+        <p class="sc-story" data-i18n="lp.t5Story">D0 flagged: $420M in BTC longs clustered at 5x-10x leverage, liquidation zone at $81,200. Funding rate 0.09% and rising. Opened short with tight stop. Price swept longs — cascade triggered.</p>
+        <div class="sc-pnl-block green">
+          <div class="sc-pnl">+18%</div>
+          <div class="sc-pnl-sub" data-i18n="lp.t5PnlSub">$900 from a single cascade · position closed in 4 minutes</div>
+        </div>
+        <div class="sc-tools"><span>d0 oi BTC</span><span>d0 derivatives</span><span>d0 fundingrate</span><span>d0 perps:order</span></div>
+      </div>
+
+      <div class="story-card">
+        <div class="sc-header">
+          <span class="sc-type" data-i18n="lp.t6Type">YIELD ROTATION</span>
+          <span class="sc-time">🔄 auto</span>
+        </div>
+        <p class="sc-story" data-i18n="lp.t6Story">D0 monitors DeFi yields daily. Drift APY dropped from 12% to 7.8%. Kamino launched a new vault at 14.2%. D0 auto-withdrew from Drift, deposited into Kamino. Zero downtime on capital.</p>
+        <div class="sc-pnl-block gold">
+          <div class="sc-pnl">+$180<span class="sc-pnl-unit">/mo</span></div>
+          <div class="sc-pnl-sub" data-i18n="lp.t6PnlSub">extra yield from auto-rotation · 14.2% vs 7.8% APY</div>
+        </div>
+        <div class="sc-tools"><span>d0 drift:vaults</span><span>d0 kamino</span><span>d0 defi-yield</span></div>
+      </div>
+
+      <div class="story-card">
+        <div class="sc-header">
+          <span class="sc-type" data-i18n="lp.t7Type">MM BEHAVIOR</span>
+          <span class="sc-time">⏱ 2h</span>
+        </div>
+        <p class="sc-story" data-i18n="lp.t7Story">Asked D0: "Can I buy SOL now?" It ran market maker phase analysis — P5 accumulation detected, Setup Score 7.2/10. Entry zone $142-145, stop at $138. Entered at $143. MMs pushed price to $158 in 2 days.</p>
+        <div class="sc-pnl-block green">
+          <div class="sc-pnl">+10.5%</div>
+          <div class="sc-pnl-sub" data-i18n="lp.t7PnlSub">followed MM accumulation phase · entered before markup</div>
+        </div>
+        <div class="sc-tools"><span>d0 mm-phase SOL</span><span>d0 setup-score</span><span>d0 orderflow</span><span>d0 perps:order</span></div>
+      </div>
+
+      <div class="story-card">
+        <div class="sc-header">
+          <span class="sc-type" data-i18n="lp.t8Type">SHORT SQUEEZE</span>
+          <span class="sc-time">⏱ 4h scan</span>
+        </div>
+        <p class="sc-story" data-i18n="lp.t8Story">D0's 4-hour scan flagged DOGE: funding rate at -0.08% (extreme negative), OI surging while price flat. Short squeeze setup confirmed. Went long with 3x. Shorts got liquidated — price rallied 22% in 6 hours.</p>
+        <div class="sc-pnl-block green">
+          <div class="sc-pnl">+$1,650</div>
+          <div class="sc-pnl-sub" data-i18n="lp.t8PnlSub">caught short squeeze before it fired · 3x leveraged long</div>
+        </div>
+        <div class="sc-tools"><span>d0 fundingrate</span><span>d0 oi DOGE</span><span>d0 liquidations</span><span>d0 perps:order</span></div>
+      </div>
+
+      <div class="story-card">
+        <div class="sc-header">
+          <span class="sc-type" data-i18n="lp.t9Type">TREND BREAKOUT</span>
+          <span class="sc-time">⏱ 15min</span>
+        </div>
+        <p class="sc-story" data-i18n="lp.t9Story">D0 ran 4-dimensional breakout check on ETH: price above resistance ✓, volume 3.2x average ✓, futures OI confirming ✓, MA20/50/200 aligned ✓. All four passed. Entered long. ETH ran from $3,200 to $3,580.</p>
+        <div class="sc-pnl-block green">
+          <div class="sc-pnl">+11.8%</div>
+          <div class="sc-pnl-sub" data-i18n="lp.t9PnlSub">4D breakout verification · no false breakout this time</div>
+        </div>
+        <div class="sc-tools"><span>d0 ta ETH</span><span>d0 volume</span><span>d0 oi ETH</span><span>d0 ma-alignment</span></div>
+      </div>
+
+      <div class="story-card">
+        <div class="sc-header">
+          <span class="sc-type" data-i18n="lp.t10Type">GRID TRADING</span>
+          <span class="sc-time">🔄 7 days</span>
+        </div>
+        <p class="sc-story" data-i18n="lp.t10Story">D0 detected BTC in range-bound mode: MA200 flat, ATR declining, Hurst index 0.42 (mean-reverting). Recommended grid: $82K-$88K, 12 levels. 7 days later: 94 fills, consistent small profits while others waited.</p>
+        <div class="sc-pnl-block green">
+          <div class="sc-pnl">+3.8%</div>
+          <div class="sc-pnl-sub" data-i18n="lp.t10PnlSub">94 grid fills in 7 days · profit while market went sideways</div>
+        </div>
+        <div class="sc-tools"><span>d0 market-regime BTC</span><span>d0 grid-params</span><span>d0 perps:grid</span></div>
+      </div>
+
+      <div class="story-card">
+        <div class="sc-header">
+          <span class="sc-type" data-i18n="lp.t11Type">PORTFOLIO CHECK</span>
+          <span class="sc-time">⏱ 5min</span>
+        </div>
+        <p class="sc-story" data-i18n="lp.t11Story">"Check my portfolio." D0 scanned 8 holdings: BTC/ETH/SOL correlation at 0.94 — essentially the same bet 3x. Recommended: reduce SOL, add stablecoin yield position for uncorrelated returns. Rebalanced.</p>
+        <div class="sc-pnl-block gold">
+          <div class="sc-pnl">-38%<span class="sc-pnl-unit"> corr</span></div>
+          <div class="sc-pnl-sub" data-i18n="lp.t11PnlSub">portfolio correlation dropped from 0.94 to 0.58 · real diversification</div>
+        </div>
+        <div class="sc-tools"><span>d0 portfolio</span><span>d0 correlation</span><span>d0 rebalance</span></div>
+      </div>
+
+      <div class="story-card">
+        <div class="sc-header">
+          <span class="sc-type" data-i18n="lp.t12Type">MACRO PLAY</span>
+          <span class="sc-time">⏱ 1 day</span>
+        </div>
+        <p class="sc-story" data-i18n="lp.t12Story">D0 flagged: DXY dropping + 10Y yield falling + oil stable = risk-on macro. BTC historically rallies 8-12% in this regime. Went long with tight stop. BTC moved from $84K to $91K in 5 days.</p>
+        <div class="sc-pnl-block green">
+          <div class="sc-pnl">+8.3%</div>
+          <div class="sc-pnl-sub" data-i18n="lp.t12PnlSub">macro regime detection · DXY + yields + oil correlation signal</div>
+        </div>
+        <div class="sc-tools"><span>d0 macro</span><span>d0 dxy</span><span>d0 correlation</span><span>d0 perps:order</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CAPABILITIES ═══ -->
+<section class="lp-caps scroll-reveal">
+  <div class="caps-inner">
+    <div class="section-label" data-i18n="lp.capsLabel">WHAT IS D0</div>
+    <h2 class="caps-headline" data-i18n="lp.capsHeadline">An AI trading agent you talk to.</h2>
+    <p class="caps-sub" data-i18n="lp.capsSub">Four capabilities no human trader can match — every one backed by real trading data.</p>
+
+    <div class="caps-grid">
+      <div class="cap-card">
+        <div class="cap-icon">💪</div>
+        <h3 data-i18n="lp.cap1Title">Full-Stack Trader</h3>
+        <p class="cap-hook" data-i18n="lp.cap1Hook">Analysis + execution + risk control. One agent replaces an entire trading team.</p>
+        <p class="cap-proof" data-i18n="lp.cap1Proof">155 tools across 11 domains: research, perpetuals, DeFi, backtesting, prediction markets, on-chain analytics — all in one conversation.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">⏰</div>
+        <h3 data-i18n="lp.cap2Title">Never Sleeps</h3>
+        <p class="cap-hook" data-i18n="lp.cap2Hook">3AM stop-loss execution. Weekend funding rate alerts. Holiday portfolio rebalance.</p>
+        <p class="cap-proof" data-i18n="lp.cap2Proof">Crypto markets never close. D0 monitors 24/7 — you set the rules, it enforces them while you sleep.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🧩</div>
+        <h3 data-i18n="lp.cap3Title">Built-in Skills</h3>
+        <p class="cap-hook" data-i18n="lp.cap3Hook">11 skill packs, all pre-loaded. No setup, no config — just ask and trade.</p>
+        <p class="cap-proof" data-i18n="lp.cap3Proof">d0-perps for leverage, d0-defi for yield farming, d0-research for analysis — all 11 packs ready from day one. One agent, full coverage.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🔒</div>
+        <h3 data-i18n="lp.cap4Title">Hardcoded Discipline</h3>
+        <p class="cap-hook" data-i18n="lp.cap4Hook">2% max loss. 30% position cap. 3-loss cool-down. Rules it refuses to break.</p>
+        <p class="cap-proof" data-i18n="lp.cap4Proof">These aren't suggestions — they're red lines coded into D0's execution layer. No FOMO, no revenge trading, no "just this once."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SKILLS ═══ -->
+<section class="lp-skills scroll-reveal">
+  <div class="skills-inner">
+    <div class="section-label" data-i18n="lp.skillsLabel">SKILL SYSTEM</div>
+    <h2 class="skills-headline" data-i18n="lp.skillsTitle">155 tools. All built-in. Just talk.</h2>
+    <p class="skills-sub" data-i18n="lp.skillsSub">Every skill pack comes pre-loaded — no install, no config. D0 is ready to trade the moment you start talking.</p>
+
+    <div class="skills-grid">
+      <div class="skill-row">
+        <div class="sk-name">d0-research</div>
+        <div class="sk-desc" data-i18n="lp.sk1Desc">Token research, price data, technical analysis, sentiment, rug checks across 9 chains</div>
+        <div class="sk-id" data-i18n="lp.sk1Id">→ Built-in: Market Analyst</div>
+      </div>
+      <div class="skill-row">
+        <div class="sk-name">d0-perps</div>
+        <div class="sk-desc" data-i18n="lp.sk2Desc">Perpetual futures: market/limit orders, leverage, position management, PnL tracking</div>
+        <div class="sk-id" data-i18n="lp.sk2Id">→ Built-in: Leverage Trader</div>
+      </div>
+      <div class="skill-row">
+        <div class="sk-name">d0-defi</div>
+        <div class="sk-desc" data-i18n="lp.sk3Desc">Kamino, Meteora, Drift, Raydium, Pendle, Sanctum — deposit, borrow, LP, yield optimization</div>
+        <div class="sk-id" data-i18n="lp.sk3Id">→ Built-in: DeFi Farmer</div>
+      </div>
+      <div class="skill-row">
+        <div class="sk-name">d0-indicators</div>
+        <div class="sk-desc" data-i18n="lp.sk4Desc">AHR999, Rainbow Chart, Fear & Greed, funding rates, open interest, long/short ratios</div>
+        <div class="sk-id" data-i18n="lp.sk4Id">→ Built-in: Macro Analyst</div>
+      </div>
+      <div class="skill-row">
+        <div class="sk-name">d0-backtest</div>
+        <div class="sk-desc" data-i18n="lp.sk5Desc">Strategy backtests (Bollinger, MACD, RSI), signal calculation, equity curves, Sharpe ratios</div>
+        <div class="sk-id" data-i18n="lp.sk5Id">→ Built-in: Quant Strategist</div>
+      </div>
+      <div class="skill-row">
+        <div class="sk-name">d0-prediction</div>
+        <div class="sk-desc" data-i18n="lp.sk6Desc">Polymarket events, DFlow markets, Allora AI forecasts — prediction market analysis and trading</div>
+        <div class="sk-id" data-i18n="lp.sk6Id">→ Built-in: Prediction Trader</div>
+      </div>
+    </div>
+    <p class="skills-footer" data-i18n="lp.skillsFooter">+ 5 more built-in packs: Social Analytics, On-chain Data, Spot Trading, HyperLiquid, and 26 advanced scenario workflows.</p>
+  </div>
+</section>
+
+<!-- ═══ OPENCLAW ═══ -->
+<section class="lp-oc scroll-reveal">
+  <div class="oc-inner">
+    <div class="section-label" data-i18n="lp.ocLabel">THE BIGGER PICTURE</div>
+    <h2 class="oc-headline" data-i18n="lp.ocHeadline">Turning every agent into an exchange.</h2>
+    <p class="oc-p" data-i18n="lp.ocP1">D0 is built on OpenClaw — an open-source AI agent platform. We gave every agent the keys to the markets.</p>
+    <div class="oc-points">
+      <p data-i18n="lp.ocPoint1">Your AI assistant only writes emails? Give it D0 — now it trades.</p>
+      <p data-i18n="lp.ocPoint2">Your friend's AI only chats? Give it D0 — now it trades too.</p>
+      <p data-i18n="lp.ocPoint3">Every AI agent is a potential exchange. D0 is the upgrade.</p>
+    </div>
+    <blockquote class="oc-quote" data-i18n="lp.ocQuote">"We're not building another trading terminal. We're turning every AI agent into an exchange."</blockquote>
+  </div>
+</section>
+
+<!-- ═══ GET STARTED ═══ -->
+<section class="lp-start scroll-reveal">
+  <div class="start-inner">
+    <div class="section-label" data-i18n="lp.startLabel">GET STARTED</div>
+    <h2 class="start-headline" data-i18n="lp.startTitle">Three ways to start trading with D0</h2>
+
+    <div class="start-grid">
+      <a href="https://t.me/DonutD0Bot" target="_blank" class="start-card start-tg">
+        <div class="sc-badge" data-i18n="lp.start1Badge">RECOMMENDED · ZERO SETUP</div>
+        <h3 data-i18n="lp.start1Title">Telegram Bot</h3>
+        <p data-i18n="lp.start1Desc">Open Telegram, talk to D0. Ask any trading question, get analysis in 30 seconds. Place orders by chatting.</p>
+        <span class="sc-cta" data-i18n="lp.start1Cta">Open Telegram →</span>
+      </a>
+      <a href="/learn/quickstart/" class="start-card">
+        <h3 data-i18n="lp.start2Title">CLI Tool</h3>
+        <p data-i18n="lp.start2Desc">For power users. Install d0-cli, run analysis and trades from the terminal.</p>
+        <span class="sc-cta" data-i18n="lp.start2Cta">Quick Start →</span>
+      </a>
+      <a href="/learn/" class="start-card">
+        <h3 data-i18n="lp.start3Title">Learn the System</h3>
+        <p data-i18n="lp.start3Desc">12 courses from basics to Agent architecture. Every lesson uses D0 as the hands-on platform.</p>
+        <span class="sc-cta" data-i18n="lp.start3Cta">Enter Academy →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="lp-cta scroll-reveal">
+  <div class="cta-inner">
+    <h2 class="cta-headline" data-i18n="lp.ctaHeadline">Your first trade is 30 seconds away.</h2>
+    <p class="cta-sub" data-i18n="lp.ctaSub">Open Telegram. Ask D0 about the trade you've been thinking about. 30 seconds — you'll know.</p>
+    <div class="cta-buttons">
+      <a href="https://t.me/DonutD0Bot" target="_blank" class="btn-primary btn-lg" data-i18n="lp.ctaCta">Talk to D0 →</a>
+      <a href="/learn/quickstart/" class="btn-ghost" data-i18n="lp.ctaCli">Install CLI →</a>
+    </div>
+    <div class="cta-team">
+      <span data-i18n="lp.ctaTeam">Built by Donut Labs · ~30 full-time · Turnkey security · 5-layer agent architecture</span>
+    </div>
   </div>
 </section>
 
 </BaseLayout>
 
-<script>
-// Copy button
-document.querySelectorAll('.copy-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const text = (btn as HTMLButtonElement).dataset.copy || '';
-    navigator.clipboard.writeText(text).then(() => {
-      btn.textContent = 'COPIED!';
-      setTimeout(() => { btn.textContent = 'COPY'; }, 1500);
-    });
-  });
-});
-
-// Terminal typewriter effect (subtle)
-const cursor = document.querySelector('.cursor-blink') as HTMLElement;
-if (cursor) {
-  setInterval(() => cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0', 530);
-}
-</script>
-
 <style>
-/* ── Layout ── */
-.hero-section, .stats-bar, .paths-section,
-.quickstart-strip, .articles-section,
-.principles-section, .thesis-section {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 24px;
+/* ═══ HERO ═══ */
+.lp-hero {
+  position: relative; overflow: hidden;
+  padding: 80px 24px 56px; text-align: center;
 }
-
-/* ── Hero ── */
-.hero-section { padding-top: 72px; padding-bottom: 0; }
-.hero-inner { text-align: center; }
-
+.hero-glow {
+  position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
+  width: 700px; height: 450px;
+  background: radial-gradient(ellipse, rgba(172,170,255,0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-inner { position: relative; z-index: 1; max-width: var(--max-w); margin: 0 auto; }
 .hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  color: var(--text2);
-  border: 1px solid var(--border2);
-  border-radius: 100px;
-  padding: 5px 14px;
-  margin-bottom: 28px;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; color: var(--accent);
+  border: 1px solid rgba(172,170,255,0.3);
+  border-radius: 100px; padding: 5px 16px; margin-bottom: 28px;
+  animation: fadeInUp 0.6s ease 0.1s both;
 }
-.badge-dot {
-  width: 6px; height: 6px;
-  background: var(--green);
-  border-radius: 50%;
-  box-shadow: 0 0 6px var(--green);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%,100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-.hero-headline {
+.badge-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; box-shadow: 0 0 6px var(--green); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.hero-headline { margin-bottom: 8px; animation: fadeInUp 0.7s ease 0.2s both; }
+.hero-slogan {
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(20px, 3.5vw, 36px);
-  line-height: 1.6;
-  letter-spacing: 1px;
-  color: var(--text);
-  margin-bottom: 20px;
+  font-size: clamp(22px, 4.5vw, 42px);
+  color: var(--accent); letter-spacing: 1px; line-height: 1.4;
 }
-.hero-headline strong { color: var(--accent); }
-
+.hero-hook {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: clamp(18px, 2.5vw, 26px); font-weight: 700;
+  color: var(--text); margin-bottom: 16px;
+  animation: fadeInUp 0.6s ease 0.3s both;
+}
 .hero-sub {
-  font-size: 15px;
-  color: var(--text2);
-  line-height: 1.8;
-  max-width: 560px;
-  margin: 0 auto 32px;
+  font-size: 15px; color: var(--text2); line-height: 1.8;
+  max-width: 560px; margin: 0 auto 32px;
+  animation: fadeInUp 0.6s ease 0.4s both;
 }
-.break-desktop { display: none; }
-@media (min-width: 600px) { .break-desktop { display: block; } }
-
-.hero-actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 48px;
-  flex-wrap: wrap;
+.hero-ctas {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  animation: fadeInUp 0.6s ease 0.5s both;
 }
 
-/* Buttons */
+/* ═══ BUTTONS ═══ */
 .btn-primary {
-  display: inline-block;
-  font-family: 'Space Mono', monospace;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #131320;
-  background: var(--accent);
-  padding: 12px 24px;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: background 0.15s, transform 0.1s;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'Noto Sans SC', sans-serif; font-size: 14px; font-weight: 700;
+  color: #131320; background: var(--accent);
+  padding: 12px 28px; border-radius: 6px; text-decoration: none;
+  transition: all 0.2s; box-shadow: 0 0 20px rgba(172,170,255,0.25);
 }
-.btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
-
+.btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 4px 24px rgba(172,170,255,0.35); }
+.btn-primary.btn-lg { font-size: 16px; padding: 16px 36px; animation: btnGlow 3s ease-in-out infinite; }
 .btn-ghost {
-  display: inline-block;
-  font-family: 'Space Mono', monospace;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: var(--accent);
-  background: transparent;
-  border: 1px solid var(--border2);
-  padding: 12px 24px;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: border-color 0.15s, color 0.15s;
+  display: inline-flex; align-items: center;
+  font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.5px; color: var(--accent);
+  border: 1px solid var(--border2); padding: 11px 24px; border-radius: 6px;
+  text-decoration: none; transition: all 0.2s;
 }
 .btn-ghost:hover { border-color: var(--accent); color: var(--accent2); }
 
-/* Terminal */
-.terminal {
-  max-width: 640px;
-  margin: 0 auto 80px;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid var(--border2);
-  box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(172,170,255,0.1);
-  text-align: left;
+/* ═══ PNL MARQUEE ═══ */
+.lp-trades {
+  max-width: 100%; overflow: hidden;
+  padding: 64px 0 48px;
 }
-.terminal-bar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: #1e1e30;
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--border);
+.trades-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+.trades-title {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: clamp(18px, 2.5vw, 24px); font-weight: 700;
+  color: var(--text); margin-bottom: 8px;
 }
-.dot { width: 12px; height: 12px; border-radius: 50%; }
-.dot.red { background: #ff5f57; }
-.dot.yellow { background: #febc2e; }
-.dot.green { background: #28c840; }
-.terminal-title {
-  flex: 1;
-  text-align: center;
-  font-size: 11px;
-  color: var(--text2);
+.trades-disclaimer {
   font-family: 'Space Mono', monospace;
-  margin-left: -46px;
+  font-size: 10px; color: var(--muted); letter-spacing: 0.3px;
+  margin-bottom: 24px; line-height: 1.5;
 }
-.terminal-body {
-  background: #0d0d1a;
-  padding: 20px 24px;
-  font-family: 'Space Mono', monospace;
-  font-size: 12px;
-  line-height: 1.6;
+.marquee-wrap { overflow: hidden; width: 100vw; margin-left: calc(-50vw + 50%); }
+.marquee-row { overflow: hidden; padding: 6px 0; }
+.marquee-track {
+  display: flex; gap: 12px; width: max-content;
+  animation: marquee-left 80s linear infinite;
 }
-.t-line { display: flex; align-items: center; gap: 10px; min-height: 20px; }
-.t-gap { height: 8px; }
-.t-prompt { color: var(--accent); font-weight: 700; }
-.t-cmd { color: var(--text); }
-.t-out { color: var(--text2); padding-left: 20px; }
-.t-hl { color: var(--accent); font-weight: 700; }
-.t-gold { color: var(--gold); }
-.t-green { color: #4ade80; }
-.t-success { color: #4ade80; padding-left: 20px; }
-.t-cursor { padding-top: 4px; }
-.cursor-blink { color: var(--accent); transition: opacity 0.1s; }
+.marquee-row.reverse .marquee-track {
+  animation: marquee-right 90s linear infinite;
+}
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+.marquee-row:hover .marquee-track { animation-play-state: paused; }
 
-/* ── Stats Bar ── */
-.stats-bar {
+/* Marquee Card */
+.m-card {
+  flex: 0 0 auto; width: 260px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 8px;
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: default;
+}
+.m-card:hover {
+  border-color: rgba(0,210,106,0.4);
+  transform: translateY(-2px);
+}
+.m-card.featured {
+  border-color: rgba(232,184,78,0.3);
+  background: linear-gradient(135deg, var(--card) 0%, rgba(232,184,78,0.04) 100%);
+}
+.mc-top { display: flex; align-items: center; gap: 8px; }
+.mc-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--av-bg, #666);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  color: #fff; letter-spacing: 0.5px; flex-shrink: 0;
+}
+.mc-user {
+  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+  color: var(--text); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.mc-type {
+  font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700;
+  letter-spacing: 0.5px; padding: 2px 6px; border-radius: 3px; white-space: nowrap;
+}
+.mc-type.long { color: #00D26A; background: rgba(0,210,106,0.1); }
+.mc-type.short { color: #FF6B6B; background: rgba(255,107,107,0.1); }
+.mc-type.arb { color: #E8B84E; background: rgba(232,184,78,0.1); }
+.mc-type.auto { color: var(--accent); background: rgba(172,170,255,0.1); }
+.mc-pnl {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 20px; font-weight: 700; line-height: 1.2;
+}
+.mc-pnl small { font-size: 11px; opacity: 0.7; }
+.mc-pnl.green { color: #00D26A; text-shadow: 0 0 16px rgba(0,210,106,0.25); }
+.mc-pnl.gold { color: #E8B84E; text-shadow: 0 0 16px rgba(232,184,78,0.25); }
+.mc-desc {
+  font-size: 11px; color: var(--text2); line-height: 1.5;
+  overflow: hidden; text-overflow: ellipsis;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+
+/* ═══ TRADE STORIES ═══ */
+.lp-stories {
   border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 0 24px;
-  margin: 0 auto;
+  padding: 64px 24px;
 }
-.stats-inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  padding: 28px 0;
+.stories-inner { max-width: var(--max-w); margin: 0 auto; }
+.stories-headline {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: clamp(18px, 2.5vw, 24px); font-weight: 700;
+  color: var(--text); margin-bottom: 28px;
 }
-.stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 0 40px;
+.stories-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
 }
-.stat-num {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 18px;
-  color: var(--accent);
+.story-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  position: relative; overflow: hidden;
 }
-.stat-label {
-  font-size: 11px;
-  color: var(--text2);
-  white-space: nowrap;
-}
-.stat-divider {
-  width: 1px;
-  height: 36px;
-  background: var(--border);
-}
-@media (max-width: 600px) {
-  .stats-inner { flex-wrap: wrap; gap: 24px; }
-  .stat-divider { display: none; }
-  .stat { padding: 0 20px; }
-}
-
-/* ── Section Labels ── */
-.section-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--accent);
-  margin-bottom: 8px;
-}
-.section-heading {
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(14px, 2vw, 20px);
-  line-height: 1.6;
-  color: var(--text);
-  margin-bottom: 32px;
-}
-
-/* ── Three Paths ── */
-.paths-section { padding-top: 80px; padding-bottom: 0; }
-.paths-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-.path-card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 28px 24px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  text-decoration: none;
-  transition: border-color 0.15s, transform 0.15s;
-}
-.path-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-.path-card-gold:hover { border-color: var(--gold); }
-.path-card-purple:hover { border-color: #9f7aea; }
-.path-icon { font-size: 28px; }
-.path-tier {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: var(--accent);
-}
-.path-card-gold .path-tier { color: var(--gold); }
-.path-card-purple .path-tier { color: #9f7aea; }
-.path-title {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 13px;
-  color: var(--text);
-  line-height: 1.5;
-}
-.path-desc { font-size: 13px; color: var(--text2); line-height: 1.7; flex: 1; }
-.path-meta {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
-  border-top: 1px solid var(--border);
-  padding-top: 12px;
-  margin-top: 4px;
-}
-.path-arrow { margin-left: auto; color: var(--accent); font-size: 14px; }
-
-@media (max-width: 720px) {
-  .paths-grid { grid-template-columns: 1fr; }
-}
-
-/* ── Quick Start Strip ── */
-.quickstart-strip {
-  padding-top: 80px;
-  padding-bottom: 0;
-}
-.qs-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: center;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 48px;
-}
-.qs-heading {
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(14px, 2vw, 20px);
-  line-height: 1.6;
-  color: var(--text);
-  margin-bottom: 12px;
-}
-.qs-desc { font-size: 13px; color: var(--text2); line-height: 1.8; }
-
-.code-block {
-  background: #0d0d1a;
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  padding: 20px 24px;
-  font-family: 'Space Mono', monospace;
-  font-size: 12px;
-}
-.code-comment { color: var(--muted); }
-.code-line {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 24px;
-  gap: 8px;
-}
-.code-line code { color: var(--text); flex: 1; }
-.copyable { margin-bottom: 8px; }
-.copy-btn {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  font-weight: 700;
-  color: var(--accent);
-  background: transparent;
-  border: 1px solid var(--border2);
-  border-radius: 3px;
-  padding: 3px 7px;
-  cursor: pointer;
-  transition: all 0.15s;
-  flex-shrink: 0;
-}
-.copy-btn:hover { background: rgba(172,170,255,0.1); }
-.code-output {
-  margin-top: 8px;
-  padding: 8px 12px;
-  background: rgba(172,170,255,0.05);
-  border-left: 2px solid var(--accent);
-  border-radius: 0 4px 4px 0;
-}
-.out-text { font-size: 11px; color: var(--text2); }
-.out-text strong { color: var(--accent); }
-
-@media (max-width: 720px) {
-  .qs-inner { grid-template-columns: 1fr; padding: 28px 20px; }
-}
-
-/* ── Articles Grid ── */
-.articles-section { padding-top: 80px; }
-.articles-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 24px;
-}
-.link-all {
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  color: var(--accent);
-  text-decoration: none;
-}
-.link-all:hover { color: var(--accent2); }
-.articles-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-.article-card {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 24px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  text-decoration: none;
-  transition: border-color 0.15s, transform 0.15s;
-}
-.article-card:hover { border-color: var(--border2); transform: translateY(-2px); }
-.article-cat {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: var(--accent);
-}
-.article-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.5;
-  flex: 1;
-}
-.article-desc { font-size: 11px; color: var(--text2); line-height: 1.6; }
-.article-meta {
-  display: flex;
-  justify-content: space-between;
-  font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
-  border-top: 1px solid var(--border);
-  padding-top: 10px;
-  margin-top: 4px;
-}
-.article-read { color: var(--accent); }
-
-@media (max-width: 720px) {
-  .articles-grid { grid-template-columns: 1fr; }
-}
-@media (min-width: 480px) and (max-width: 720px) {
-  .articles-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-/* ── Principles ── */
-.principles-section { padding-top: 80px; }
-.principles-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: center;
-}
-.principles-desc { font-size: 13px; color: var(--text2); line-height: 1.8; }
-.principles-list { display: flex; flex-direction: column; gap: 2px; }
-.principle-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 16px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  transition: border-color 0.15s;
-}
-.principle-item:hover { border-color: var(--border2); }
-.p-num {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--accent);
-  width: 24px;
-  flex-shrink: 0;
-}
-.p-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text);
-  display: block;
-}
-.p-sub {
-  font-size: 11px;
-  color: var(--text2);
-  display: block;
-  margin-top: 2px;
-}
-
-@media (max-width: 720px) {
-  .principles-inner { grid-template-columns: 1fr; }
-}
-
-/* ── DSEA Engine ── */
-.dsea-section {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 80px 24px 0;
-}
-.dsea-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: start;
-}
-.dsea-desc { font-size: 13px; color: var(--text2); line-height: 1.8; margin-top: 12px; }
-.dsea-grid { display: flex; flex-direction: column; gap: 2px; }
-.dsea-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 16px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  transition: border-color 0.15s;
-}
-.dsea-card:hover { border-color: var(--accent); }
-.dsea-letter {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 16px;
-  color: var(--accent);
-  width: 28px;
-  flex-shrink: 0;
-  line-height: 1.5;
-}
-.dsea-title { font-size: 13px; font-weight: 700; color: var(--text); display: block; }
-.dsea-card-desc { font-size: 11px; color: var(--text2); line-height: 1.6; display: block; margin-top: 4px; }
-
-@media (max-width: 720px) {
-  .dsea-inner { grid-template-columns: 1fr; }
-}
-
-/* ── Integrations ── */
-.integrations-section {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 80px 24px 0;
-}
-.int-desc { font-size: 13px; color: var(--text2); line-height: 1.8; margin-bottom: 32px; margin-top: -16px; }
-.int-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-.int-card {
-  padding: 20px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  transition: border-color 0.15s, transform 0.15s;
-}
-.int-card:hover { border-color: var(--border2); transform: translateY(-2px); }
-.int-icon { font-size: 22px; margin-bottom: 8px; }
-.int-layer {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: var(--accent);
-  margin-bottom: 4px;
-}
-.int-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
-.int-card-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
-
-@media (max-width: 720px) {
-  .int-grid { grid-template-columns: 1fr; }
-}
-@media (min-width: 480px) and (max-width: 720px) {
-  .int-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-/* ── Competitive ── */
-.compete-section {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 80px 24px 0;
-}
-.compete-inner { text-align: center; }
-.compete-desc {
-  font-size: 13px;
-  color: var(--text2);
-  line-height: 1.8;
-  margin-bottom: 32px;
-  margin-top: -16px;
-}
-.compete-table-wrap {
-  overflow-x: auto;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-}
-.compete-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 11px;
-  text-align: center;
-}
-.compete-table th, .compete-table td {
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-}
-.compete-table th {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: var(--text2);
-  background: var(--surface);
-}
-.th-d0 { color: var(--accent) !important; }
-.td-d0 { color: var(--accent); font-weight: 700; }
-.td-yes { color: #4ade80; }
-.td-no { color: var(--muted); }
-.td-partial { color: var(--gold); }
-.row-label {
-  text-align: left;
-  font-weight: 700;
-  color: var(--text);
-  font-family: 'Space Mono', monospace;
-  font-size: 10px;
-}
-
-/* ── Security ── */
-.security-section {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 80px 24px 0;
-}
-.security-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-.sec-card {
-  padding: 24px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  transition: border-color 0.15s;
-}
-.sec-card:hover { border-color: var(--border2); }
-.sec-card-main {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  background: var(--surface);
-  border-color: var(--border2);
-}
-.sec-icon { font-size: 24px; flex-shrink: 0; margin-bottom: 8px; }
-.sec-card-main .sec-icon { font-size: 32px; margin-bottom: 0; }
-.sec-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
-.sec-desc { font-size: 11px; color: var(--text2); line-height: 1.6; }
-
-@media (max-width: 720px) {
-  .security-grid { grid-template-columns: 1fr; }
-  .sec-card-main { flex-direction: column; }
-}
-@media (min-width: 480px) and (max-width: 720px) {
-  .security-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-/* ── Thesis ── */
-.thesis-section { padding-top: 80px; padding-bottom: 0; }
-.thesis-inner {
-  text-align: center;
-  padding: 64px 40px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  position: relative;
-  overflow: hidden;
-}
-.thesis-inner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(172,170,255,0.08) 0%, transparent 60%);
+.story-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+  background: linear-gradient(to top, rgba(0,210,106,0.03) 0%, transparent 100%);
   pointer-events: none;
 }
-.thesis-quote {
-  font-size: clamp(15px, 2.2vw, 20px);
-  color: var(--text);
-  line-height: 1.8;
-  font-style: italic;
-  max-width: 640px;
-  margin: 0 auto;
-  position: relative;
+.story-card:hover {
+  border-color: rgba(0,210,106,0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 20px rgba(0,210,106,0.06);
 }
-.thesis-cite {
-  display: block;
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 20px;
-  letter-spacing: 1px;
-  font-style: normal;
+.story-card.featured {
+  border-color: rgba(232,184,78,0.4);
+  background: linear-gradient(135deg, var(--card) 0%, rgba(232,184,78,0.03) 100%);
+}
+.story-card.featured::after {
+  background: linear-gradient(to top, rgba(232,184,78,0.04) 0%, transparent 100%);
+}
+.sc-header {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.sc-type {
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; color: var(--accent);
+}
+.sc-time {
+  font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted);
+}
+.sc-story {
+  font-size: 13px; color: var(--text2); line-height: 1.7;
+}
+.sc-pnl-block {
+  padding: 16px 18px; border-radius: 8px;
+  position: relative; z-index: 1;
+}
+.sc-pnl-block.green {
+  background: rgba(0,210,106,0.06);
+  border: 1px solid rgba(0,210,106,0.15);
+}
+.sc-pnl-block.gold {
+  background: rgba(232,184,78,0.06);
+  border: 1px solid rgba(232,184,78,0.15);
+}
+.sc-pnl {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 28px; font-weight: 700; line-height: 1.2;
+}
+.sc-pnl-block.green .sc-pnl {
+  color: #00D26A;
+  text-shadow: 0 0 20px rgba(0,210,106,0.3);
+}
+.sc-pnl-block.gold .sc-pnl {
+  color: #E8B84E;
+  text-shadow: 0 0 20px rgba(232,184,78,0.3);
+}
+.sc-pnl-unit { font-size: 14px; opacity: 0.7; }
+.sc-pnl-sub {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--text2); margin-top: 6px; line-height: 1.5;
+}
+.sc-tools {
+  display: flex; flex-wrap: wrap; gap: 4px; margin-top: auto;
+}
+.sc-tools span {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--muted); background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  padding: 2px 7px; border-radius: 3px;
+}
+
+/* ═══ CAPABILITIES ═══ */
+.lp-caps {
+  border-top: 1px solid var(--border);
+  padding: 64px 24px;
+}
+.caps-inner { max-width: var(--max-w); margin: 0 auto; }
+.caps-headline {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: clamp(20px, 3vw, 28px); font-weight: 700;
+  color: var(--text); margin-bottom: 8px;
+}
+.caps-sub {
+  font-size: 14px; color: var(--text2); margin-bottom: 32px; line-height: 1.7;
+}
+.caps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+.cap-card {
+  background: var(--card); border: 1px solid var(--border);
+  padding: 28px 24px; transition: border-color 0.2s;
+}
+.cap-card:hover { border-color: var(--border2); }
+.cap-icon { font-size: 24px; margin-bottom: 12px; }
+.cap-card h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.cap-hook { font-size: 13px; color: var(--text); line-height: 1.6; margin-bottom: 8px; font-weight: 500; }
+.cap-proof { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+/* ═══ SKILLS ═══ */
+.lp-skills {
+  border-top: 1px solid var(--border);
+  padding: 64px 24px;
+}
+.skills-inner { max-width: var(--max-w); margin: 0 auto; }
+.skills-headline {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: clamp(18px, 2.5vw, 24px); font-weight: 700;
+  color: var(--text); margin-bottom: 8px;
+}
+.skills-sub {
+  font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 28px;
+  max-width: 640px;
+}
+.skills-grid { display: flex; flex-direction: column; gap: 1px; margin-bottom: 16px; }
+.skill-row {
+  display: grid; grid-template-columns: 140px 1fr auto;
+  gap: 16px; align-items: center;
+  background: var(--card); border: 1px solid var(--border);
+  padding: 14px 20px; transition: border-color 0.2s;
+}
+.skill-row:hover { border-color: var(--border2); }
+.sk-name {
+  font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700;
+  color: var(--accent); letter-spacing: 0.5px;
+}
+.sk-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+.sk-id {
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  color: var(--text); white-space: nowrap;
+}
+.skills-footer {
+  font-size: 12px; color: var(--muted); line-height: 1.6;
+}
+
+/* ═══ OPENCLAW ═══ */
+.lp-oc {
+  border-top: 1px solid var(--border);
+  padding: 64px 24px;
+}
+.oc-inner { max-width: 640px; margin: 0 auto; }
+.oc-headline {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: clamp(18px, 2.5vw, 24px); font-weight: 700;
+  color: var(--text); margin-bottom: 16px;
+}
+.oc-p { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 20px; }
+.oc-points {
+  padding-left: 16px; border-left: 2px solid var(--accent);
+  margin-bottom: 24px;
+}
+.oc-points p {
+  font-size: 13px; color: var(--text2); line-height: 1.7;
+  margin-bottom: 8px;
+}
+.oc-points p:last-child { margin-bottom: 0; }
+.oc-quote {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 14px; font-style: italic;
+  color: var(--text); line-height: 1.7;
+  padding: 16px 20px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0;
+  margin: 0;
+}
+
+/* ═══ GET STARTED ═══ */
+.lp-start {
+  border-top: 1px solid var(--border);
+  padding: 64px 24px;
+}
+.start-inner { max-width: var(--max-w); margin: 0 auto; }
+.start-headline {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: clamp(18px, 2.5vw, 24px); font-weight: 700;
+  color: var(--text); margin-bottom: 28px;
+}
+.start-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.start-card {
+  background: var(--card); border: 1px solid var(--border);
+  padding: 24px 20px; display: flex; flex-direction: column;
+  text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+}
+.start-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.start-card.start-tg { border-color: rgba(172,170,255,0.3); }
+.sc-badge {
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  color: var(--accent); letter-spacing: 1px; margin-bottom: 12px;
+}
+.start-card h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.start-card p { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 16px; flex: 1; }
+.sc-cta {
+  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+  color: var(--accent); letter-spacing: 0.5px;
+}
+
+/* ═══ CTA ═══ */
+.lp-cta {
+  text-align: center; padding: 64px 24px 80px;
+  border-top: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.lp-cta::before {
+  content: ''; position: absolute; bottom: -80px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 300px;
+  background: radial-gradient(ellipse, rgba(0,210,106,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-inner { position: relative; z-index: 1; max-width: 520px; margin: 0 auto; }
+.cta-headline {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: clamp(22px, 3vw, 32px); font-weight: 700;
+  color: var(--text); margin-bottom: 12px;
+}
+.cta-sub { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 28px; }
+.cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.cta-team {
+  margin-top: 32px;
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--muted); letter-spacing: 0.5px;
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 860px) {
+  .caps-grid { grid-template-columns: 1fr; }
+  .start-grid { grid-template-columns: 1fr; }
+  .skill-row { grid-template-columns: 120px 1fr; }
+  .sk-id { grid-column: 1 / -1; }
+  .m-card { width: 220px; }
+  .mc-pnl { font-size: 16px; }
+  .stories-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .stories-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .lp-hero { padding: 56px 20px 40px; }
+  .hero-slogan { font-size: 22px; }
+  .hero-ctas, .cta-buttons { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-ghost { width: 100%; max-width: 320px; justify-content: center; text-align: center; }
+  .m-card { width: 200px; }
+  .mc-pnl { font-size: 14px; }
+  .mc-desc { font-size: 10px; }
+  .sc-pnl { font-size: 22px; }
+  .skill-row { grid-template-columns: 1fr; gap: 4px; }
+  .sk-name { margin-bottom: 2px; }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Clone marquee tracks for seamless looping using safe DOM cloning
+  document.querySelectorAll('.marquee-track').forEach(track => {
+    const children = Array.from(track.children);
+    children.forEach(child => {
+      track.appendChild(child.cloneNode(true));
+    });
+  });
+});
+</script>
